@@ -1,0 +1,92 @@
+---
+import { siteData } from '../data/content';
+---
+
+<!-- ============================================================ -->
+<!-- SITE FOOTER COMPONENT                                        -->
+<!-- ID: #section_footer / フッター・企業概要・著作権 (Footer)      -->
+<!-- ============================================================ -->
+<footer
+  id="section_footer"
+  class="bg-douitsu-navy text-slate-300 pt-16 pb-12 border-t border-slate-800"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-slate-800/80">
+      
+      <!-- Brand & Mission Statement -->
+      <div class="lg:col-span-5 flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <div class="bg-white rounded-xl p-1.5 shadow-sm inline-block">
+            <img src="/images/landing/login-logo.jpg" alt="DOUITSU Logo" class="h-10 w-auto object-contain" />
+          </div>
+          <div>
+            <h4 class="font-extrabold text-white text-lg tracking-tight">DOUITSU合同会社</h4>
+            <span class="text-xs text-blue-300 font-mono">登録支援機関: REG:0A32ES43</span>
+          </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm">
+          特定技能制度における受入れ機関様の支援計画作成から、外国人の来日後10大支援業務までワンストップで伴走する専門機関です。
+        </p>
+
+        <div class="text-xs text-slate-400 space-y-1">
+          <p>〒204-0021 東京都清瀬市元町1-11-21 フローレス元町205号</p>
+          <p>TEL: 042-497-1537 / E-mail: info@douitsu-co.com</p>
+        </div>
+      </div>
+
+      <!-- Quick Navigation -->
+      <div class="lg:col-span-3">
+        <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-4">サイト内リンク</h5>
+        <ul class="space-y-2 text-xs sm:text-sm">
+          {siteData.navigation.map((item) => (
+            <li>
+              <a href={item.href} class="text-slate-400 hover:text-white transition-colors flex items-center gap-1.5">
+                <span class="text-douitsu-primary">›</span>
+                <span x-show="lang === 'ja'">{item.label.ja}</span>
+                <span x-show="lang === 'my'" style="display: none;">{item.label.my}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Specific Skills Support Focus -->
+      <div class="lg:col-span-4">
+        <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-4">特定技能 重点対応職種</h5>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs border border-slate-700">介護分野</span>
+          <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs border border-slate-700">外食業分野</span>
+          <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs border border-slate-700">飲食料品製造業</span>
+          <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs border border-slate-700">各種工業製品製造</span>
+          <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs border border-slate-700">ビルクリーニング</span>
+          <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs border border-slate-700">農業分野</span>
+        </div>
+
+        <div class="mt-6 p-3 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
+          <p class="font-semibold text-slate-300 mb-0.5">海外連携提携先:</p>
+          <p>FOR UNITY/SMZ CO.,LTD (Myanmar) & DOITSU日本語学校</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Back to Top -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <p>
+        Copyright © 2025 DOUITSU合同会社. All rights reserved.
+      </p>
+
+      <div class="flex items-center gap-6">
+        <a href="#section_1" class="text-slate-400 hover:text-white transition-colors flex items-center gap-1">
+          <span>ページ上部へ戻る</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</footer>

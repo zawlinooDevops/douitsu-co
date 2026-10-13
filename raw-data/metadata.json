@@ -1,0 +1,264 @@
+{
+  "site": {
+    "title": "Douitsu合同会社 (登録支援機関)",
+    "domain": "https://www.douitsu-co.com/",
+    "description": "Douitsu for skill is an organization that provides support in the professional life, daily life, or social life in order to enable activities based on the qualifications of specific skills to be carried out stably and smoothly.",
+    "architecture": "Single Page Scroll Website (Section by Scroll Navigation) + Job Recruitment Subpage",
+    "scraped_at": "2026-10-13",
+    "target_framework": "Astro SSG + Tailwind CSS + Alpine.js"
+  },
+  "statistics": {
+    "total_main_sections": 5,
+    "section_breakdown": [
+      {
+        "id": "nav",
+        "name": "Header & Navigation Bar",
+        "type": "Sticky Header"
+      },
+      {
+        "id": "section_1",
+        "name": "Hero Section (登録支援機関とは)",
+        "type": "Hero Banner"
+      },
+      {
+        "id": "section_2",
+        "name": "About / Support Plan (私たちが全力で支援します)",
+        "type": "Service Outline & 10 Support Pillars"
+      },
+      {
+        "id": "featured",
+        "name": "Company Information & Downloads (企業情報 / Download PDF)",
+        "type": "Company Profile & Study Materials"
+      },
+      {
+        "id": "section_3",
+        "name": "Services Features (特定技能・外国人採用支援サービスの特徴)",
+        "type": "3 Feature Cards & Certificate"
+      },
+      {
+        "id": "section_4",
+        "name": "Contact & Location (お問い合わせ)",
+        "type": "Contact Info, Map & Form"
+      },
+      {
+        "id": "footer",
+        "name": "Site Footer",
+        "type": "Copyright Footer"
+      },
+      {
+        "id": "job_page",
+        "name": "Job Recruitment Page (求人票)",
+        "type": "Flyer Gallery (job.html)"
+      }
+    ],
+    "total_images_downloaded": 19,
+    "image_categories": {
+      "landing_page_images": 9,
+      "icons_and_favicons": 4,
+      "job_flyer_images": 7
+    },
+    "total_pdf_documents": 2
+  },
+  "company_info": {
+    "company_name": "DOUITSU合同会社",
+    "establishment_date": "2025.3.31",
+    "staff_count": 30,
+    "registration_number": "REG:0A32ES43",
+    "address": "東京都清瀬市元町1-11-21 フローレス元町205号 (Flawless Motomachi 205, 1-11-21 Motomachi, Kiyose-shi, Tokyo)",
+    "phone": "042-497-1537",
+    "email": "info@douitsu-co.com",
+    "copyright": "Copyright © 2025 Douitsu. All rights reserved."
+  },
+  "navigation_menu": [
+    {
+      "label": "ホームページ",
+      "target": "#section_1",
+      "type": "scroll"
+    },
+    {
+      "label": "私たちが全力で支援します",
+      "target": "#section_2",
+      "type": "scroll"
+    },
+    {
+      "label": "特定技能・外国人採用支援サービスの特徴",
+      "target": "#section_3",
+      "type": "scroll"
+    },
+    {
+      "label": "求人票",
+      "target": "/job.html",
+      "type": "page_link"
+    },
+    {
+      "label": "お問い合わせ",
+      "target": "#section_4",
+      "type": "scroll"
+    },
+    {
+      "label": "042-497-1537",
+      "target": "tel:042-497-1537",
+      "type": "phone"
+    }
+  ],
+  "section_image_mapping": [
+    {
+      "section": "Header / Navbar",
+      "section_id": "navbar",
+      "images": [
+        {
+          "file_name": "login-logo.jpg",
+          "local_path": "raw-data/images/landing/login-logo.jpg",
+          "original_url": "assets/images/data/login-logo.jpg",
+          "role": "Brand Logo"
+        }
+      ]
+    },
+    {
+      "section": "Section 1: Hero Banner",
+      "section_id": "section_1",
+      "images": [
+        {
+          "file_name": "banner.jpg",
+          "local_path": "raw-data/images/landing/banner.jpg",
+          "original_url": "assets/images/banner.jpg",
+          "role": "Main Hero Illustration Banner (16:9 ratio)"
+        }
+      ]
+    },
+    {
+      "section": "Section 2: About / 10 Support Pillars",
+      "section_id": "section_2",
+      "images": [
+        {
+          "file_name": "about-main.png",
+          "local_path": "raw-data/images/landing/about-main.png",
+          "original_url": "assets/images/2_20241118_145054_0001.png",
+          "role": "Specified Skilled Worker graphic banner"
+        },
+        {
+          "file_name": "cherry.png",
+          "local_path": "raw-data/images/landing/cherry.png",
+          "original_url": "assets/templates/douitsu/images/cherry.png",
+          "role": "Cherry Blossom flower title ornament"
+        },
+        {
+          "file_name": "jp-dictionary-icon.png",
+          "local_path": "raw-data/images/icons/jp-dictionary-icon.png",
+          "original_url": "embedded inline base64",
+          "role": "JP Dictionary popup icon"
+        }
+      ]
+    },
+    {
+      "section": "Section: Featured Company Info & PDF Downloads",
+      "section_id": "featured",
+      "images": [
+        {
+          "file_name": "login-logo.jpg",
+          "local_path": "raw-data/images/landing/login-logo.jpg",
+          "original_url": "assets/images/data/login-logo.jpg",
+          "role": "Company Profile card logo badge"
+        }
+      ]
+    },
+    {
+      "section": "Section 3: Tokutei Ginou Service Features",
+      "section_id": "section_3",
+      "images": [
+        {
+          "file_name": "handshake-contract.jpg",
+          "local_path": "raw-data/images/landing/handshake-contract.jpg",
+          "original_url": "assets/templates/douitsu/images/handshake-man-woman-after-signing-business-contract-closeup.jpg",
+          "role": "Section Header Avatar (Circular Badge)"
+        },
+        {
+          "file_name": "cherry-48.png",
+          "local_path": "raw-data/images/landing/cherry-48.png",
+          "original_url": "assets/templates/douitsu/images/cherry-48.png",
+          "role": "Card decorative corner blossom icon (used 3 times)"
+        },
+        {
+          "file_name": "license-certificate.jpg",
+          "local_path": "raw-data/images/landing/license-certificate.jpg",
+          "original_url": "assets/images/2025.7doitsu-_page-0001.jpg",
+          "role": "Registration License Certificate Document flyer"
+        }
+      ]
+    },
+    {
+      "section": "Section 4: Contact & Inquiry",
+      "section_id": "section_4",
+      "images": [
+        {
+          "file_name": "contact-laptop.jpg",
+          "local_path": "raw-data/images/landing/contact-laptop.jpg",
+          "original_url": "assets/templates/douitsu/images/aerial-view-man-using-computer-laptop-wooden-table.jpg",
+          "role": "Contact Title Avatar (Circular Badge)"
+        }
+      ]
+    },
+    {
+      "section": "Global / Page Background",
+      "section_id": "body_background",
+      "images": [
+        {
+          "file_name": "snow-bg.jpg",
+          "local_path": "raw-data/images/landing/snow-bg.jpg",
+          "original_url": "assets/images/data/snow.jpg",
+          "role": "Page CSS background wallpaper texture"
+        }
+      ]
+    },
+    {
+      "section": "Subpage: Job Recruitment Flyers (job.html)",
+      "section_id": "job_page",
+      "images": [
+        {
+          "file_name": "job-1.jpg",
+          "local_path": "raw-data/images/jobs/job-1.jpg"
+        },
+        {
+          "file_name": "job-2025-11fudo.jpg",
+          "local_path": "raw-data/images/jobs/job-2025-11fudo.jpg"
+        },
+        {
+          "file_name": "job-viber-1.jpg",
+          "local_path": "raw-data/images/jobs/job-viber-1.jpg"
+        },
+        {
+          "file_name": "job-viber-2.jpg",
+          "local_path": "raw-data/images/jobs/job-viber-2.jpg"
+        },
+        {
+          "file_name": "job-viber-3.jpg",
+          "local_path": "raw-data/images/jobs/job-viber-3.jpg"
+        },
+        {
+          "file_name": "job-yamaguchi.jpg",
+          "local_path": "raw-data/images/jobs/job-yamaguchi.jpg"
+        },
+        {
+          "file_name": "job-viber-4.jpg",
+          "local_path": "raw-data/images/jobs/job-viber-4.jpg"
+        }
+      ]
+    }
+  ],
+  "downloadable_documents": [
+    {
+      "title": "介護特定技能評価試験 (日本語) 学習テキスト",
+      "description": "Nursing Care Specified Skilled Worker Evaluation Test Textbook (Japanese Edition)",
+      "file_name": "kaigo-tokuteiginou-japanese.pdf",
+      "local_path": "raw-data/files/kaigo-tokuteiginou-japanese.pdf",
+      "size_mb": 38.8
+    },
+    {
+      "title": "介護特定技能評価試験 (ミャンマー語) 学習テキスト",
+      "description": "Nursing Care Specified Skilled Worker Evaluation Test Textbook (Myanmar Language Edition)",
+      "file_name": "kaigo-tokuteiginou-myanmar.pdf",
+      "local_path": "raw-data/files/kaigo-tokuteiginou-myanmar.pdf",
+      "size_mb": 14.1
+    }
+  ]
+}

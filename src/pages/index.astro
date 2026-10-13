@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Featured from '../components/Featured.astro';
+import Services from '../components/Services.astro';
+import Jobs from '../components/Jobs.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <!-- ======================================================= -->
+  <!-- NAVIGATION BAR (STICKY HEADER)                          -->
+  <!-- ======================================================= -->
+  <Navbar />
+
+  <main>
+    <!-- ======================================================= -->
+    <!-- SECTION 1: HERO (登録支援機関とは)                       -->
+    <!-- ID: #section_1                                          -->
+    <!-- ======================================================= -->
+    <Hero />
+
+    <!-- ======================================================= -->
+    <!-- SECTION 2: ABOUT / 10 SUPPORT PILLARS                   -->
+    <!-- ID: #section_2 (私たちが全力で支援します)                 -->
+    <!-- ======================================================= -->
+    <About />
+
+    <!-- ======================================================= -->
+    <!-- SECTION: FEATURED COMPANY & TEXTBOOK PDF DOWNLOADS      -->
+    <!-- ID: #section_featured (企業情報 & 介護テキスト)          -->
+    <!-- ======================================================= -->
+    <Featured />
+
+    <!-- ======================================================= -->
+    <!-- SECTION 3: SERVICES FEATURES                            -->
+    <!-- ID: #section_3 (特定技能・外国人採用支援サービスの特徴)    -->
+    <!-- ======================================================= -->
+    <Services />
+
+    <!-- ======================================================= -->
+    <!-- SECTION: RECRUITMENT FLYERS GALLERY                     -->
+    <!-- ID: #section_jobs (最新の求人情報・求人票)               -->
+    <!-- ======================================================= -->
+    <Jobs />
+
+    <!-- ======================================================= -->
+    <!-- SECTION 4: CONTACT & INQUIRIES                          -->
+    <!-- ID: #section_4 (お問い合わせ・アクセス)                   -->
+    <!-- ======================================================= -->
+    <Contact />
+  </main>
+
+  <!-- ======================================================= -->
+  <!-- SITE FOOTER                                             -->
+  <!-- ID: #section_footer (フッター・会社概要・著作権)          -->
+  <!-- ======================================================= -->
+  <Footer />
+</Layout>
