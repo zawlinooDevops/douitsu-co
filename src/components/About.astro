@@ -3,122 +3,72 @@ import { siteData } from '../data/content';
 ---
 
 <!-- ============================================================ -->
-<!-- SECTION 2: ABOUT / 10 SUPPORT PILLARS                        -->
-<!-- ID: #section_2 / 私たちが全力で支援します (10 Statutory Duties)-->
+<!-- SECTION: SUPPORT (SUPPORT PLAN & 10 PILLARS)                  -->
+<!-- ID: #support (Alias: #section_2) / 私たちが全力で支援します    -->
 <!-- ============================================================ -->
 <section
-  id="section_2"
+  id="support"
   class="py-20 md:py-28 bg-white border-b border-slate-200/60 relative overflow-hidden"
 >
+  <div id="section_2" class="absolute -top-24"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Section Header with Sakura Ornament -->
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-50 border border-pink-200 text-pink-600 text-xs font-bold mb-3 shadow-sm">
-        <img src="/images/landing/cherry.png" alt="桜" class="w-4 h-4 object-contain" />
-        <span x-show="lang === 'ja'">{siteData.about.badge.ja}</span>
-        <span x-show="lang === 'my'" style="display: none;">{siteData.about.badge.my}</span>
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <img src="/images/landing/cherry.png" alt="桜" class="w-6 h-6 object-contain" />
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight">
+          <span x-show="lang === 'ja'">{siteData.about.title.ja}</span>
+          <span x-show="lang === 'my'" style="display: none;">{siteData.about.title.my}</span>
+        </h2>
       </div>
 
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight mb-4">
-        <span x-show="lang === 'ja'">{siteData.about.title.ja}</span>
-        <span x-show="lang === 'my'" style="display: none;">{siteData.about.title.my}</span>
-      </h2>
-
-      <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+      <p class="text-base sm:text-lg text-slate-600 leading-relaxed mt-2">
         <span x-show="lang === 'ja'">{siteData.about.lead.ja}</span>
         <span x-show="lang === 'my'" style="display: none;">{siteData.about.lead.my}</span>
       </p>
-
     </div>
 
-    <!-- Top Highlight: Real Photos Support Poster -->
-    <div class="mb-16 rounded-3xl bg-slate-50 border border-slate-200/80 p-6 sm:p-8 shadow-sm">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        
-        <!-- Image Poster -->
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="relative max-w-sm rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-white group cursor-pointer"
-               @click={`lightboxImg = '/images/landing/about-main.png'; lightboxTitle = (lang === 'ja' ? '支援現場写真 (公的手続き・職場支援)' : 'ထောက်ပံ့မှု မှတ်တမ်းဓာတ်ပုံများ')`}>
-            <img
-              src="/images/landing/about-main.png"
-              alt="DOUITSU 支援活動 (公的手続きへの同行・初めて職場への支援)"
-              class="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-102"
-              loading="lazy"
-            />
-            <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
-              <span class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-white/90 rounded-xl text-xs font-bold text-slate-800 shadow-md">
-                拡大して見る
+    <!-- Main Grid: Poster Image & 10 Support Pillars List -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      
+      <!-- Left Column: About Main Poster -->
+      <div class="lg:col-span-5 flex justify-center">
+        <div
+          class="relative w-full max-w-md rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white group cursor-pointer"
+          @click={`lightboxImg = '/images/landing/about-main.png'; lightboxTitle = (lang === 'ja' ? '特定技能 支援活動' : 'သတ်မှတ်ကျွမ်းကျင်လုပ်သား ထောက်ပံ့မှု မှတ်တမ်း')`}
+        >
+          <img
+            src="/images/landing/about-main.png"
+            alt="DOUITSU 支援活動"
+            class="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-102"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-white/95 rounded-xl text-xs font-bold text-slate-800 shadow-md">
+              拡大表示
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: 10 Core Support Items -->
+      <div class="lg:col-span-7">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          {siteData.about.pillars.map((pillar) => (
+            <div class="p-4 rounded-xl bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-douitsu-primary/50 shadow-xs hover:shadow-sm transition-all flex items-center gap-3.5 group">
+              <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-douitsu-blue group-hover:bg-douitsu-primary text-white font-mono font-bold text-xs flex items-center justify-center transition-colors">
+                {pillar.number}
+              </span>
+              <span class="font-bold text-sm text-douitsu-navy group-hover:text-douitsu-primary transition-colors leading-snug">
+                <span x-show="lang === 'ja'">{pillar.title.ja}</span>
+                <span x-show="lang === 'my'" style="display: none;">{pillar.title.my}</span>
               </span>
             </div>
-          </div>
+          ))}
         </div>
-
-        <!-- Accompanying Explanation -->
-        <div class="lg:col-span-7 flex flex-col gap-4 text-left">
-          <div class="inline-flex items-center gap-2 text-douitsu-blue font-bold text-sm">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-            <span x-show="lang === 'ja'">安心の現地・日本一貫体制</span>
-            <span x-show="lang === 'my'" style="display: none;">ဂျပန်နှင့် မြန်မာ ချိတ်ဆက်ထားသော စနစ်</span>
-          </div>
-
-          <h3 class="text-xl sm:text-2xl font-bold text-douitsu-navy">
-            <span x-show="lang === 'ja'">「公的手続きの同行」から「職場定着」まで、現場に寄り添う親身な支援</span>
-            <span x-show="lang === 'my'" style="display: none;">ရပ်ကွက်ရုံး စာရွက်စာတမ်းလုပ်ငန်းစဉ်မှသည် လုပ်ငန်းခွင် အသားကျသည်အထိ အတူရှိနေပေးခြင်း</span>
-          </h3>
-
-          <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-            <span x-show="lang === 'ja'">
-              特定技能外国人が日本で生活を始める際、役所での住民登録や銀行口座開設、健康保険の手続きなど、多くの公的手続きが必要となります。DOUITSU合同会社では、母国語が通じるスタッフが役所窓口へ直接同行し、不慣れな手続きを完全にサポート。職場配属の初日も担当者が現場へ同行し、受入れ企業様と外国人本人が安心して業務を開始できるよう伴走いたします。
-            </span>
-            <span x-show="lang === 'my'" style="display: none;">
-              သတ်မှတ်ကျွမ်းကျင်လုပ်သားများ ဂျပန်သို့ စတင်ရောက်ရှိချိန်တွင် ရပ်ကွက်ရုံး မှတ်ပုံတင်ခြင်း၊ ဘဏ်စာအုပ်ဖွင့်ခြင်း၊ ကျန်းမာရေးအာမခံ ပြုလုပ်ခြင်း စသည့် အရေးကြီးသော လုပ်ထုံးလုပ်နည်းများစွာ ရှိပါသည်။ DOUITSU LLC မှ မိခင်ဘာသာစကား နားလည်သော ဝန်ထမ်းများက သက်ဆိုင်ရာ ရုံးဌာနများသို့ ကိုယ်တိုင်ကိုယ်ကျ အတူလိုက်ပါဆောင်ရွက်ပေးပြီး၊ အလုပ်ခွင် ပထမဆုံး စတင်ဝင်ရောက်သည့်နေ့တွင်လည်း လုပ်ငန်းခွင်အထိ လိုက်ပါပို့ဆောင် ပံ့ပိုးပေးပါသည်။
-            </span>
-          </p>
-
-          <div class="flex flex-wrap gap-2 pt-2">
-            <span class="px-3 py-1 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-700">✓ 専任バイリンガルスタッフ同行</span>
-            <span class="px-3 py-1 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-700">✓ 母国語対応相談窓口 (24時間)</span>
-            <span class="px-3 py-1 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-700">✓ 定期的な企業・本人面談実施</span>
-          </div>
-        </div>
-
       </div>
-    </div>
 
-    <!-- 10 Pillars Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
-      {siteData.about.pillars.map((pillar) => (
-        <div class="relative p-6 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-douitsu-sky/60 shadow-sm hover:shadow-md transition-all group flex gap-5 items-start">
-          
-          <!-- Number Badge & Icon -->
-          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-douitsu-blue text-white flex flex-col items-center justify-center shadow-sm group-hover:bg-douitsu-primary transition-colors">
-            <span class="text-[10px] font-mono font-bold leading-none text-blue-200">NO.</span>
-            <span class="text-base font-extrabold font-mono leading-none">{String(pillar.number).padStart(2, '0')}</span>
-          </div>
-
-          <!-- Content -->
-          <div class="flex-1">
-            <h4 class="text-base sm:text-lg font-bold text-douitsu-navy mb-1.5 group-hover:text-douitsu-primary transition-colors">
-              <span x-show="lang === 'ja'">{pillar.title.ja}</span>
-              <span x-show="lang === 'my'" style="display: none;">{pillar.title.my}</span>
-            </h4>
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              <span x-show="lang === 'ja'">{pillar.desc.ja}</span>
-              <span x-show="lang === 'my'" style="display: none;">{pillar.desc.my}</span>
-            </p>
-          </div>
-
-          <!-- Subtle Icon Indicator in background -->
-          <div class="hidden sm:block absolute top-4 right-4 text-slate-300 group-hover:text-blue-100 transition-colors pointer-events-none">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={pillar.icon}></path>
-            </svg>
-          </div>
-
-        </div>
-      ))}
     </div>
 
   </div>

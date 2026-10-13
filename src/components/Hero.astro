@@ -3,135 +3,50 @@ import { siteData } from '../data/content';
 ---
 
 <!-- ============================================================ -->
-<!-- SECTION 1: HERO SECTION                                      -->
-<!-- ID: #section_1 / 登録支援機関とは (About Registered Agency)    -->
+<!-- SECTION: HOME / HERO (FULL BACKGROUND MT. FUJI & SAKURA)     -->
+<!-- ID: #home (Alias: #section_1) / 登録支援機関とは              -->
 <!-- ============================================================ -->
 <section
-  id="section_1"
-  class="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden sakura-gradient border-b border-slate-200/60"
+  id="home"
+  class="relative min-h-[620px] md:min-h-[700px] flex items-center pt-36 pb-20 md:pt-44 md:pb-28 bg-cover bg-center overflow-hidden border-b border-slate-200/60"
+  style="background-image: url('/images/landing/hero-bg.jpg');"
 >
-  <!-- Background Decorative Sakura Blossom Circles -->
-  <div class="absolute top-10 right-10 w-96 h-96 bg-pink-100/40 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute bottom-10 left-10 w-80 h-80 bg-blue-100/40 rounded-full blur-3xl pointer-events-none"></div>
+  <!-- Invisible backwards-compatibility anchor -->
+  <div id="section_1" class="absolute -top-32"></div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+  <!-- Subtle gradient overlay to enhance legibility and preserve natural Fuji & Sakura scenery -->
+  <div class="absolute inset-0 bg-gradient-to-r from-slate-950/50 via-slate-900/25 to-transparent pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+    <div class="max-w-xl lg:max-w-2xl">
       
-      <!-- Left Column: Copy & Actions -->
-      <div class="lg:col-span-7 flex flex-col items-start text-left">
+      <!-- Frosted Glassmorphism Card for Crystal Clear Typography -->
+      <div class="p-7 sm:p-10 md:p-12 rounded-3xl bg-white/90 backdrop-blur-md border border-white shadow-2xl">
         
-        <!-- Official Badge -->
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-douitsu-blue text-xs font-semibold mb-6 shadow-sm">
-          <span class="w-2 h-2 rounded-full bg-douitsu-primary animate-pulse"></span>
-          <span x-show="lang === 'ja'">{siteData.hero.badge.ja}</span>
-          <span x-show="lang === 'my'" style="display: none;">{siteData.hero.badge.my}</span>
-          <span class="text-slate-400">|</span>
-          <span class="font-mono text-douitsu-slate font-bold">{siteData.meta.registrationNo}</span>
-        </div>
-
         <!-- Main Heading -->
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-douitsu-navy tracking-tight leading-[1.18] mb-4">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-douitsu-navy tracking-tight leading-[1.2] mb-5">
           <span x-show="lang === 'ja'">{siteData.hero.title.ja}</span>
           <span x-show="lang === 'my'" style="display: none;">{siteData.hero.title.my}</span>
         </h1>
 
-        <!-- Subtitle -->
-        <p class="text-lg sm:text-xl font-bold text-douitsu-primary mb-5 leading-snug">
-          <span x-show="lang === 'ja'">{siteData.hero.subtitle.ja}</span>
-          <span x-show="lang === 'my'" style="display: none;">{siteData.hero.subtitle.my}</span>
+        <!-- Paragraph Description -->
+        <p class="text-slate-800 text-sm sm:text-base font-medium leading-relaxed mb-8">
+          <span x-show="lang === 'ja'">{siteData.hero.description.ja}</span>
+          <span x-show="lang === 'my'" style="display: none;">{siteData.hero.description.my}</span>
         </p>
 
-        <!-- Paragraph Description -->
-        <div class="p-5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-sm text-slate-700 text-sm sm:text-base leading-relaxed mb-8 backdrop-blur-sm">
-          <p x-show="lang === 'ja'">
-            {siteData.hero.description.ja}
-          </p>
-          <p x-show="lang === 'my'" style="display: none;">
-            {siteData.hero.description.my}
-          </p>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-wrap items-center gap-4 w-full sm:w-auto">
+        <!-- Action Button -->
+        <div>
           <a
-            href="#section_4"
-            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white font-bold text-sm sm:text-base shadow-md shadow-blue-500/25 hover:shadow-lg transition-all"
+            href={siteData.hero.cta.href}
+            class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white font-bold text-sm sm:text-base shadow-md shadow-blue-500/25 hover:shadow-lg transition-all"
           >
-            <span x-show="lang === 'ja'">{siteData.hero.ctaPrimary.ja}</span>
-            <span x-show="lang === 'my'" style="display: none;">{siteData.hero.ctaPrimary.my}</span>
+            <span x-show="lang === 'ja'">{siteData.hero.cta.ja}</span>
+            <span x-show="lang === 'my'" style="display: none;">{siteData.hero.cta.my}</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
           </a>
-
-          <a
-            href="#section_2"
-            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-sm sm:text-base shadow-sm hover:shadow transition-all"
-          >
-            <span x-show="lang === 'ja'">{siteData.hero.ctaSecondary.ja}</span>
-            <span x-show="lang === 'my'" style="display: none;">{siteData.hero.ctaSecondary.my}</span>
-          </a>
-        </div>
-
-        <!-- Metric Badges Row -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full mt-8 pt-8 border-t border-slate-200/60">
-          <div class="p-3 rounded-xl bg-white/70 border border-slate-100 shadow-sm text-center">
-            <span class="block text-xl font-extrabold text-douitsu-navy">30名</span>
-            <span class="text-[11px] text-slate-500 font-medium">専門スタッフ体制</span>
-          </div>
-          <div class="p-3 rounded-xl bg-white/70 border border-slate-100 shadow-sm text-center">
-            <span class="block text-xl font-extrabold text-douitsu-primary">10項目</span>
-            <span class="text-[11px] text-slate-500 font-medium">義務的支援を完備</span>
-          </div>
-          <div class="p-3 rounded-xl bg-white/70 border border-slate-100 shadow-sm text-center">
-            <span class="block text-xl font-extrabold text-douitsu-navy">0円</span>
-            <span class="text-[11px] text-slate-500 font-medium">特定技能 紹介料</span>
-          </div>
-          <div class="p-3 rounded-xl bg-white/70 border border-slate-100 shadow-sm text-center">
-            <span class="block text-xl font-extrabold text-pink-600">介護/外食</span>
-            <span class="text-[11px] text-slate-500 font-medium">特定技能 重点分野</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Right Column: Banner Image & Visual Frame -->
-      <div class="lg:col-span-5 relative">
-        <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 group">
-          
-          <!-- Original Fuji & Sakura Banner -->
-          <img
-            src="/images/landing/banner.jpg"
-            alt="日本の富士山と桜 DOUITSU合同会社"
-            class="w-full aspect-[4/3] sm:aspect-[16/10] object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="eager"
-          />
-
-          <!-- Gradient Overlay -->
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-
-          <!-- Bottom Floating Caption Card -->
-          <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/90 backdrop-blur-md border border-white/40 shadow-lg">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-douitsu-blue text-white flex items-center justify-center font-bold text-lg shadow-sm">
-                同
-              </div>
-              <div>
-                <h4 class="font-bold text-douitsu-navy text-sm">DOUITSU合同会社</h4>
-                <p class="text-xs text-slate-500">
-                  <span x-show="lang === 'ja'">安心・安全な特定技能外国人就労支援</span>
-                  <span x-show="lang === 'my'" style="display: none;">ယုံကြည်စိတ်ချရသော သတ်မှတ်ကျွမ်းကျင်လုပ်သား ထောက်ပံ့မှု</span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Decorative Floating Badge -->
-        <div class="absolute -top-4 -right-4 hidden sm:flex items-center gap-2 px-4 py-2 rounded-2xl bg-white border border-pink-100 shadow-lg shadow-pink-500/10 text-pink-600 font-bold text-xs">
-          <img src="/images/landing/cherry.png" alt="桜" class="w-5 h-5 object-contain" />
-          <span>信頼と共生のパートナー</span>
         </div>
 
       </div>

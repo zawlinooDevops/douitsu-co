@@ -3,11 +3,11 @@ import { siteData } from '../data/content';
 ---
 
 <!-- ============================================================ -->
-<!-- SECTION 4: CONTACT & INQUIRIES                               -->
-<!-- ID: #section_4 / お問い合わせ (Contact Form & Office Details)   -->
+<!-- SECTION: CONTACT & INQUIRIES                                 -->
+<!-- ID: #contact (Alias: #section_4) / お問い合わせ                 -->
 <!-- ============================================================ -->
 <section
-  id="section_4"
+  id="contact"
   class="py-20 md:py-28 bg-white relative overflow-hidden"
   x-data="{
     formSubmitted: false,
@@ -15,7 +15,6 @@ import { siteData } from '../data/content';
       name: '',
       email: '',
       phone: '',
-      inquiryType: '特定技能人材の採用について (企業様)',
       message: ''
     },
     submitForm() {
@@ -27,44 +26,34 @@ import { siteData } from '../data/content';
     }
   }"
 >
+  <div id="section_4" class="absolute -top-24"></div>
+
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Section Header with Avatar -->
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="flex items-center justify-center gap-3 mb-4">
-        <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
+      <div class="flex items-center justify-center mb-4">
+        <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-md">
           <img src="/images/landing/contact-laptop.jpg" alt="お問い合わせ" class="w-full h-full object-cover" />
         </div>
-        <span class="inline-flex items-center px-3.5 py-1 rounded-full bg-pink-50 border border-pink-200 text-pink-600 text-xs font-bold uppercase tracking-wider">
-          <span x-show="lang === 'ja'">{siteData.contact.badge.ja}</span>
-          <span x-show="lang === 'my'" style="display: none;">{siteData.contact.badge.my}</span>
-        </span>
       </div>
 
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight mb-4">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight">
         <span x-show="lang === 'ja'">{siteData.contact.title.ja}</span>
         <span x-show="lang === 'my'" style="display: none;">{siteData.contact.title.my}</span>
       </h2>
-
-      <p class="text-base text-slate-600 leading-relaxed">
-        <span x-show="lang === 'ja'">{siteData.contact.subtitle.ja}</span>
-        <span x-show="lang === 'my'" style="display: none;">{siteData.contact.subtitle.my}</span>
-      </p>
     </div>
 
-    <!-- Contact Grid: Left Office Info + Right Interactive Form -->
+    <!-- Contact Grid: Left Office Info + Right Clean Form -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
       
-      <!-- Left Column: Office Details & Direct Channels -->
+      <!-- Left Column: Office Details -->
       <div class="lg:col-span-5 flex flex-col gap-6">
-        
-        <!-- Main Info Card -->
-        <div class="p-7 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-6">
+        <div class="p-7 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-6">
           
           <div>
-            <span class="text-xs font-bold text-douitsu-primary uppercase tracking-wider block mb-1">OFFICE LOCATION</span>
-            <h4 class="text-lg font-extrabold text-douitsu-navy">DOUITSU合同会社 (DOUITSU LLC)</h4>
-            <p class="text-xs font-mono text-slate-500 mt-0.5">登録支援機関登録番号: REG:0A32ES43</p>
+            <h4 class="text-lg font-extrabold text-douitsu-navy">{siteData.meta.companyName}</h4>
+            <p class="text-xs font-mono text-slate-500 mt-0.5">{siteData.meta.registrationNo}</p>
           </div>
 
           <!-- Address -->
@@ -77,14 +66,14 @@ import { siteData } from '../data/content';
             </div>
             <div>
               <span class="text-xs font-bold text-slate-500 block mb-0.5">
-                <span x-show="lang === 'ja'">所在地</span>
-                <span x-show="lang === 'my'" style="display: none;">လိပ်စာ</span>
+                <span x-show="lang === 'ja'">{siteData.contact.address.label.ja}</span>
+                <span x-show="lang === 'my'" style="display: none;">{siteData.contact.address.label.my}</span>
               </span>
               <p class="text-sm font-semibold text-slate-800 leading-snug">
-                {siteData.meta.address.postalCode} {siteData.meta.address.ja}
+                {siteData.contact.address.ja}
               </p>
               <p class="text-xs text-slate-500 mt-1" x-show="lang === 'my'" style="display: none;">
-                {siteData.meta.address.my}
+                {siteData.contact.address.my}
               </p>
             </div>
           </div>
@@ -98,15 +87,12 @@ import { siteData } from '../data/content';
             </div>
             <div>
               <span class="text-xs font-bold text-slate-500 block mb-0.5">
-                <span x-show="lang === 'ja'">お電話</span>
-                <span x-show="lang === 'my'" style="display: none;">ဖုန်းနံပါတ်</span>
+                <span x-show="lang === 'ja'">{siteData.contact.phone.label.ja}</span>
+                <span x-show="lang === 'my'" style="display: none;">{siteData.contact.phone.label.my}</span>
               </span>
-              <a href={`tel:${siteData.meta.phone}`} class="text-base font-bold text-douitsu-primary hover:underline">
-                {siteData.meta.phone}
+              <a href={`tel:${siteData.contact.phone.value}`} class="text-base font-bold text-douitsu-primary hover:underline">
+                {siteData.contact.phone.value}
               </a>
-              <span class="block text-xs text-slate-500 mt-0.5">
-                担当携帯: <a href={`tel:${siteData.meta.mobilePhone}`} class="hover:underline">{siteData.meta.mobilePhone}</a>
-              </span>
             </div>
           </div>
 
@@ -119,160 +105,144 @@ import { siteData } from '../data/content';
             </div>
             <div>
               <span class="text-xs font-bold text-slate-500 block mb-0.5">
-                <span x-show="lang === 'ja'">Eメール</span>
-                <span x-show="lang === 'my'" style="display: none;">အီးမေးလ်</span>
+                <span x-show="lang === 'ja'">{siteData.contact.email.label.ja}</span>
+                <span x-show="lang === 'my'" style="display: none;">{siteData.contact.email.label.my}</span>
               </span>
-              <a href={`mailto:${siteData.meta.email}`} class="text-sm font-bold text-douitsu-navy hover:underline">
-                {siteData.meta.email}
+              <a href={`mailto:${siteData.contact.email.value}`} class="text-sm font-bold text-douitsu-navy hover:underline">
+                {siteData.contact.email.value}
               </a>
-              <span class="block text-[11px] text-slate-400 mt-0.5">24時間受付中</span>
             </div>
           </div>
 
-          <!-- Office Hours -->
-          <div class="pt-4 border-t border-slate-200/80 text-xs text-slate-600 flex items-center justify-between">
-            <span>営業時間: 平日 9:00 - 18:00</span>
-            <span class="text-emerald-600 font-bold">土日祝・相談可</span>
+          <!-- Quick Navigation Links (from original site) -->
+          <div class="pt-4 border-t border-slate-200/80 flex items-center gap-4 text-xs font-semibold text-slate-600">
+            {siteData.contact.quickLinks.map((link) => (
+              <a href={link.href} class="hover:text-douitsu-primary transition-colors">
+                <span x-show="lang === 'ja'">{link.label.ja}</span>
+                <span x-show="lang === 'my'" style="display: none;">{link.label.my}</span>
+              </a>
+            ))}
+          </div>
+
+          <!-- Social Links -->
+          <div class="pt-2 flex items-center gap-3 text-slate-400">
+            {siteData.contact.social.map((s) => (
+              <a href={s.url} class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:text-douitsu-primary transition-colors text-xs font-bold">
+                {s.name[0]}
+              </a>
+            ))}
           </div>
 
         </div>
-
       </div>
 
-      <!-- Right Column: Interactive Alpine.js Form -->
+      <!-- Right Column: Clean Original Contact Form -->
       <div class="lg:col-span-7">
-        <div class="p-7 sm:p-9 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm relative">
+        <div class="p-7 sm:p-9 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm relative">
           
-          <!-- Success State Notification -->
+          <!-- Success State -->
           <div
             x-show="formSubmitted"
             x-cloak
-            x-transition
-            class="text-center py-12 px-6"
-            style="display: none;"
+            class="text-center py-10"
           >
-            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
             </div>
-            <h3 class="text-2xl font-extrabold text-douitsu-navy mb-2">送信完了いたしました</h3>
-            <p class="text-sm text-slate-600 mb-6 max-w-md mx-auto">
+            <h4 class="text-lg font-bold text-douitsu-navy mb-2">
               <span x-show="lang === 'ja'">{siteData.contact.form.success.ja}</span>
               <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.success.my}</span>
-            </p>
+            </h4>
             <button
               type="button"
-              @click="formSubmitted = false; formData = { name: '', email: '', phone: '', inquiryType: '特定技能人材の採用について (企業様)', message: '' }"
-              class="px-6 py-2.5 rounded-xl bg-douitsu-primary text-white text-xs font-bold hover:bg-douitsu-blue transition-colors shadow-sm"
+              @click="formSubmitted = false; formData = { name: '', email: '', phone: '', message: '' }"
+              class="mt-4 px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition-colors"
             >
               もう一度送信する
             </button>
           </div>
 
-          <!-- Form Fields -->
+          <!-- Form Inputs -->
           <form
             x-show="!formSubmitted"
-            @submit.prevent="submitForm"
-            class="flex flex-col gap-5"
+            @submit.prevent="submitForm()"
+            class="space-y-4"
           >
-            <!-- Inquiy Type Select -->
+            <!-- Name -->
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">
-                <span x-show="lang === 'ja'">{siteData.contact.form.inquiryType.label.ja}</span>
-                <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.inquiryType.label.my}</span>
-                <span class="text-red-500 ml-0.5">*</span>
-              </label>
-              <select
-                x-model="formData.inquiryType"
-                class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-douitsu-primary/20 focus:border-douitsu-primary transition-all font-medium"
-              >
-                {siteData.contact.form.inquiryType.options.map((opt) => (
-                  <option value={opt.ja}>{opt.ja}</option>
-                ))}
-              </select>
-            </div>
-
-            <!-- Name Field -->
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">
+              <label class="block text-xs font-bold text-slate-700 mb-1">
                 <span x-show="lang === 'ja'">{siteData.contact.form.name.label.ja}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.name.label.my}</span>
-                <span class="text-red-500 ml-0.5">*</span>
+                <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 x-model="formData.name"
                 required
-                placeholder="例: 株式会社○○ / 山田 太郎"
-                class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-douitsu-primary/20 focus:border-douitsu-primary transition-all"
+                placeholder="名前"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
               />
             </div>
 
             <!-- Email & Phone Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                <label class="block text-xs font-bold text-slate-700 mb-1">
                   <span x-show="lang === 'ja'">{siteData.contact.form.email.label.ja}</span>
                   <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.email.label.my}</span>
-                  <span class="text-red-500 ml-0.5">*</span>
+                  <span class="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
                   x-model="formData.email"
                   required
-                  placeholder="example@douitsu-co.com"
-                  class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-douitsu-primary/20 focus:border-douitsu-primary transition-all"
+                  placeholder="Eメール"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                <label class="block text-xs font-bold text-slate-700 mb-1">
                   <span x-show="lang === 'ja'">{siteData.contact.form.phone.label.ja}</span>
                   <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.phone.label.my}</span>
-                  <span class="text-red-500 ml-0.5">*</span>
+                  <span class="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
                   x-model="formData.phone"
                   required
-                  placeholder="042-497-1537"
-                  class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-douitsu-primary/20 focus:border-douitsu-primary transition-all"
+                  placeholder="電話"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
                 />
               </div>
             </div>
 
-            <!-- Message Field -->
+            <!-- Message -->
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1.5">
+              <label class="block text-xs font-bold text-slate-700 mb-1">
                 <span x-show="lang === 'ja'">{siteData.contact.form.message.label.ja}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.message.label.my}</span>
               </label>
               <textarea
                 x-model="formData.message"
                 rows="4"
-                placeholder="ご相談・採用希望時期・ご質問などをご記入ください..."
-                class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-douitsu-primary/20 focus:border-douitsu-primary transition-all resize-none"
+                placeholder="メッセージ"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all resize-y"
               ></textarea>
             </div>
 
-            <!-- Privacy Policy Notice -->
-            <p class="text-[11px] text-slate-500">
-              ※ ご記入いただいた個人情報は、お問い合わせへの回答および人材採用支援のご連絡にのみ使用いたします。
-            </p>
-
             <!-- Submit Button -->
-            <button
-              type="submit"
-              class="w-full py-4 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white font-bold text-sm sm:text-base shadow-md shadow-blue-500/25 hover:shadow-lg transition-all flex items-center justify-center gap-2"
-            >
-              <span x-show="lang === 'ja'">{siteData.contact.form.submit.ja}</span>
-              <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.submit.my}</span>
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-              </svg>
-            </button>
-
+            <div class="pt-2">
+              <button
+                type="submit"
+                class="w-full py-3 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
+              >
+                <span x-show="lang === 'ja'">{siteData.contact.form.submit.ja}</span>
+                <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.submit.my}</span>
+              </button>
+            </div>
           </form>
 
         </div>

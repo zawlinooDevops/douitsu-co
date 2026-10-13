@@ -18,7 +18,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
 ---
 
 <!doctype html>
-<html lang="ja" class="scroll-smooth" x-data="{ lang: 'ja', lightboxImg: null, lightboxTitle: '', mobileMenuOpen: false }">
+<html lang="ja" class="scroll-smooth" x-data="{ lang: (typeof localStorage !== 'undefined' && localStorage.getItem('douitsu_lang')) || 'ja', lightboxImg: null, lightboxTitle: '', mobileMenuOpen: false }">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -82,12 +82,6 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
         "@type": "GeoCoordinates",
         "latitude": 35.7876,
         "longitude": 139.5298
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "09:00",
-        "closes": "18:00"
       }
     })} />
   </head>

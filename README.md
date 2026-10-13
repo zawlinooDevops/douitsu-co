@@ -120,8 +120,7 @@ douitsu-co/
 - **登録番号**: 出入国在留管理庁 登録支援機関 REG:0A32ES43
 - **所在地**: 〒204-0021 東京都清瀬市元町1-11-21 フローレス元町205号
 - **TEL**: 042-497-1537 / 080-2213-8194
-- **E-mail**: info@douitsu-co.com
-- **海外提携**: FOR UNITY/SMZ CO.,LTD (Myanmar) & DOITSU日本語学校
+- **送り出し機関 (ミャンマー)**: FOR UNITY/SMZ CO.,LTD
 
 ---
 

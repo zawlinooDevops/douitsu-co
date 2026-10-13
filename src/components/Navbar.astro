@@ -3,65 +3,39 @@ import { siteData } from '../data/content';
 ---
 
 <!-- ============================================================ -->
-<!-- HEADER & NAVIGATION COMPONENT                                -->
-<!-- ID: #header / Sticky Navigation with Local Language Switcher -->
+<!-- HEADER & NAVIGATION (TWO-TIER: TOP INFO BAR + MAIN NAVBAR)   -->
 <!-- ============================================================ -->
 <header
-  class="fixed top-0 left-0 right-0 z-40 glass-nav transition-all duration-300"
-  x-data="{ scrolled: false }"
-  @scroll.window="scrolled = (window.pageYOffset > 20)"
-  :class="{ 'shadow-md py-2': scrolled, 'py-3.5': !scrolled }"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  x-data="{ mobileMenuOpen: false }"
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between">
+  <!-- 1. TOP INFO BAR -->
+  <div class="bg-douitsu-navy text-slate-200 text-xs py-2 border-b border-white/10 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
       
-      <!-- Brand Logo & Company Title -->
-      <a href="#section_1" class="flex items-center gap-3 group">
-        <div class="relative overflow-hidden rounded-xl border border-slate-200/80 bg-white p-1 shadow-sm group-hover:shadow-md transition-shadow">
-          <img
-            src="/images/landing/login-logo.jpg"
-            alt="DOUITSU合同会社 ロゴ"
-            class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
-          />
-        </div>
-        <div class="flex flex-col">
-          <div class="flex items-center gap-1.5">
-            <span class="font-bold text-douitsu-navy text-base sm:text-lg tracking-tight group-hover:text-douitsu-primary transition-colors">
-              DOUITSU<span class="text-xs font-semibold text-douitsu-slate ml-1">合同会社</span>
-            </span>
-            <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-100 text-douitsu-blue border border-blue-200">
-              登録支援機関
-            </span>
-          </div>
-          <span class="text-[10px] text-slate-500 font-medium tracking-wide">
-            REG: 0A32ES43
-          </span>
-        </div>
-      </a>
+      <!-- Left: Phone Number -->
+      <div class="flex items-center gap-2">
+        <a
+          href={`tel:${siteData.meta.phone}`}
+          class="inline-flex items-center gap-2 font-semibold text-slate-100 hover:text-white transition-colors"
+        >
+          <svg class="w-3.5 h-3.5 text-douitsu-sky" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+          </svg>
+          <span class="tracking-wide">TEL: {siteData.meta.phone}</span>
+        </a>
+      </div>
 
-      <!-- Desktop Navigation Links -->
-      <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
-        {siteData.navigation.map((item) => (
-          <a
-            href={item.href}
-            class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-douitsu-primary hover:bg-blue-50/80 transition-all"
-          >
-            <span x-show="lang === 'ja'">{item.label.ja}</span>
-            <span x-show="lang === 'my'" style="display: none;">{item.label.my}</span>
-          </a>
-        ))}
-      </nav>
-
-      <!-- Right Actions: Language Switcher & Phone Call CTA -->
-      <div class="flex items-center gap-3">
+      <!-- Right: Bilingual Switcher & Contact Us -->
+      <div class="flex items-center gap-4 sm:gap-6">
         
-        <!-- Bilingual Toggle Button (Alpine.js) -->
-        <div class="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 shadow-inner">
+        <!-- Language Switcher -->
+        <div class="inline-flex p-0.5 rounded-lg bg-slate-800/80 border border-slate-700">
           <button
             type="button"
             @click="lang = 'ja'; localStorage.setItem('douitsu_lang', 'ja')"
-            :class="{ 'bg-douitsu-blue text-white shadow-sm font-bold': lang === 'ja', 'text-slate-600 hover:text-slate-900': lang !== 'ja' }"
-            class="px-2.5 py-1 text-xs font-medium rounded-lg transition-all flex items-center gap-1"
+            :class="{ 'bg-douitsu-blue text-white shadow-xs font-bold': lang === 'ja', 'text-slate-300 hover:text-white': lang !== 'ja' }"
+            class="px-2 py-0.5 text-[11px] rounded transition-all flex items-center gap-1"
           >
             <span>🇯🇵</span>
             <span>日本語</span>
@@ -69,77 +43,99 @@ import { siteData } from '../data/content';
           <button
             type="button"
             @click="lang = 'my'; localStorage.setItem('douitsu_lang', 'my')"
-            :class="{ 'bg-douitsu-blue text-white shadow-sm font-bold': lang === 'my', 'text-slate-600 hover:text-slate-900': lang !== 'my' }"
-            class="px-2.5 py-1 text-xs font-medium rounded-lg transition-all flex items-center gap-1"
+            :class="{ 'bg-douitsu-blue text-white shadow-xs font-bold': lang === 'my', 'text-slate-300 hover:text-white': lang !== 'my' }"
+            class="px-2 py-0.5 text-[11px] rounded transition-all flex items-center gap-1"
           >
             <span>🇲🇲</span>
             <span>မြန်မာ</span>
           </button>
         </div>
 
-        <!-- Phone Call Quick Action -->
+        <!-- Contact Us Link -->
         <a
-          href={`tel:${siteData.meta.phone}`}
-          class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white text-xs sm:text-sm font-bold shadow-sm shadow-blue-500/20 hover:shadow-md transition-all"
+          href="/#contact"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-100 hover:text-douitsu-sky transition-colors"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+          <svg class="w-3.5 h-3.5 text-douitsu-sky" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
           </svg>
-          <span>{siteData.meta.phone}</span>
+          <span x-show="lang === 'ja'">お問い合わせ</span>
+          <span x-show="lang === 'my'" style="display: none;">ဆက်သွယ်ရန်</span>
         </a>
 
-        <!-- Mobile Menu Hamburger Button -->
-        <button
-          type="button"
-          @click="mobileMenuOpen = !mobileMenuOpen"
-          class="lg:hidden p-2 rounded-xl text-slate-700 hover:text-douitsu-primary hover:bg-slate-100 transition-colors"
-          aria-label="Toggle navigation menu"
-        >
-          <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-          <svg x-show="mobileMenuOpen" style="display: none;" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-
       </div>
+
     </div>
   </div>
 
-  <!-- Mobile Dropdown Navigation -->
+  <!-- 2. MAIN NAVBAR -->
+  <div class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-2 sm:py-2.5">
+      
+      <!-- Left: Pure Main Logo (no card box, no border, no side text) -->
+      <a href="/#home" class="inline-flex items-center group">
+        <img
+          src="/images/landing/login-logo.jpg"
+          alt="DOUITSU合同会社"
+          class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-102"
+        />
+      </a>
+
+      <!-- Right: Main Menu Links -->
+      <nav class="hidden lg:flex items-center gap-2 xl:gap-3">
+        {siteData.navigation.filter(item => item.id !== 'phone' && item.id !== 'contact').map((item) => (
+          <a
+            href={item.href}
+            class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-douitsu-primary hover:bg-blue-50/80 transition-all"
+          >
+            <span x-show="lang === 'ja'">{item.label.ja}</span>
+            <span x-show="lang === 'my'" style="display: none;">{item.label.my}</span>
+          </a>
+        ))}
+      </nav>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        type="button"
+        @click="mobileMenuOpen = !mobileMenuOpen"
+        class="lg:hidden p-2 rounded-xl text-slate-700 hover:text-douitsu-primary hover:bg-slate-100 transition-colors"
+        aria-label="Toggle navigation menu"
+      >
+        <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg x-show="mobileMenuOpen" style="display: none;" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
   <div
     x-show="mobileMenuOpen"
     x-cloak
-    x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="opacity-0 -translate-y-3"
-    x-transition:enter-end="opacity-100 translate-y-0"
-    x-transition:leave="transition ease-in duration-150"
-    x-transition:leave-start="opacity-100 translate-y-0"
-    x-transition:leave-end="opacity-0 -translate-y-3"
-    class="lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 px-4 pt-3 pb-6 shadow-xl"
+    class="lg:hidden bg-white/98 backdrop-blur-xl border-b border-slate-200 px-4 pt-3 pb-6 shadow-xl"
     style="display: none;"
   >
     <div class="flex flex-col gap-1.5">
-      {siteData.navigation.map((item) => (
+      {siteData.navigation.filter(item => item.id !== 'phone').map((item) => (
         <a
           href={item.href}
           @click="mobileMenuOpen = false"
-          class="px-4 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:text-douitsu-primary hover:bg-blue-50 transition-colors"
+          class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-700 hover:text-douitsu-primary hover:bg-blue-50 transition-colors"
         >
           <span x-show="lang === 'ja'">{item.label.ja}</span>
           <span x-show="lang === 'my'" style="display: none;">{item.label.my}</span>
         </a>
       ))}
-      <div class="pt-4 mt-2 border-t border-slate-100 flex flex-col gap-2">
+      <div class="pt-3 mt-2 border-t border-slate-100 flex items-center justify-between">
         <a
           href={`tel:${siteData.meta.phone}`}
-          class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-douitsu-primary text-white font-bold text-sm shadow-md"
+          class="w-full text-center py-2.5 rounded-xl bg-douitsu-primary text-white font-bold text-xs shadow-xs"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-          </svg>
-          <span>お電話: {siteData.meta.phone}</span>
+          <span>TEL: {siteData.meta.phone}</span>
         </a>
       </div>
     </div>
