@@ -47,11 +47,12 @@ description: Comprehensive Tech Stack Architecture, Runtime, Styling, Typography
 |---|---|---|
 | `douitsu.navy` | `#0d1b2a` | Primary text headings, top info bar background, footer background |
 | `douitsu.dark` | `#1b263b` | Dark container backgrounds, high-contrast borders |
-| `douitsu.blue` | `#1e3a8a` | Primary theme color, mobile meta theme color, button hover state |
-| `douitsu.primary` | `#2563eb` | Primary brand CTA buttons, active links, focus rings, icon badges |
-| `douitsu.accent` | `#3b82f6` | Secondary interactive accents, hover highlights |
-| `douitsu.sky` | `#60a5fa` | Subtle icon highlights, borders, top-bar icon accents |
-| `douitsu.ice` | `#eff6ff` | Light blue background tints, badge backgrounds |
+| `douitsu.blue` | `#1a486c` | Logo dark blue facet, button hover state, badge accent |
+| `douitsu.primary` | `#105c8e` | Official DOUITSU brand logo signature blue, primary CTA buttons, active links, focus rings |
+| `douitsu.accent` | `#1874b3` | Secondary interactive accents, hover highlights |
+| `douitsu.sky` | `#7ba7cc` | Logo light blue facet, subtle icon highlights, top-bar icon accents |
+| `douitsu.ice` | `#eff6fa` | Ultra-light blue tint derived from logo blue |
+| `douitsu.light` | `#dbeaf3` | Soft icon and badge background tint |
 | `douitsu.slate` | `#334155` | Secondary text, subheadings, card descriptions |
 | `douitsu.muted` | `#64748b` | Muted captions, form placeholders, metadata labels |
 | `douitsu.sakura` | `#f43f5e` | Japanese Sakura cherry blossom accent color |
@@ -61,7 +62,7 @@ description: Comprehensive Tech Stack Architecture, Runtime, Styling, Typography
 ### Custom Shadows & Glassmorphism Utilities
 - **`shadow-glass`**: `0 8px 32px 0 rgba(31, 38, 135, 0.07)`
 - **`shadow-card`**: `0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04)`
-- **`shadow-glow`**: `0 0 25px rgba(37, 99, 235, 0.25)`
+- **`shadow-glow`**: `0 0 25px rgba(16, 92, 142, 0.25)`
 - **`.glass-panel`**: `background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(226, 232, 240, 0.8);`
 - **`.glass-nav`**: `background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(226, 232, 240, 0.7);`
 - **`.sakura-gradient`**: `background: linear-gradient(135deg, #fff1f2 0%, #ffffff 50%, #eff6ff 100%);`

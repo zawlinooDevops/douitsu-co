@@ -18,7 +18,12 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
 ---
 
 <!doctype html>
-<html lang="ja" class="scroll-smooth" x-data="{ lang: (typeof localStorage !== 'undefined' && localStorage.getItem('douitsu_lang')) || 'ja', lightboxImg: null, lightboxTitle: '', mobileMenuOpen: false }">
+<html
+  lang="ja"
+  class="scroll-smooth"
+  x-data="{ lang: (typeof localStorage !== 'undefined' && localStorage.getItem('douitsu_lang')) || 'ja', lightboxImg: null, lightboxTitle: '', mobileMenuOpen: false }"
+  @open-lightbox.window="lightboxImg = $event.detail.img; lightboxTitle = $event.detail.title"
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -74,7 +79,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
     <meta property="twitter:image" content={new URL(ogImage, siteData.meta.siteUrl).toString()} />
 
     <!-- Theme Color & Mobile App Meta -->
-    <meta name="theme-color" content="#1e3a8a" />
+    <meta name="theme-color" content="#105c8e" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -121,47 +126,32 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
       x-transition:leave-start="opacity-100"
       x-transition:leave-end="opacity-0"
       @keydown.escape.window="lightboxImg = null"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/85 backdrop-blur-md"
+      @click="lightboxImg = null"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/85 backdrop-blur-md cursor-zoom-out"
       style="display: none;"
     >
       <div
-        @click.outside="lightboxImg = null"
-        class="relative max-w-4xl max-h-[92vh] w-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-white/20"
+        @click.stop
+        class="relative max-w-4xl max-h-[90vh] flex items-center justify-center cursor-default"
       >
-        <div class="flex items-center justify-between px-6 py-4 bg-slate-900 text-white border-b border-slate-800">
-          <h3 class="font-bold text-lg text-slate-100 truncate pr-4" x-text="lightboxTitle"></h3>
-          <button
-            @click="lightboxImg = null"
-            class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors"
-            aria-label="Close"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-        </div>
-        <div class="p-4 overflow-auto flex-1 flex items-center justify-center bg-slate-950/40">
-          <img :src="lightboxImg" :alt="lightboxTitle" class="max-h-[75vh] w-auto object-contain rounded-lg shadow-lg" />
-        </div>
-        <div class="px-6 py-3 bg-slate-100 flex items-center justify-between border-t border-slate-200 text-sm">
-          <span class="text-slate-600 font-medium">
-            <span x-show="lang === 'ja'">DOUITSU合同会社 登録支援機関</span>
-            <span x-show="lang === 'en'" style="display: none;">DOUITSU LLC (Registered Support Organization)</span>
-            <span x-show="lang === 'my'" style="display: none;">DOUITSU LLC (မှတ်ပုံတင်ထောက်ပံ့ရေးအဖွဲ့အစည်း)</span>
-          </span>
-          <a
-            :href="lightboxImg"
-            download
-            class="inline-flex items-center gap-2 px-4 py-1.5 bg-douitsu-primary text-white text-xs font-semibold rounded-lg hover:bg-douitsu-blue transition-colors shadow-sm"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-            </svg>
-            <span x-show="lang === 'ja'">画像を保存</span>
-            <span x-show="lang === 'en'" style="display: none;">Save Image</span>
-            <span x-show="lang === 'my'" style="display: none;">ပုံကို ဒေါင်းလုဒ်ရယူရန်</span>
-          </a>
-        </div>
+        <!-- Floating Close Icon Button -->
+        <button
+          type="button"
+          @click="lightboxImg = null"
+          class="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-900/90 hover:bg-slate-950 text-white hover:text-douitsu-sakura flex items-center justify-center shadow-xl border border-white/20 backdrop-blur-md transition-all hover:scale-110 active:scale-95 cursor-pointer"
+          aria-label="Close"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+
+        <!-- Pure Clean Image with Border Radius -->
+        <img
+          :src="lightboxImg"
+          alt="DOUITSU"
+          class="max-h-[85vh] sm:max-h-[88vh] max-w-full w-auto object-contain rounded-2xl sm:rounded-3xl shadow-2xl border-2 sm:border-4 border-white/90 ring-1 ring-slate-900/20"
+        />
       </div>
     </div>
 

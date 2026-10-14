@@ -23,6 +23,108 @@ export interface JobFlyer {
   alt: string;
 }
 
+export interface SupportPhoto {
+  id: string;
+  image: string;
+  tag: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  title: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  caption: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  alt: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+}
+
+export interface CareerJobItem {
+  no: number;
+  category: string;
+  categoryLabel: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  title: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  salary: {
+    ja: string;
+    en: string;
+    my: string;
+    line1: {
+      ja: string;
+      en: string;
+      my: string;
+    };
+    line2: {
+      ja: string;
+      en: string;
+      my: string;
+    };
+  };
+  joinDate: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  ageLimit: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  image: string;
+}
+
+export interface WorkerProgram {
+  id: string;
+  trackNumber: string;
+  theme: 'blue' | 'indigo' | 'emerald';
+  badge: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  title: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  subtitle: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  description: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  specs: {
+    duration: { label: { ja: string; en: string; my: string }; value: { ja: string; en: string; my: string } };
+    family: { label: { ja: string; en: string; my: string }; value: { ja: string; en: string; my: string } };
+    requirement: { label: { ja: string; en: string; my: string }; value: { ja: string; en: string; my: string } };
+  };
+  supportBadge: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+}
+
 export const siteData = {
   meta: {
     title: {
@@ -53,12 +155,13 @@ export const siteData = {
     staffCount: "30",
   },
 
-  // Semantic Navigation Bar (Home, About Us, Services, Careers, Contact Us)
+  // Semantic Navigation Bar (Home, About Us, Services, Support, Careers, Contact Us)
   navigation: [
     { id: "home", href: "/#home", label: { ja: "ホーム", en: "Home", my: "ပင်မစာမျက်နှာ" } },
     { id: "about", href: "/#about", label: { ja: "会社概要", en: "About Us", my: "ကုမ္ပဏီအကြောင်း" } },
     { id: "services", href: "/#services", label: { ja: "サービス", en: "Services", my: "ဝန်ဆောင်မှုများ" } },
-    { id: "career", href: "/job.html", label: { ja: "採用・求人", en: "Careers", my: "အလုပ်အကိုင်များ" } },
+    { id: "support", href: "/#support", label: { ja: "支援内容", en: "Support", my: "ထောက်ပံ့မှုများ" } },
+    { id: "career", href: "/#career", label: { ja: "採用・求人", en: "Careers", my: "အလုပ်အကိုင်များ" } },
     { id: "contact", href: "/#contact", label: { ja: "お問い合わせ", en: "Contact Us", my: "ဆက်သွယ်ရန်" } },
     { id: "phone", href: "tel:+81424971537", label: { ja: "042-497-1537", en: "042-497-1537", my: "042-497-1537" } },
   ] as NavItem[],
@@ -89,7 +192,7 @@ export const siteData = {
       ja: "求人情報を見る",
       en: "View Job Openings",
       my: "အလုပ်ခေါ်ယူမှုများ ကြည့်ရန်",
-      href: "/job.html",
+      href: "#career",
     },
     highlights: [
       {
@@ -142,11 +245,89 @@ export const siteData = {
       { number: 9, title: { ja: "転職支援（受入側の都合で雇用契約を解除した場合）", en: "Job Change Support in Case of Involuntary Dismissal", my: "အလုပ်အသစ် ပြောင်းရွှေ့နိုင်ရေး ကူညီထောက်ပံ့ခြင်း" } },
       { number: 10, title: { ja: "定期的面談・行政機関への通報", en: "Regular Periodic Interviews and Reporting to Authorities", my: "ပုံမှန်တွေ့ဆုံမေးမြန်းခြင်းနှင့် အစိုးရသို့ အစီရင်ခံခြင်း" } },
     ] as SupportPillar[],
+    photos: [
+      {
+        id: "support-1",
+        image: "/images/landing/support-activity-1.jpg",
+        tag: {
+          ja: "支援活動 #1",
+          en: "Activity #1",
+          my: "ထောက်ပံ့မှု မှတ်တမ်း #၁",
+        },
+        title: {
+          ja: "企業配属・生活オリエンテーション",
+          en: "Enterprise Placement & Orientation",
+          my: "လုပ်ငန်းခွင် ဝင်ရောက်ခြင်းနှင့် မိတ်ဆက်လမ်းညွှန်မှု",
+        },
+        caption: {
+          ja: "特定技能外国人の入社初日同行と生活ルールの対面ガイダンス実施風景",
+          en: "First-day workplace accompaniment & comprehensive living guidance in Japan",
+          my: "သတ်မှတ်ကျွမ်းကျင်လုပ်သားများ အလုပ်စတင်ဝင်ရောက်ချိန် အတူလိုက်ပါပေးခြင်းနှင့် ဂျပန်လူနေမှုစနစ် မိတ်ဆက်ဆွေးနွေးပွဲ",
+        },
+        alt: {
+          ja: "特定技能外国人 企業配属・生活オリエンテーション",
+          en: "Enterprise Placement and Orientation Support",
+          my: "သတ်မှတ်ကျွမ်းကျင်လုပ်သားများ လုပ်ငန်းခွင် ဝင်ရောက်ခြင်းနှင့် မိတ်ဆက်လမ်းညွှန်မှု",
+        },
+      },
+      {
+        id: "support-2",
+        image: "/images/landing/support-activity-2.jpg",
+        tag: {
+          ja: "支援活動 #2",
+          en: "Activity #2",
+          my: "ထောက်ပံ့မှု မှတ်တမ်း #၂",
+        },
+        title: {
+          ja: "公的手続き・郵便局/口座開設同行",
+          en: "Post Office & Administrative Procedures",
+          my: "အစိုးရရုံး၊ စာတိုက်နှင့် ဘဏ်အကောင့် ဖွင့်လှစ်ခြင်း",
+        },
+        caption: {
+          ja: "住民登録・小鹿野郵便局での通帳口座開設など公的手続きに完全同行",
+          en: "Accompanying candidates to municipal office and Ogano Post Office for banking setup",
+          my: "ရပ်ကွက်ရုံး နေထိုင်ခွင့်စာရင်းသွင်းခြင်း၊ အိုဂနိုစာတိုက်တွင် ဘဏ်စာအုပ်နှင့် အကောင့်ဖွင့်ခြင်းတို့ကို အပြည့်အဝ အတူလိုက်ပါကူညီပေးခြင်း",
+        },
+        alt: {
+          ja: "公的手続き・郵便局/口座開設同行支援",
+          en: "Accompaniment to Post Office and Official Procedures",
+          my: "အစိုးရရုံး၊ စာတိုက်နှင့် ဘဏ်အကောင့် ဖွင့်လှစ်ခြင်းသို့ အတူလိုက်ပါဆောင်ရွက်ပေးခြင်း",
+        },
+      },
+    ] as SupportPhoto[],
+    interactive: {
+      dragHint: {
+        ja: "カードを左右にドラッグして切り替え",
+        en: "Drag or swipe cards to switch",
+        my: "ဖဲချပ်ကို ဘေးသို့ဆွဲဖယ်၍ ကြည့်ပါ",
+      },
+      switchBtn: {
+        ja: "写真を切り替え",
+        en: "Switch Photo",
+        my: "ဖဲချပ်လှန်ရန်",
+      },
+      zoomBtn: {
+        ja: "拡大表示",
+        en: "Zoom In",
+        my: "အကြီးချဲ့ရန်",
+      },
+      photoLabel: {
+        ja: "写真",
+        en: "Photo",
+        my: "ဓာတ်ပုံ",
+      },
+    },
   },
 
   featured: {
+    title: { ja: "会社概要", en: "About Us", my: "ကုမ္ပဏီအကြောင်း" },
+    subtitle: {
+      ja: "DOUITSU合同会社の基本情報および介護試験テキスト教材のダウンロード",
+      en: "Corporate profile of DOUITSU LLC and official nursing care study resources.",
+      my: "DOUITSU LLC ၏ အခြေခံအချက်အလက်များနှင့် ခိုင်ဂိုစာမေးပွဲ ဖတ်စာအုပ် ဒေါင်းလုဒ်များ",
+    },
     company: {
-      title: { ja: "企業情報", en: "Company Profile", my: "ကုမ္ပဏီ အချက်အလက်များ" },
+      title: { ja: "会社概要", en: "About Us", my: "ကုမ္ပဏီအကြောင်း" },
       items: [
         {
           label: { ja: "会社名", en: "Company Name", my: "ကုမ္ပဏီအမည်" },
@@ -186,6 +367,145 @@ export const siteData = {
       en: "Key Features of Specified Skilled Worker Support Services",
       my: "သတ်မှတ်ကျွမ်းကျင်လုပ်သား ခေါ်ယူထောက်ပံ့ရေး ဝန်ဆောင်မှု၏ အင်္ဂါရပ်များ",
     },
+    subtitle: {
+      ja: "受入れ企業の負担を軽減し、安心できる外国人雇用環境をトータルサポートいたします。",
+      en: "We reduce host enterprise burden and provide end-to-end support for a secure foreign employment environment.",
+      my: "အလုပ်ခန့်အပ်သည့် လုပ်ငန်းရှင်များ၏ ဝန်ထုပ်ဝန်ပိုးကို လျှော့ချပေးပြီး စိတ်ချရသော နိုင်ငံခြားသား အလုပ်အကိုင် ပတ်ဝန်းကျင်ကို အပြည့်အဝ ပံ့ပိုးပေးပါသည်။",
+    },
+    programs: [
+      {
+        id: "ssw-1",
+        trackNumber: "TRACK 01",
+        theme: "blue",
+        badge: {
+          ja: "特定技能 1号",
+          en: "SSW-1 Track",
+          my: "သတ်မှတ်ကျွမ်းကျင် ၁号",
+        },
+        title: {
+          ja: "特定技能 1号 (SSW1)",
+          en: "Specified Skilled Worker 1",
+          my: "အမှတ် (၁) သတ်မှတ်ကျွမ်းကျင်လုပ်သား",
+        },
+        subtitle: {
+          ja: "即戦力として活躍する基幹技能人材",
+          en: "Field-Ready Core Operational Workforce",
+          my: "လုပ်ငန်းခွင် ချက်ချင်းဝင်ရောက်နိုင်သော အခြေခံကျွမ်းကျင်လုပ်သား",
+        },
+        description: {
+          ja: "一定の専門技能と日本語能力（N4水準）を有し、介護、外食、飲食料品製造などの人手不足分野で即戦力として活躍できる在留資格です。登録支援機関による法定10項目の支援計画の策定・実施が義務付けられています。",
+          en: "Designed for international personnel with certified technical skills and Japanese proficiency (JLPT N4/JFT). Qualified to work immediately in shortage sectors. Host enterprises are legally required to provide 10 statutory support items via a Registered Support Organization.",
+          my: "သတ်မှတ်ကျွမ်းကျင်မှုနှင့် ဂျပန်စာ N4 အဆင့်ရှိပြီး ဘိုးဘွားစောင့်ရှောက်ရေး၊ စားသောက်ဆိုင်၊ စားသောက်ကုန်ထုတ်လုပ်ရေး စသည့် လုပ်သားလိုအပ်ချက်မြင့်မားသော ကဏ္ဍများတွင် ချက်ချင်းလုပ်ကိုင်နိုင်သော ဗီဇာဖြစ်ပါသည်။ ဥပဒေအရ သတ်မှတ်ထားသော ထောက်ပံ့ကူညီမှု ၁၀ ချက်ကို DOUITSU မှ အပြည့်အဝ တာဝန်ယူ ဆောင်ရွက်ပေးပါသည်။",
+        },
+        specs: {
+          duration: {
+            label: { ja: "在留期間", en: "Stay Duration", my: "သက်တမ်း" },
+            value: { ja: "最長5年間 (通算)", en: "Up to 5 years total", my: "အများဆုံး ၅ နှစ်အထိ" },
+          },
+          family: {
+            label: { ja: "家族帯同", en: "Family Sponsorship", my: "မိသားစုခေါ်ယူခွင့်" },
+            value: { ja: "原則不可", en: "Not permitted", my: "ခေါ်ယူခွင့် မရရှိနိုင်ပါ" },
+          },
+          requirement: {
+            label: { ja: "取得要件", en: "Requirements", my: "သတ်မှတ်ချက်" },
+            value: { ja: "技能試験 + 日本語N4/JFT", en: "Skills Test + JLPT N4 / JFT", my: "ကျွမ်းကျင်မှုစာမေးပွဲ + N4/JFT" },
+          },
+        },
+        supportBadge: {
+          ja: "法定支援10項目 完全対応",
+          en: "All 10 Statutory Duties Covered",
+          my: "ဥပဒေပြဋ္ဌာန်းချက် ၁၀ ချက် အပြည့်အဝထောက်ပံ့",
+        },
+      },
+      {
+        id: "ssw-2",
+        trackNumber: "TRACK 02",
+        theme: "indigo",
+        badge: {
+          ja: "特定技能 2号",
+          en: "SSW-2 Track",
+          my: "သတ်မှတ်ကျွမ်းကျင် ၂号",
+        },
+        title: {
+          ja: "特定技能 2号 (SSW2)",
+          en: "Specified Skilled Worker 2",
+          my: "အမှတ် (၂) သတ်မှတ်ကျွမ်းကျင်လုပ်သား",
+        },
+        subtitle: {
+          ja: "熟練技能を持つ現場の指導・監督リーダー",
+          en: "High-Skill Supervisory & Master Craft Track",
+          my: "အတွေ့အကြုံရင့် ကြီးကြပ်ခေါင်းဆောင် အဆင့်မြင့်လုပ်သား",
+        },
+        description: {
+          ja: "現場での長年の実務経験と熟練した技能を持つ外国人材を対象とした上位資格です。在留期間の更新制限がなく、将来的な永住申請や家族（配偶者・子）の帯同が認められており、長期的なキャリア形成が可能です。",
+          en: "An advanced qualification for seasoned professionals possessing master craftsmanship and supervisory capability. Features unlimited visa renewals, family accompaniment (spouse & children), and an eligible pathway toward Japanese permanent residency.",
+          my: "လုပ်ငန်းခွင်အတွင်း နှစ်ရှည်အတွေ့အကြုံနှင့် စီမံကြီးကြပ်နိုင်သော အဆင့်မြင့် ကျွမ်းကျင်မှုရှိသူများအတွက် ဗီဇာဖြစ်ပါသည်။ သက်တမ်းကန့်သတ်ချက်မရှိ သက်တမ်းတိုးနိုင်ပြီး မိသားစု (ဇနီး/ခင်ပွန်း နှင့် သားသမီး) ခေါ်ယူခွင့်ရှိကာ ဂျပန်တွင် အမြဲတမ်းနေထိုင်ခွင့် (PR) လျှောက်ထားနိုင်ပါသည်။",
+        },
+        specs: {
+          duration: {
+            label: { ja: "在留期間", en: "Stay Duration", my: "သက်တမ်း" },
+            value: { ja: "上限なし (更新可能)", en: "Renewable without cap", my: "ကန့်သတ်ချက်မရှိ သက်တမ်းတိုးနိုင်" },
+          },
+          family: {
+            label: { ja: "家族帯同", en: "Family Sponsorship", my: "မိသားစုခေါ်ယူခွင့်" },
+            value: { ja: "配偶者・子の帯同可能", en: "Spouse & children allowed", my: "ခေါ်ယူခွင့်ရှိပါသည်" },
+          },
+          requirement: {
+            label: { ja: "取得要件", en: "Requirements", my: "သတ်မှတ်ချက်" },
+            value: { ja: "実務経験 + 2号技能試験", en: "Supervisory experience + SSW2 Exam", my: "ကြီးကြပ်မှုအတွေ့အကြုံ + အဆင့် ၂ စာမေးပွဲ" },
+          },
+        },
+        supportBadge: {
+          ja: "永住申請・キャリア定着支援",
+          en: "PR Pathway & Long-term Retention",
+          my: "ရေရှည်နေထိုင်ခွင့်နှင့် အလုပ်အကိုင်တိုးတက်ရေး ထောက်ပံ့",
+        },
+      },
+      {
+        id: "ikusei-shuro",
+        trackNumber: "TRACK 03",
+        theme: "emerald",
+        badge: {
+          ja: "育成就労制度",
+          en: "Ikusei Shuro",
+          my: "လေ့ကျင့်ပျိုးထောင်ရေးစနစ်သစ်",
+        },
+        title: {
+          ja: "育成就労制度 (新制度)",
+          en: "Training & Employment System",
+          my: "အလုပ်အကိုင် လေ့ကျင့်ပျိုးထောင်ရေးစနစ်",
+        },
+        subtitle: {
+          ja: "特定技能1号を目指す計画的キャリア育成",
+          en: "Structured 3-Year Pathway to SSW1",
+          my: "SSW1 အဆင့်သို့ စနစ်တကျ ကူးပြောင်းမည့် မွေးထုတ်ပျိုးထောင်မှု",
+        },
+        description: {
+          ja: "従来の技能実習制度を発展的に改編し、3年間の計画的就労・教育を通じて「特定技能1号」水準の人材を育成する新制度です。一定要件での転籍や明確なキャリアパスにより、外国人材と企業の確実な信頼関係を築きます。",
+          en: "The historic statutory reform superseding Technical Intern Training, engineered to cultivate candidates up to SSW1 standards through 3 years of structured employment and skills training. Supports standardized job transfers and long-term retention.",
+          my: "ယခင်အလုပ်သင်စနစ်အစား အသစ်ပြဋ္ဌာန်းထားသော စနစ်ဖြစ်ပြီး ၃ နှစ်တာ စနစ်တကျ လုပ်ကိုင်သင်ယူခြင်းဖြင့် သတ်မှတ်ကျွမ်းကျင်လုပ်သား (SSW1) အဆင့်သို့ ရောက်ရှိစေရန် ပျိုးထောင်ပေးပါသည်။ သတ်မှတ်ချက်များနှင့်အညီ အလုပ်ရှင်ပြောင်းရွှေ့ခွင့်နှင့် ခိုင်မာသော အနာဂတ်လမ်းကြောင်းများ ပါဝင်ပါသည်။",
+        },
+        specs: {
+          duration: {
+            label: { ja: "育成期間", en: "Training Period", my: "ကာလ" },
+            value: { ja: "基本3年間 (特定技能へ移行)", en: "3-year bridge to SSW1", my: "၃ နှစ် (SSW1 သို့ ကူးပြောင်း)" },
+          },
+          family: {
+            label: { ja: "家族帯同", en: "Family Sponsorship", my: "မိသားစုခေါ်ယူခွင့်" },
+            value: { ja: "原則不可", en: "Not permitted", my: "ခေါ်ယူခွင့် မရရှိနိုင်ပါ" },
+          },
+          requirement: {
+            label: { ja: "育成目標", en: "Core Target", my: "ရည်မှန်းချက်" },
+            value: { ja: "特定技能1号への円滑移行", en: "Direct transition to SSW1", my: "SSW1 အဆင့်သို့ စနစ်တကျ ကူးပြောင်းရေး" },
+          },
+        },
+        supportBadge: {
+          ja: "育成計画策定・転籍サポート",
+          en: "Training Plan & Compliance Setup",
+          my: "လေ့ကျင့်ရေးအစီအစဉ်နှင့် ဥပဒေလိုက်နာမှု ထောက်ပံ့",
+        },
+      },
+    ] as WorkerProgram[],
     card1: {
       image: "/images/landing/license-certificate.jpg",
       alt: { ja: "登録支援機関 登録証明書", en: "Registered Support Organization Certificate", my: "မှတ်ပုံတင်ထောက်ပံ့ရေးအဖွဲ့အစည်း မှတ်ပုံတင်လက်မှတ်" },
@@ -217,6 +537,11 @@ export const siteData = {
 
   contact: {
     title: { ja: "お問い合わせ", en: "Contact Us", my: "ဆက်သွယ်ရန်" },
+    subtitle: {
+      ja: "特定技能外国人の受入れや支援計画に関するご相談・ご質問等、お気軽にお問い合わせください。",
+      en: "Please feel free to contact us regarding SSW employment or statutory support planning.",
+      my: "သတ်မှတ်ကျွမ်းကျင်လုပ်သား ခေါ်ယူခန့်ထားရေးနှင့် ထောက်ပံ့ရေးအစီအစဉ်များအတွက် မည်သည့်မေးခွန်းမဆို အခမဲ့ ဆွေးနွေးမေးမြန်းနိုင်ပါသည်။",
+    },
     address: {
       label: { ja: "所在地", en: "Address", my: "လိပ်စာ" },
       ja: "東京都清瀬市元町1-11-21 フローレス元町205号",
@@ -232,16 +557,6 @@ export const siteData = {
       value: "042-497-1537",
       tel: "+81424971537",
     },
-    quickLinks: [
-      { label: { ja: "特定技能", en: "Specified Skilled Worker", my: "သတ်မှတ်ကျွမ်းကျင်လုပ်သား" }, href: "#services" },
-      { label: { ja: "内容サービス", en: "Our Services", my: "ဝန်ဆောင်မှု အကြောင်းအရာများ" }, href: "#services" },
-    ],
-    social: [
-      { name: "Twitter", icon: "bi-twitter", url: "#" },
-      { name: "Instagram", icon: "bi-instagram", url: "#" },
-      { name: "Pinterest", icon: "bi-pinterest", url: "#" },
-      { name: "YouTube", icon: "bi-youtube", url: "#" },
-    ],
     form: {
       name: {
         label: { ja: "名前", en: "Full Name", my: "အမည်" },
@@ -268,14 +583,307 @@ export const siteData = {
     },
   },
 
+  career: {
+    title: {
+      ja: "採用・求人情報",
+      en: "Job Openings & Careers",
+      my: "အလုပ်ခေါ်ယူမှုနှင့် အလုပ်အကိုင်များ",
+    },
+    subtitle: {
+      ja: "特定技能外国人の皆様へ、安心・安定して日本で働ける最新の求人情報をご案内いたします。",
+      en: "Explore our latest verified Specified Skilled Worker job opportunities across Japan.",
+      my: "ဂျပန်နိုင်ငံတွင် တည်ငြိမ်စိတ်ချစွာ လုပ်ကိုင်နိုင်မည့် နောက်ဆုံးရ သတ်မှတ်ကျွမ်းကျင်လုပ်သား အလုပ်အကိုင်များ ဖြစ်ပါသည်။",
+    },
+    featuredImage: "/images/jobs/job-2025-11fudo.jpg",
+    filter: {
+      searchPlaceholder: {
+        ja: "職種・キーワードで検索 (例: 介護, 食品, 農業)...",
+        en: "Search by title or keyword (e.g. Care, Food)...",
+        my: "အလုပ်အကိုင် သို့မဟုတ် စကားလုံးဖြင့် ရှာဖွေရန်...",
+      },
+      sectorLabel: {
+        ja: "業種で絞り込み (複数選択可)",
+        en: "Filter by Industry Sector",
+        my: "လုပ်ငန်းကဏ္ဍအလိုက် စစ်ထုတ်ရန်",
+      },
+      resultsLabel: {
+        ja: "該当求人",
+        en: "Jobs Found",
+        my: "တွေ့ရှိသည့် အလုပ်",
+      },
+      resetLabel: {
+        ja: "条件クリア",
+        en: "Reset Filters",
+        my: "စစ်ထုတ်မှု ရှင်းလင်းမည်",
+      },
+      noResults: {
+        ja: "該当する求人は見つかりませんでした。検索条件を変更するか、条件をリセットしてください。",
+        en: "No job openings found matching your criteria. Please adjust your filters or reset.",
+        my: "ရှာဖွေမှုနှင့် ကိုက်ညီသော အလုပ် မတွေ့ရှိပါ။ စစ်ထုတ်မှုများကို ပြန်လည်ချိန်ညှိပါ။",
+      },
+      categories: [
+        { id: "kaigo", label: { ja: "介護 (Nursing)", en: "Nursing Care", my: "ဘိုးဘွားရိပ်သာ" } },
+        { id: "food", label: { ja: "食品加工 (Food)", en: "Food Processing", my: "စားသောက်ကုန်" } },
+        { id: "restaurant", label: { ja: "外食業 (Restaurant)", en: "Food Service", my: "စားသောက်ဆိုင်" } },
+        { id: "agriculture", label: { ja: "農業 (Agriculture)", en: "Agriculture", my: "စိုက်ပျိုးရေး" } },
+        { id: "manufacturing", label: { ja: "機械・製造 (Manufacturing)", en: "Manufacturing", my: "စက်မှုထုတ်လုပ်ရေး" } },
+        { id: "cleaning", label: { ja: "清掃・ビルメン (Cleaning)", en: "Building Cleaning", my: "သန့်ရှင်းရေး" } },
+      ],
+    },
+    tableHeaders: {
+      no: { ja: "No.", en: "No.", my: "စဉ်" },
+      title: { ja: "職種 / 業務内容", en: "Job Title", my: "အလုပ်အကိုင်" },
+      salary: { ja: "給与 (月給目安)", en: "Salary", my: "လစာ" },
+      joinDate: { ja: "入社時期", en: "Join Date", my: "ဝင်ရောက်ရမည့် ကာလ" },
+      ageLimit: { ja: "年齢制限", en: "Age Limit", my: "အသက်ကန့်သတ်ချက်" },
+    },
+    jobs: [
+      {
+        no: 1,
+        category: "kaigo",
+        categoryLabel: {
+          ja: "介護",
+          en: "Care",
+          my: "ခိုင်ဂို",
+        },
+        title: {
+          ja: "介護施設スタッフ (高齢者ケア)",
+          en: "Nursing Care Staff (Elderly Care)",
+          my: "ဘိုးဘွားရိပ်သာ စောင့်ရှောက်ရေး (ခိုင်ဂို)",
+        },
+        salary: {
+          ja: "月給 210,000円〜260,000円",
+          en: "¥210,000 - ¥260,000 / mo",
+          my: "လစာ ၂၁၀,၀၀၀ ~ ၂၆၀,၀၀၀ ယန်း",
+          line1: {
+            ja: "月給 210,000円〜",
+            en: "¥210,000 ~",
+            my: "၂၁၀,၀၀၀ ယန်း〜",
+          },
+          line2: {
+            ja: "260,000円",
+            en: "¥260,000",
+            my: "၂၆၀,၀၀၀ ယန်း",
+          },
+        },
+        joinDate: {
+          ja: "随時 (2026年5月〜)",
+          en: "Rolling (May 2026~)",
+          my: "အမြဲမပြတ် (၂၀၂၆ မေလ~)",
+        },
+        ageLimit: {
+          ja: "18歳〜38歳",
+          en: "18 - 38 years",
+          my: "၁၈ နှစ် ~ ၃၈ နှစ်",
+        },
+        image: "/images/jobs/job-2025-11fudo.jpg",
+      },
+      {
+        no: 2,
+        category: "food",
+        categoryLabel: {
+          ja: "食品加工",
+          en: "Food",
+          my: "စားသောက်ကုန်",
+        },
+        title: {
+          ja: "食品加工・お弁当惣菜製造",
+          en: "Food Processing & Bento Manufacturing",
+          my: "စားသောက်ကုန်နှင့် ဘင်တိုထုတ်လုပ်ရေး",
+        },
+        salary: {
+          ja: "月給 200,000円〜245,000円",
+          en: "¥200,000 - ¥245,000 / mo",
+          my: "လစာ ၂၀၀,၀၀၀ ~ ၂၄၅,၀၀၀ ယန်း",
+          line1: {
+            ja: "月給 200,000円〜",
+            en: "¥200,000 ~",
+            my: "၂၀၀,၀၀၀ ယန်း〜",
+          },
+          line2: {
+            ja: "245,000円",
+            en: "¥245,000",
+            my: "၂၄၅,၀၀၀ ယန်း",
+          },
+        },
+        joinDate: {
+          ja: "2026年6月入社",
+          en: "June 2026",
+          my: "၂၀၂၆ ဇွန်လ",
+        },
+        ageLimit: {
+          ja: "18歳〜35歳",
+          en: "18 - 35 years",
+          my: "၁၈ နှစ် ~ ၃၅ နှစ်",
+        },
+        image: "/images/jobs/job-2025-11fudo.jpg",
+      },
+      {
+        no: 3,
+        category: "restaurant",
+        categoryLabel: {
+          ja: "外食業",
+          en: "Restaurant",
+          my: "စားသောက်ဆိုင်",
+        },
+        title: {
+          ja: "外食業 (ホール・キッチンスタッフ)",
+          en: "Food Service (Hall & Kitchen Staff)",
+          my: "စားသောက်ဆိုင် ဝန်ဆောင်မှုနှင့် မီးဖိုချောင်",
+        },
+        salary: {
+          ja: "月給 205,000円〜250,000円",
+          en: "¥205,000 - ¥250,000 / mo",
+          my: "လစာ ၂၀၅,၀၀၀ ~ ၂၅၀,၀၀၀ ယန်း",
+          line1: {
+            ja: "月給 205,000円〜",
+            en: "¥205,000 ~",
+            my: "၂၀၅,၀၀၀ ယန်း〜",
+          },
+          line2: {
+            ja: "250,000円",
+            en: "¥250,000",
+            my: "၂၅၀,၀၀၀ ယန်း",
+          },
+        },
+        joinDate: {
+          ja: "2026年6月入社",
+          en: "June 2026",
+          my: "၂၀၂၆ ဇွန်လ",
+        },
+        ageLimit: {
+          ja: "18歳〜32歳",
+          en: "18 - 32 years",
+          my: "၁၈ နှစ် ~ ၃၂ နှစ်",
+        },
+        image: "/images/jobs/job-2025-11fudo.jpg",
+      },
+      {
+        no: 4,
+        category: "agriculture",
+        categoryLabel: {
+          ja: "農業",
+          en: "Agriculture",
+          my: "စိုက်ပျိုးရေး",
+        },
+        title: {
+          ja: "農業・施設園芸・野菜果物栽培",
+          en: "Agriculture & Crop Cultivation",
+          my: "စိုက်ပျိုးရေးနှင့် သီးနှံစိုက်ပျိုးစနစ်",
+        },
+        salary: {
+          ja: "月給 195,000円〜235,000円",
+          en: "¥195,000 - ¥235,000 / mo",
+          my: "လစာ ၁၉၅,၀၀၀ ~ ၂၃၅,၀၀၀ ယန်း",
+          line1: {
+            ja: "月給 195,000円〜",
+            en: "¥195,000 ~",
+            my: "၁၉၅,၀၀၀ ယန်း〜",
+          },
+          line2: {
+            ja: "235,000円",
+            en: "¥235,000",
+            my: "၂၃၅,၀၀၀ ယန်း",
+          },
+        },
+        joinDate: {
+          ja: "2026年7月入社",
+          en: "July 2026",
+          my: "၂၀၂၆ ဇူလိုင်လ",
+        },
+        ageLimit: {
+          ja: "18歳〜40歳",
+          en: "18 - 40 years",
+          my: "၁၈ နှစ် ~ ၄၀ နှစ်",
+        },
+        image: "/images/jobs/job-yamaguchi.jpg",
+      },
+      {
+        no: 5,
+        category: "manufacturing",
+        categoryLabel: {
+          ja: "機械・製造",
+          en: "Manufacturing",
+          my: "စက်မှုထုတ်လုပ်ရေး",
+        },
+        title: {
+          ja: "機械加工・工場製造ラインオペレーター",
+          en: "Machinery Processing & Factory Line",
+          my: "စက်မှုစက်ရုံ ထုတ်လုပ်ရေးလိုင်း",
+        },
+        salary: {
+          ja: "月給 215,000円〜270,000円",
+          en: "¥215,000 - ¥270,000 / mo",
+          my: "လစာ ၂၁၅,၀၀၀ ~ ၂၇၀,၀၀၀ ယန်း",
+          line1: {
+            ja: "月給 215,000円〜",
+            en: "¥215,000 ~",
+            my: "၂၁၅,၀၀၀ ယန်း〜",
+          },
+          line2: {
+            ja: "270,000円",
+            en: "¥270,000",
+            my: "၂၇၀,၀၀၀ ယန်း",
+          },
+        },
+        joinDate: {
+          ja: "2026年7月入社",
+          en: "July 2026",
+          my: "၂၀၂၆ ဇူလိုင်လ",
+        },
+        ageLimit: {
+          ja: "18歳〜35歳",
+          en: "18 - 35 years",
+          my: "၁၈ နှစ် ~ ၃၅ နှစ်",
+        },
+        image: "/images/jobs/job-yamaguchi.jpg",
+      },
+      {
+        no: 6,
+        category: "cleaning",
+        categoryLabel: {
+          ja: "清掃",
+          en: "Cleaning",
+          my: "သန့်ရှင်းရေး",
+        },
+        title: {
+          ja: "ビルクリーニング・施設衛生管理",
+          en: "Building Cleaning & Sanitation Management",
+          my: "အဆောက်အအုံ သန့်ရှင်းရေးနှင့် ထိန်းသိမ်းရေး",
+        },
+        salary: {
+          ja: "月給 198,000円〜240,000円",
+          en: "¥198,000 - ¥240,000 / mo",
+          my: "လစာ ၁၉၈,၀၀၀ ~ ၂၄၀,၀၀၀ ယန်း",
+          line1: {
+            ja: "月給 198,000円〜",
+            en: "¥198,000 ~",
+            my: "၁၉၈,၀၀၀ ယန်း〜",
+          },
+          line2: {
+            ja: "240,000円",
+            en: "¥240,000",
+            my: "၂၄၀,၀၀၀ ယန်း",
+          },
+        },
+        joinDate: {
+          ja: "随時 (2026年5月〜)",
+          en: "Rolling (May 2026~)",
+          my: "အမြဲမပြတ် (၂၀၂၆ မေလ~)",
+        },
+        ageLimit: {
+          ja: "18歳〜42歳",
+          en: "18 - 42 years",
+          my: "၁၈ နှစ် ~ ၄၂ နှစ်",
+        },
+        image: "/images/jobs/job-yamaguchi.jpg",
+      },
+    ] as CareerJobItem[],
+  },
+
   jobs: [
-    { id: "1", image: "/images/jobs/job-1.jpg", alt: "求人票 1" },
-    { id: "2", image: "/images/jobs/job-2025-11fudo.jpg", alt: "求人票 2025.11" },
-    { id: "3", image: "/images/jobs/job-viber-1.jpg", alt: "求人票 Viber 1" },
-    { id: "4", image: "/images/jobs/job-viber-2.jpg", alt: "求人票 Viber 2" },
-    { id: "5", image: "/images/jobs/job-viber-3.jpg", alt: "求人票 Viber 3" },
-    { id: "6", image: "/images/jobs/job-yamaguchi.jpg", alt: "求人票 山口" },
-    { id: "7", image: "/images/jobs/job-viber-4.jpg", alt: "求人票 Viber 4" },
+    { id: "1", image: "/images/jobs/job-2025-11fudo.jpg", alt: "求人票 (食品加工・お弁当惣菜製造)" },
+    { id: "2", image: "/images/jobs/job-yamaguchi.jpg", alt: "求人票 (山口・機械加工・工場製造)" },
   ] as JobFlyer[],
 
   footer: {

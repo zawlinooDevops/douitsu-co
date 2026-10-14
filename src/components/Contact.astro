@@ -1,5 +1,6 @@
 ---
 import { siteData } from '../data/content';
+import SectionHeader from './SectionHeader.astro';
 ---
 
 <!-- ============================================================ -->
@@ -8,7 +9,7 @@ import { siteData } from '../data/content';
 <!-- ============================================================ -->
 <section
   id="contact"
-  class="py-20 md:py-28 bg-white relative overflow-hidden"
+  class="py-20 md:py-28 bg-white relative overflow-hidden scroll-mt-24"
   x-data="{
     formSubmitted: false,
     formData: {
@@ -31,13 +32,11 @@ import { siteData } from '../data/content';
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Section Header -->
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight">
-        <span x-show="lang === 'ja'">{siteData.contact.title.ja}</span>
-        <span x-show="lang === 'en'" style="display: none;">{siteData.contact.title.en}</span>
-        <span x-show="lang === 'my'" style="display: none;">{siteData.contact.title.my}</span>
-      </h2>
-    </div>
+    <SectionHeader
+      eyebrow="CONTACT US"
+      title={siteData.contact.title}
+      subtitle={siteData.contact.subtitle}
+    />
 
     <!-- Contact Grid: Left Office Info + Right Clean Form -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -59,7 +58,7 @@ import { siteData } from '../data/content';
 
           <!-- Address -->
           <div class="flex items-start gap-4 pt-4 border-t border-slate-200/80">
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-douitsu-primary flex items-center justify-center flex-shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-douitsu-primary/10 border border-douitsu-primary/15 text-douitsu-primary flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -81,7 +80,7 @@ import { siteData } from '../data/content';
 
           <!-- Phone -->
           <div class="flex items-start gap-4 pt-4 border-t border-slate-200/80">
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-douitsu-primary flex items-center justify-center flex-shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-douitsu-primary/10 border border-douitsu-primary/15 text-douitsu-primary flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
               </svg>
@@ -100,7 +99,7 @@ import { siteData } from '../data/content';
 
           <!-- Email -->
           <div class="flex items-start gap-4 pt-4 border-t border-slate-200/80">
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-douitsu-primary flex items-center justify-center flex-shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-douitsu-primary/10 border border-douitsu-primary/15 text-douitsu-primary flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
               </svg>
@@ -115,26 +114,6 @@ import { siteData } from '../data/content';
                 {siteData.contact.email.value}
               </a>
             </div>
-          </div>
-
-          <!-- Quick Navigation Links -->
-          <div class="pt-4 border-t border-slate-200/80 flex items-center gap-4 text-xs font-semibold text-slate-600">
-            {siteData.contact.quickLinks.map((link) => (
-              <a href={link.href} class="hover:text-douitsu-primary transition-colors">
-                <span x-show="lang === 'ja'">{link.label.ja}</span>
-                <span x-show="lang === 'en'" style="display: none;">{link.label.en}</span>
-                <span x-show="lang === 'my'" style="display: none;">{link.label.my}</span>
-              </a>
-            ))}
-          </div>
-
-          <!-- Social Links -->
-          <div class="pt-2 flex items-center gap-3 text-slate-400">
-            {siteData.contact.social.map((s) => (
-              <a href={s.url} class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:text-douitsu-primary transition-colors text-xs font-bold">
-                {s.name[0]}
-              </a>
-            ))}
           </div>
 
         </div>

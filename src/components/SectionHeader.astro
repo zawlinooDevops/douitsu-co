@@ -1,0 +1,68 @@
+---
+interface Props {
+  eyebrow: string;
+  title: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  subtitle?: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  isH1?: boolean;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  isH1 = false,
+  class: className = "mb-12 sm:mb-16",
+} = Astro.props;
+---
+
+<div class={`text-left ${className}`}>
+  <!-- 1. Top Eyebrow Badge (Soft Tinted Pill with Dot) -->
+  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-douitsu-primary/10 border border-douitsu-primary/20 text-douitsu-primary text-[11px] sm:text-xs font-bold tracking-wider uppercase mb-3 sm:mb-3.5 shadow-2xs">
+    <span class="w-1.5 h-1.5 rounded-full bg-douitsu-primary shrink-0"></span>
+    <span>{eyebrow}</span>
+  </div>
+
+  <!-- 2. Main Title with Left Gradient Bar -->
+  <div class="flex items-stretch gap-3 sm:gap-4 mb-3 sm:mb-4">
+    <!-- Vertical Left Accent Bar -->
+    <div class="w-1.5 sm:w-2 rounded-full bg-gradient-to-b from-douitsu-primary via-douitsu-accent to-douitsu-sky shrink-0 self-stretch"></div>
+
+    {isH1 ? (
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-douitsu-navy tracking-tight leading-tight">
+        <span x-show="lang === 'ja'">{title.ja}</span>
+        <span x-show="lang === 'en'" style="display: none;">{title.en}</span>
+        <span x-show="lang === 'my'" style="display: none;">{title.my}</span>
+      </h1>
+    ) : (
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-douitsu-navy tracking-tight leading-tight">
+        <span x-show="lang === 'ja'">{title.ja}</span>
+        <span x-show="lang === 'en'" style="display: none;">{title.en}</span>
+        <span x-show="lang === 'my'" style="display: none;">{title.my}</span>
+      </h2>
+    )}
+  </div>
+
+  <!-- 3. Dual Accent Bottom Line (Short Pill + Subtle Fading Sky Blue Line) -->
+  <div class="flex items-center gap-1.5 ml-4.5 sm:ml-6 mb-3 sm:mb-4">
+    <div class="w-12 sm:w-16 h-1 rounded-full bg-douitsu-primary"></div>
+    <div class="w-20 sm:w-28 h-[2px] rounded-full bg-gradient-to-r from-douitsu-sky/70 to-transparent"></div>
+  </div>
+
+  <!-- 4. Subtitle / Lead Paragraph -->
+  {subtitle && (
+    <p class="ml-4.5 sm:ml-6 text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed">
+      <span x-show="lang === 'ja'">{subtitle.ja}</span>
+      <span x-show="lang === 'en'" style="display: none;">{subtitle.en}</span>
+      <span x-show="lang === 'my'" style="display: none;">{subtitle.my}</span>
+    </p>
+  )}
+</div>

@@ -8,7 +8,7 @@ import { siteData } from '../data/content';
 <!-- ============================================================ -->
 <section
   id="home"
-  class="relative min-h-[600px] md:min-h-[700px] flex items-center pt-32 pb-16 sm:pt-40 sm:pb-24 lg:pt-44 lg:pb-28 bg-cover bg-center overflow-hidden border-b border-slate-200/60"
+  class="relative min-h-[600px] md:min-h-[700px] flex items-center pt-32 pb-24 sm:pt-40 sm:pb-28 lg:pt-44 lg:pb-36 bg-cover bg-center overflow-hidden"
   style="background-image: url('/images/landing/hero-bg.webp');"
 >
   <!-- Invisible backwards-compatibility anchor -->
@@ -37,5 +37,40 @@ import { siteData } from '../data/content';
       </div>
 
     </div>
+  </div>
+
+  <!-- Bottom Organic SVG Wave Divider (3 Transparent Waves with DOUITSU Logo Colors) -->
+  <div class="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none pointer-events-none z-10 -mb-[1px]">
+    <svg
+      class="relative block w-full h-16 sm:h-22 md:h-28 lg:h-36 xl:h-40"
+      viewBox="0 0 1440 160"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      <!-- Wave 1: Logo Deep Navy Blue (#1a486c) - Transparent / Translucent -->
+      <path
+        d="M0,20 C320,80 600,10 880,50 C1160,90 1340,15 1440,30 L1440,160 L0,160 Z"
+        fill="#1a486c"
+        fill-opacity="0.3"
+      />
+      <!-- Wave 2: Logo Primary Blue (#105c8e) - Transparent / Translucent -->
+      <path
+        d="M0,45 C280,15 540,85 820,40 C1100,0 1300,70 1440,45 L1440,160 L0,160 Z"
+        fill="#105c8e"
+        fill-opacity="0.45"
+      />
+      <!-- Wave 3: Logo Sky Blue (#7ba7cc) - Transparent / Translucent -->
+      <path
+        d="M0,70 C260,105 520,40 780,75 C1040,105 1260,40 1440,65 L1440,160 L0,160 Z"
+        fill="#7ba7cc"
+        fill-opacity="0.6"
+      />
+      <!-- Wave 4: Seamless base wave that merges directly into #about bg-slate-100 (#f1f5f9) -->
+      <path
+        d="M0,95 C280,135 540,75 820,110 C1100,140 1320,85 1440,100 L1440,160 L0,160 Z"
+        fill="#f1f5f9"
+      />
+    </svg>
   </div>
 </section>

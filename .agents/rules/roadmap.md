@@ -17,6 +17,7 @@ The legacy web presence has been overhauled and modernized into a high-performan
 - [x] **Interactive Flyer Gallery (`/job.html`)**: Subpage displaying 7 recruitment flyers with Alpine lightbox modal zoom and download features.
 - [x] **Kaigo PDF Study Guides**: Direct downloads for official Nursing Care examination textbooks in both Japanese (38.8 MB) and Myanmar (14.1 MB).
 - [x] **SEO & Schema.org**: Fully integrated `LocalBusiness` JSON-LD structured data and OpenGraph tags.
+- [x] **Hero Transparent 3-Wave SVG Divider**: Multi-layer organic wave divider using official DOUITSU brand logo blue tokens with seamless cutout transition into `#about`.
 
 ---
 

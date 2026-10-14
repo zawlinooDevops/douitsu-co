@@ -1,18 +1,27 @@
 ---
 import { siteData } from '../data/content';
+import SectionHeader from './SectionHeader.astro';
 ---
 
 <!-- ============================================================ -->
-<!-- SECTION: COMPANY (企業情報 & DOWNLOAD PDF)                     -->
-<!-- ID: #company (Alias: #featured) / 企業情報 & 介護テキスト       -->
+<!-- SECTION: ABOUT US / COMPANY PROFILE (会社概要 & DOWNLOAD PDF)  -->
+<!-- ID: #about (Alias: #company, #featured) / 会社概要 & 介護テキスト -->
 <!-- ============================================================ -->
 <section
-  id="company"
-  class="py-16 bg-slate-100 border-b border-slate-200/60 relative"
+  id="about"
+  class="py-16 md:py-24 bg-slate-100 border-b border-slate-200/60 relative scroll-mt-24"
 >
-  <div id="featured" class="absolute -top-20"></div>
-  <div id="about" class="absolute -top-20"></div>
+  <div id="company" class="absolute -top-24"></div>
+  <div id="featured" class="absolute -top-24"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Header -->
+    <SectionHeader
+      eyebrow="ABOUT US"
+      title={siteData.featured.title}
+      subtitle={siteData.featured.subtitle}
+    />
+
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
       
       <!-- Left Card: Company Profile (企業情報) -->
@@ -20,10 +29,10 @@ import { siteData } from '../data/content';
         <div class="h-full rounded-2xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm flex flex-col justify-between">
           <div>
             <div class="pb-5 mb-5 border-b border-slate-100">
-              <h3 class="text-2xl font-extrabold text-douitsu-navy">
-                <span x-show="lang === 'ja'">{siteData.featured.company.title.ja}</span>
-                <span x-show="lang === 'en'" style="display: none;">{siteData.featured.company.title.en}</span>
-                <span x-show="lang === 'my'" style="display: none;">{siteData.featured.company.title.my}</span>
+              <h3 class="text-xl font-bold text-douitsu-navy">
+                <span x-show="lang === 'ja'">基本情報</span>
+                <span x-show="lang === 'en'" style="display: none;">Corporate Info</span>
+                <span x-show="lang === 'my'" style="display: none;">အခြေခံအချက်အလက်</span>
               </h3>
             </div>
 

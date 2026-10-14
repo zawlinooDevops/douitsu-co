@@ -1,5 +1,8 @@
 ---
 import { siteData } from '../data/content';
+import SectionHeader from './SectionHeader.astro';
+
+const photos = siteData.about.photos;
 ---
 
 <!-- ============================================================ -->
@@ -8,48 +11,170 @@ import { siteData } from '../data/content';
 <!-- ============================================================ -->
 <section
   id="support"
-  class="py-20 md:py-28 bg-white border-b border-slate-200/60 relative overflow-hidden"
+  class="py-20 md:py-28 bg-white border-b border-slate-200/60 relative overflow-hidden scroll-mt-24"
 >
   <div id="section_2" class="absolute -top-24"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Section Header -->
-    <div class="text-center max-w-3xl mx-auto mb-14">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight mb-3">
-        <span x-show="lang === 'ja'">{siteData.about.title.ja}</span>
-        <span x-show="lang === 'en'" style="display: none;">{siteData.about.title.en}</span>
-        <span x-show="lang === 'my'" style="display: none;">{siteData.about.title.my}</span>
-      </h2>
+    <SectionHeader
+      eyebrow="SUPPORT PLAN"
+      title={siteData.about.title}
+      subtitle={siteData.about.lead}
+    />
 
-      <p class="text-base sm:text-lg text-slate-600 leading-relaxed mt-2">
-        <span x-show="lang === 'ja'">{siteData.about.lead.ja}</span>
-        <span x-show="lang === 'en'" style="display: none;">{siteData.about.lead.en}</span>
-        <span x-show="lang === 'my'" style="display: none;">{siteData.about.lead.my}</span>
-      </p>
-    </div>
-
-    <!-- Main Grid: Poster Image & 10 Support Pillars List -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+    <!-- Main Grid: Interactive Draggable Photos Stack & 10 Support Pillars -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
       
-      <!-- Left Column: About Main Poster -->
-      <div class="lg:col-span-5 flex justify-center">
-        <div
-          class="relative w-full max-w-md rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white group cursor-pointer"
-          @click={`lightboxImg = '/images/landing/about-main.png'; lightboxTitle = (lang === 'ja' ? '特定技能 支援活動' : (lang === 'en' ? 'Specified Skilled Worker Support Gallery' : 'သတ်မှတ်ကျွမ်းကျင်လုပ်သား ထောက်ပံ့မှု မှတ်တမ်း'))`}
-        >
-          <img
-            src="/images/landing/about-main.png"
-            alt="DOUITSU 支援活動"
-            class="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-102"
-            loading="lazy"
-          />
-          <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
-            <span class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-white/95 rounded-xl text-xs font-bold text-slate-800 shadow-md">
-              <span x-show="lang === 'ja'">拡大表示</span>
-              <span x-show="lang === 'en'" style="display: none;">Zoom In</span>
-              <span x-show="lang === 'my'" style="display: none;">အကြီးချဲ့ရန်</span>
-            </span>
-          </div>
+      <!-- Left Column: Interactive Support Photos Stack (Draggable / Stacked Cards) -->
+      <div
+        class="lg:col-span-5 flex justify-center items-start pt-2"
+        x-data={`{
+          currentIndex: 0,
+          isDragging: false,
+          dragX: 0,
+          dragY: 0,
+          startX: 0,
+          startY: 0,
+          draggedFar: false,
+          lockedHorizontal: false,
+          isAnimating: false,
+          animatingOut: false,
+          flyDir: 1,
+
+          startDrag(e) {
+            if (this.isAnimating) return;
+            this.isDragging = true;
+            this.startX = e.clientX;
+            this.startY = e.clientY;
+            this.dragX = 0;
+            this.dragY = 0;
+            this.draggedFar = false;
+            this.lockedHorizontal = false;
+          },
+
+          onDrag(e) {
+            if (!this.isDragging || this.isAnimating) return;
+            const dx = e.clientX - this.startX;
+            const dy = e.clientY - this.startY;
+
+            if (Math.hypot(dx, dy) > 8) {
+              this.draggedFar = true;
+            }
+
+            if (e.pointerType === 'touch' && !this.lockedHorizontal) {
+              if (Math.abs(dy) > 18 && Math.abs(dy) > Math.abs(dx)) {
+                this.isDragging = false;
+                this.resetPos();
+                return;
+              }
+              if (Math.abs(dx) > 10) {
+                this.lockedHorizontal = true;
+              }
+            }
+
+            this.dragX = dx;
+            this.dragY = dy * 0.2;
+          },
+
+          endDrag(e) {
+            if (!this.isDragging || this.isAnimating) return;
+            this.isDragging = false;
+            this.lockedHorizontal = false;
+
+            if (Math.abs(this.dragX) > 60) {
+              this.swipe(this.dragX > 0 ? 1 : -1);
+            } else {
+              this.resetPos();
+            }
+          },
+
+          swipe(dir = 1) {
+            if (this.isAnimating) return;
+            this.isAnimating = true;
+            this.animatingOut = true;
+            this.flyDir = dir;
+            this.dragX = dir * 460;
+
+            setTimeout(() => {
+              this.currentIndex = this.currentIndex === 0 ? 1 : 0;
+              this.dragX = 0;
+              this.dragY = 0;
+              this.animatingOut = false;
+              this.isAnimating = false;
+            }, 280);
+          },
+
+          resetPos() {
+            this.dragX = 0;
+            this.dragY = 0;
+          },
+
+          switchTo(idx) {
+            if (this.currentIndex === idx || this.isAnimating) return;
+            this.swipe(idx === 1 ? 1 : -1);
+          },
+
+          getCardStyle(idx) {
+            const isActive = this.currentIndex === idx;
+            if (isActive) {
+              if (this.animatingOut) {
+                return 'transform: translate3d(' + (this.flyDir * 460) + 'px, ' + this.dragY + 'px, 0) rotate(' + (this.flyDir * 18) + 'deg); opacity: 0; transition: transform 0.28s ease-in, opacity 0.25s ease-in; z-index: 20; cursor: grabbing;';
+              }
+              const rot = this.dragX * 0.06;
+              const trans = this.isDragging ? 'none' : 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s';
+              const cursor = this.isDragging ? 'grabbing' : 'grab';
+              return 'transform: translate3d(' + this.dragX + 'px, ' + this.dragY + 'px, 0) rotate(' + rot + 'deg); transition: ' + trans + '; z-index: 20; cursor: ' + cursor + ';';
+            } else {
+              const p = Math.min(Math.abs(this.dragX) / 100, 1);
+              const baseRot = idx === 1 ? 4.5 : -4.5;
+              const rot = baseRot * (1 - p);
+              const transX = (idx === 1 ? 12 : -12) * (1 - p);
+              const transY = 14 * (1 - p);
+              const scale = 0.95 + (p * 0.05);
+              const op = 0.92 + (p * 0.08);
+              const trans = this.isDragging ? 'none' : 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s';
+              return 'transform: translate3d(' + transX + 'px, ' + transY + 'px, 0) rotate(' + rot + 'deg) scale(' + scale + '); opacity: ' + op + '; transition: ' + trans + '; z-index: 10; cursor: pointer;';
+            }
+          },
+
+          openLightbox(idx) {
+            const p = ${JSON.stringify(photos)}[idx];
+            if (!p) return;
+            $dispatch('open-lightbox', { img: p.image });
+          }
+        }`}
+        @pointermove.window="onDrag($event)"
+        @pointerup.window="endDrag($event)"
+        @pointercancel.window="endDrag($event)"
+      >
+        <div class="relative w-full max-w-[360px] sm:max-w-[400px] aspect-[3/4] select-none touch-pan-y">
+          {photos.map((photo, idx) => (
+            <div
+              class="absolute inset-0 rounded-2xl sm:rounded-3xl overflow-hidden bg-white shadow-2xl border-4 border-white select-none transition-shadow ring-1 ring-slate-900/10 group cursor-pointer"
+              :style={`getCardStyle(${idx})`}
+              @pointerdown={`if (currentIndex === ${idx}) { startDrag($event); } else { switchTo(${idx}); }`}
+              @click={`if (currentIndex === ${idx}) { if (!draggedFar) { openLightbox(${idx}); } } else { switchTo(${idx}); }`}
+            >
+              <!-- Background Image -->
+              <img
+                src={photo.image}
+                alt={photo.alt.ja}
+                class="w-full h-full object-cover object-top sm:object-center select-none pointer-events-none transition-transform duration-300 group-hover:scale-102"
+                draggable="false"
+                loading="lazy"
+              />
+
+              <!-- Hover Zoom Indicator -->
+              <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/15 transition-colors flex items-center justify-center pointer-events-none">
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-white/95 backdrop-blur-sm rounded-xl text-xs font-bold text-slate-800 shadow-md">
+                  <span x-show="lang === 'ja'">拡大表示</span>
+                  <span x-show="lang === 'en'" style="display: none;">Zoom In</span>
+                  <span x-show="lang === 'my'" style="display: none;">အကြီးချဲ့ရန်</span>
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -58,7 +183,7 @@ import { siteData } from '../data/content';
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           {siteData.about.pillars.map((pillar) => (
             <div class="p-4 rounded-xl bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-douitsu-primary/50 shadow-xs hover:shadow-sm transition-all flex items-center gap-3.5 group">
-              <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-douitsu-blue group-hover:bg-douitsu-primary text-white font-mono font-bold text-xs flex items-center justify-center transition-colors">
+              <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-douitsu-primary group-hover:bg-douitsu-blue text-white font-mono font-bold text-xs flex items-center justify-center transition-colors shadow-xs">
                 {pillar.number}
               </span>
               <span class="font-bold text-sm text-douitsu-navy group-hover:text-douitsu-primary transition-colors leading-snug">

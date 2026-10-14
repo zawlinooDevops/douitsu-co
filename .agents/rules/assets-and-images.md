@@ -91,17 +91,17 @@ public/
 
 ## 3. Job Recruitment Posters (`public/images/jobs/`)
 
-Recruitment flyers displayed on the dedicated `/job.html` page:
+Recruitment flyer images utilized in the `#career` interactive table detail popups:
 
-| File Name | Target Industry / Placement | Description |
+| File Name | Target Industry / Placement | Active Role / Notes |
 |---|---|---|
-| `job-1.jpg` | General Tokutei Ginou | Standard recruitment overview |
-| `job-2025-11fudo.jpg` | Food Processing (食品製造業) | Bento, food manufacturing facility positions |
-| `job-yamaguchi.jpg` | Regional Placement (Yamaguchi) | Yamaguchi Prefecture industrial placement |
-| `job-viber-1.jpg` | Specified Skilled Worker Opening | Field job opening 1 |
-| `job-viber-2.jpg` | Specified Skilled Worker Opening | Field job opening 2 |
-| `job-viber-3.jpg` | Specified Skilled Worker Opening | Field job opening 3 |
-| `job-viber-4.jpg` | Specified Skilled Worker Opening | Field job opening 4 |
+| `job-2025-11fudo.jpg` | Food Processing (食品製造業) | **Active Official Document 1**: High-res A4 recruitment table sheet used in career popups |
+| `job-yamaguchi.jpg` | Regional Placement (Yamaguchi / 製造業) | **Active Official Document 2**: High-res A4 recruitment table sheet used in career popups |
+| `job-1.jpg` | General Tokutei Ginou | Historical banner archive |
+| `job-viber-1.jpg` | Specified Skilled Worker Opening | Historical field photo (Unlinked per user privacy/document-only policy) |
+| `job-viber-2.jpg` | Specified Skilled Worker Opening | Historical field photo (Unlinked per user privacy/document-only policy) |
+| `job-viber-3.jpg` | Specified Skilled Worker Opening | Historical field photo (Unlinked per user privacy/document-only policy) |
+| `job-viber-4.jpg` | Specified Skilled Worker Opening | Historical field photo (Unlinked per user privacy/document-only policy) |
 
 ---
 

@@ -7,11 +7,13 @@ export default {
         douitsu: {
           navy: '#0d1b2a',
           dark: '#1b263b',
-          blue: '#1e3a8a',
-          primary: '#2563eb',
-          accent: '#3b82f6',
-          sky: '#60a5fa',
-          ice: '#eff6ff',
+          blue: '#1a486c',
+          primary: '#105c8e',
+          accent: '#1874b3',
+          sky: '#7ba7cc',
+          ice: '#eff6fa',
+          'ice-hover': '#e2eef7',
+          light: '#dbeaf3',
           slate: '#334155',
           muted: '#64748b',
           sakura: '#f43f5e',
@@ -25,7 +27,7 @@ export default {
       boxShadow: {
         'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
         'card': '0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04)',
-        'glow': '0 0 25px rgba(37, 99, 235, 0.25)',
+        'glow': '0 0 25px rgba(16, 92, 142, 0.25)',
       }
     },
   },

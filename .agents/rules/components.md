@@ -11,13 +11,12 @@ description: Comprehensive Component Architecture, Props Interfaces, and Behavio
 src/layouts/Layout.astro (Root Shell, HTML, SEO, Alpine Lightbox Modal)
 ├── src/components/Navbar.astro (Two-Tier Sticky Header, Language Switcher, Mobile Drawer)
 ├── [Main Page: src/pages/index.astro]
-│   ├── src/components/Hero.astro (Hero Banner, Trust Badges, Dual CTAs)
-│   ├── src/components/About.astro (10 Statutory Support Pillars, Main Visual Lightbox)
-│   ├── src/components/Featured.astro (Company Profile DL, Kaigo PDF Downloads)
+│   ├── src/components/Hero.astro (Hero Banner, Trust Badges)
+│   ├── src/components/Featured.astro (Company Profile DL / About Us, Kaigo PDF Downloads)
 │   ├── src/components/Services.astro (3 Feature Cards, Certificate Lightbox)
+│   ├── src/components/About.astro (10 Statutory Support Pillars, Main Visual Lightbox)
+│   ├── src/components/Career.astro (Career Job Openings, Left Poster Visual, Right 6-Job Table with Flyer Lightbox)
 │   └── src/components/Contact.astro (Office Details Card, Alpine Interactive Form)
-├── [Subpage: src/pages/job.astro]
-│   └── (Inline Responsive 7-Flyer Gallery with Zoom & Download Action)
 └── src/components/Footer.astro (Global Dark Footer, Copyright, Back-to-Top)
 ```
 
@@ -82,11 +81,18 @@ interface Props {
    - Text: `出入国在留管理庁 登録支援機関 (登録番号: 0A32ES43)`.
 3. **Dual Action CTA Buttons**:
    - Primary: Anchor link to `#support` with chevron-down icon.
-   - Secondary: Route link to `/job.html` with briefcase icon.
+   - Secondary: Route link to `/#career` with briefcase icon.
 4. **3 Trust Highlight Pills**:
    - Bilingual/Trilingual capability (日英ミャンマー語対応).
    - 10 Statutory Pillars coverage (法定支援10項目を網羅).
    - Full one-stop companion support (ワンストップ伴走支援).
+5. **Bottom Organic SVG Wave Divider (3 Transparent Waves with Logo Colors)**:
+   - Replaces the legacy flat bottom border with an organic multi-layer wave that slices into the hero image.
+   - **Wave 1 (Deep Navy Blue)**: `#1a486c` at 30% opacity, providing subtle shadow depth across Mt. Fuji's foothills.
+   - **Wave 2 (Primary Signature Blue)**: `#105c8e` at 45% opacity, creating rich oceanic brand color blending.
+   - **Wave 3 (Light Sky Blue)**: `#7ba7cc` at 60% opacity, adding a vibrant crest highlight.
+   - **Wave 4 (Seamless Slate-100 Base)**: Solid `#f1f5f9` matching `#about` (`Featured.astro`) background with `-mb-[1px]` subpixel gap protection, eliminating all straight boundary lines.
+   - Responsive height: `h-16 sm:h-22 md:h-28 lg:h-36 xl:h-40` with `preserveAspectRatio="none"`.
 
 ---
 
@@ -127,16 +133,38 @@ interface Props {
 ## 7. Services Component (`src/components/Services.astro`)
 
 ### Responsibilities:
-1. **3 Feature Cards Layout**:
-   - Card 1: Official registration certificate document (`license-certificate.jpg`) with click-to-enlarge lightbox trigger.
-   - Card 2: Tokutei Ginou visa system overview, detailing benefits for Japanese host enterprises.
-   - Card 3: 10 statutory service points checklist.
-2. **Decorative Sakura Corner Accent**:
-   - Every card features a top-right cherry blossom emblem (`cherry-48.png`, `w-6 h-6`).
+1. **3 Worker Program Track Cards (`lg:grid-cols-3`)**:
+   - Track 01: Specified Skilled Worker 1 (特定技能 1号 / SSW1) — Foundation job-ready workforce.
+   - Track 02: Specified Skilled Worker 2 (特定技能 2号 / SSW2) — Advanced supervisory leadership track with unlimited renewals and family accompaniment.
+   - Track 03: Training & Employment System (育成就労制度) — Reformed 3-year structured career pathway into SSW1.
+2. **Modern Card Title Lockup & Specifications**:
+   - Track badge pill, custom SVG icon box (no decorative sakura icon), headline, sub-headline, trilingual description, structured 3-row specifications (stay duration, family sponsorship, requirements), and DOUITSU support badge.
+3. **Bottom Consultation Callout**:
+   - Executive callout banner with trilingual consultation prompt and direct link to `#contact`.
 
 ---
 
-## 8. Contact Component (`src/components/Contact.astro`)
+## 8. Career Component (`src/components/Career.astro`)
+
+### Responsibilities:
+1. **Full-Width Interactive Search & Filter Form**:
+   - Search input box (`x-model="searchQuery"`) with clear button and real-time query matching across titles, categories, salary ranges, and dates.
+   - Multi-select sector checkboxes (`x-model="selectedCategories"`) for 6 shortage sectors: 介護 (Care), 食品加工 (Food), 外食業 (Restaurant), 農業 (Agriculture), 機械・製造 (Manufacturing), 清掃 (Cleaning).
+   - Reactive result counter pill (`x-text="visibleCount"`) and filter reset button (`@click="resetFilters()"`).
+2. **Full-Width Job Table (`min-w-[720px]`)**:
+   - Renders 6 in-demand job items from `siteData.career.jobs`.
+   - Table columns: No., Job Title (with sector category pill badge), Salary (2-line compact display), Join Date, Age Limit, and Flyer Action.
+   - **Compact Two-Line Salary**:
+     - Line 1: `[月給] 210,000円〜` (Starting pay with period badge).
+     - Line 2: `〜 260,000円` (Maximum pay in bold brand blue).
+     - Minimizes column width (~120px) to prevent layout cramping.
+   - Each row is interactive (`cursor-pointer`): clicking any row opens the global lightbox modal with that job's full recruitment flyer (`job.image`).
+   - Empty state row displayed when search/filter returns zero results with a "Show All Jobs" button.
+   - Bottom inquiry prompt with CTA button linking directly to `#contact`.
+
+---
+
+## 9. Contact Component (`src/components/Contact.astro`)
 
 ### Interactive State Contract (Alpine.js):
 ```javascript
@@ -171,7 +199,7 @@ x-data="{
 
 ---
 
-## 9. Footer Component (`src/components/Footer.astro`)
+## 10. Footer Component (`src/components/Footer.astro`)
 
 ### Responsibilities:
 1. **Brand Lockup**: White-backed DOUITSU logo mark with company name and registration code.
@@ -182,10 +210,23 @@ x-data="{
 
 ---
 
-## 10. Job Subpage (`src/pages/job.astro`)
+## 11. Reusable Section Header (`src/components/SectionHeader.astro`)
 
-### Responsibilities:
-1. Renders 7 high-resolution recruitment posters from `siteData.jobs`.
-2. Clean card container with `aspect-[3/4]` photo frame and title bar.
-3. On card click: opens global Alpine lightbox modal with zoom and download options.
-4. Provides a "Back to Home" button returning to `/#home`.
+### Props Interface:
+```typescript
+interface Props {
+  eyebrow: string;
+  title: { ja: string; en: string; my: string };
+  subtitle?: { ja: string; en: string; my: string };
+  isH1?: boolean;
+  class?: string;
+}
+```
+
+### Visual Specifications:
+1. **Left Alignment**: Completely left-aligned (`text-left`) layout for modern visual balance.
+2. **Top Eyebrow Badge**: Soft-tinted pill badge with primary logo blue dot (`bg-douitsu-primary/10 border border-douitsu-primary/20 text-douitsu-primary font-bold uppercase tracking-wider`).
+3. **Left Vertical Gradient Bar**: `w-1.5 sm:w-2 bg-gradient-to-b from-douitsu-primary via-douitsu-accent to-douitsu-sky rounded-full` preceding the headline.
+4. **Headline**: Solid Deep Navy typography (`text-douitsu-navy font-extrabold tracking-tight`).
+5. **Dual Accent Bottom Line**: Short primary blue pill (`w-12 sm:w-16 h-1 bg-douitsu-primary rounded-full`) coupled with a subtle fading sky gradient line (`w-20 sm:w-28 h-[2px] bg-gradient-to-r from-douitsu-sky/70 to-transparent`).
+6. **Synchronous Trilingual Subtitle**: Placed directly underneath the accent line with clean indentation.
