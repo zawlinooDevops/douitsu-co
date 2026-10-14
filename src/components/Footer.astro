@@ -13,10 +13,13 @@ import { siteData } from '../data/content';
       <!-- Brand & Company Info -->
       <div class="flex items-center gap-3">
         <div class="bg-white rounded-xl p-1.5 shadow-xs inline-block">
-          <img src="/images/landing/login-logo.jpg" alt="DOUITSU Logo" class="h-8 w-auto object-contain" />
+          <img src="/images/landing/logo-mark.png" alt="DOUITSU Logo" class="h-8 w-auto object-contain" />
         </div>
         <div>
-          <h4 class="font-bold text-white text-base">{siteData.meta.companyName}</h4>
+          <h4 class="font-bold text-white text-base">
+            <span x-show="lang === 'ja'">{siteData.meta.companyName}</span>
+            <span x-show="lang !== 'ja'" style="display: none;">{siteData.meta.companyNameEn}</span>
+          </h4>
           <p class="text-xs text-slate-400">{siteData.meta.registrationNo}</p>
         </div>
       </div>
@@ -26,6 +29,7 @@ import { siteData } from '../data/content';
         {siteData.navigation.map((item) => (
           <a href={item.href} class="text-slate-400 hover:text-white transition-colors">
             <span x-show="lang === 'ja'">{item.label.ja}</span>
+            <span x-show="lang === 'en'" style="display: none;">{item.label.en}</span>
             <span x-show="lang === 'my'" style="display: none;">{item.label.my}</span>
           </a>
         ))}
@@ -35,9 +39,11 @@ import { siteData } from '../data/content';
 
     <!-- Bottom Copyright -->
     <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-      <p>{siteData.footer.copyright}</p>
+      <p>Copyright © 2025 DOUITSU LLC. All rights reserved.</p>
       <a href="#home" class="text-slate-400 hover:text-white transition-colors">
-        ▲ ページ上部へ
+        <span x-show="lang === 'ja'">▲ ページ上部へ</span>
+        <span x-show="lang === 'en'" style="display: none;">▲ Back to top</span>
+        <span x-show="lang === 'my'" style="display: none;">▲ စာမျက်နှာ ထိပ်ဆုံးသို့</span>
       </a>
     </div>
   </div>

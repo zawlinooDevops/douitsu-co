@@ -1,0 +1,109 @@
+---
+trigger: always_on
+description: Asset Catalog, Image Inventory, PDF Documents, and Zero-CDN Font Pipeline for DOUITSU LLC
+---
+
+# Asset Catalog & Media Pipeline Specifications
+
+## 1. Directory Structure
+
+All static media, documents, and fonts are stored under `public/`, served directly by Astro at root URLs:
+
+```text
+public/
+├── favicon.ico                         # Root website favicon
+├── apple-touch-icon.png                # Standard iOS touch icon
+├── files/                              # Official PDF study textbooks
+│   ├── kaigo-tokuteiginou-japanese.pdf # 38.8 MB (Japanese edition)
+│   └── kaigo-tokuteiginou-myanmar.pdf  # 14.1 MB (Myanmar edition)
+├── fonts/                              # 100% Local TTF font files
+│   ├── local-font-1.ttf                # Plus Jakarta Sans Regular (400)
+│   ├── local-font-2.ttf                # Noto Sans Myanmar Regular (400)
+│   ├── local-font-3.ttf                # Noto Sans Myanmar Bold (700)
+│   ├── local-font-4.ttf                # Plus Jakarta Sans Medium (500)
+│   ├── local-font-5.ttf                # Plus Jakarta Sans Bold (700)
+│   ├── local-font-6.ttf                # Noto Sans Myanmar SemiBold (600)
+│   ├── local-font-7.ttf                # Plus Jakarta Sans SemiBold (600)
+│   └── local-font-8.ttf                # Plus Jakarta Sans ExtraBold (800)
+└── images/
+    ├── icons/                          # Web icons and favicons
+    │   ├── apple-touch-icon-180x180.png
+    │   ├── apple-touch-icon.png
+    │   ├── favicon.ico
+    │   └── jp-dictionary-icon.png
+    ├── jobs/                           # Job recruitment flyers (7 files)
+    │   ├── job-1.jpg
+    │   ├── job-2025-11fudo.jpg
+    │   ├── job-viber-1.jpg
+    │   ├── job-viber-2.jpg
+    │   ├── job-viber-3.jpg
+    │   ├── job-viber-4.jpg
+    │   └── job-yamaguchi.jpg
+    └── landing/                        # Landing page visuals & emblems
+        ├── about-main.png              # Support workers infographic (2.7 MB)
+        ├── banner.jpg                  # OpenGraph & social preview image
+        ├── cherry-48.png               # Sakura corner emblem (48x48)
+        ├── cherry.png                  # Sakura header decorative emblem
+        ├── contact-laptop.jpg          # Contact section visual
+        ├── handshake-contract.jpg      # Contract signing visual
+        ├── hero-bg.webp                # Optimized hero background (Mt. Fuji)
+        ├── license-certificate.jpg     # 2025.7 Official registration certificate
+        ├── logo-mark.png               # Main navbar brand emblem
+        ├── logo.png                    # Full brand logo
+        └── snow-bg.jpg                 # Background subtle texture
+```
+
+---
+
+## 2. Landing Page Images (`public/images/landing/`)
+
+| File Name | Dimensions / Format | Semantic Role | Notes |
+|---|---|---|---|
+| `hero-bg.webp` | WebP (1920x1080) | Above-the-fold hero background | Preloaded in `<head>` for optimal Largest Contentful Paint (LCP) |
+| `logo-mark.png` | PNG (Transparent) | Sticky header and footer emblem | Crisp hexagonal brand mark |
+| `about-main.png` | PNG (High-Res) | `#support` main infographic | Clickable; triggers Alpine.js lightbox zoom |
+| `license-certificate.jpg` | JPEG | `#services` Card 1 official document | Proof of official 2025.7 registration with Immigration Agency |
+| `banner.jpg` | JPEG (1200x630) | OpenGraph and Twitter card preview | Standard 16:9 social share asset |
+| `cherry-48.png` | PNG (48x48) | Feature card top-right ornament | Japanese Sakura cultural motif |
+| `cherry.png` | PNG | Decorative title accent | Soft floral branding |
+
+---
+
+## 3. Job Recruitment Posters (`public/images/jobs/`)
+
+Recruitment flyers displayed on the dedicated `/job.html` page:
+
+| File Name | Target Industry / Placement | Description |
+|---|---|---|
+| `job-1.jpg` | General Tokutei Ginou | Standard recruitment overview |
+| `job-2025-11fudo.jpg` | Food Processing (食品製造業) | Bento, food manufacturing facility positions |
+| `job-yamaguchi.jpg` | Regional Placement (Yamaguchi) | Yamaguchi Prefecture industrial placement |
+| `job-viber-1.jpg` | Specified Skilled Worker Opening | Field job opening 1 |
+| `job-viber-2.jpg` | Specified Skilled Worker Opening | Field job opening 2 |
+| `job-viber-3.jpg` | Specified Skilled Worker Opening | Field job opening 3 |
+| `job-viber-4.jpg` | Specified Skilled Worker Opening | Field job opening 4 |
+
+---
+
+## 4. Downloadable Study Guides (`public/files/`)
+
+Official exam preparation textbooks for candidates taking the Kaigo (Nursing Care) Tokutei Ginou skill evaluation test:
+
+1. **`kaigo-tokuteiginou-japanese.pdf`**:
+   - File Size: `38.8 MB`
+   - Target Language: Japanese (`日本語版`)
+   - Content: Complete curriculum for Nursing Care technical terms, hygiene, and caregiving fundamentals.
+2. **`kaigo-tokuteiginou-myanmar.pdf`**:
+   - File Size: `14.1 MB`
+   - Target Language: Myanmar (`ミャンマー語版`)
+   - Content: Full translated textbook enabling Myanmar candidates to master caregiving concepts in their native language before sitting for the Japanese exam.
+
+---
+
+## 5. Raw Data Archive (`raw-data/`)
+
+The repository retains a dedicated `raw-data/` folder containing the original website scrapings, section breakdowns, and extraction metadata from October 2026:
+- `raw-data/metadata.json`: Machine-readable audit of original HTML structure.
+- `raw-data/content.md`: Monolithic extraction of all original page copy.
+- `raw-data/sections/`: Individual markdown breakdowns of sections 01 to 07.
+- **Rule for Agents**: Do not modify `raw-data/` as it serves as the historical audit trail. All active development takes place in `src/` and `public/`.

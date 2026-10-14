@@ -13,16 +13,11 @@ import { siteData } from '../data/content';
   <div id="section_3" class="absolute -top-24"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- Section Header with Circular Avatar Badge -->
+    <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="flex items-center justify-center mb-4">
-        <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-md">
-          <img src="/images/landing/handshake-contract.jpg" alt="契約" class="w-full h-full object-cover" />
-        </div>
-      </div>
-
       <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight">
         <span x-show="lang === 'ja'">{siteData.services.title.ja}</span>
+        <span x-show="lang === 'en'" style="display: none;">{siteData.services.title.en}</span>
         <span x-show="lang === 'my'" style="display: none;">{siteData.services.title.my}</span>
       </h2>
     </div>
@@ -39,7 +34,7 @@ import { siteData } from '../data/content';
 
           <div
             class="rounded-xl overflow-hidden border border-slate-200 bg-white shadow-xs cursor-pointer"
-            @click={`lightboxImg = '${siteData.services.card1.image}'; lightboxTitle = (lang === 'ja' ? '${siteData.services.card1.alt.ja}' : '${siteData.services.card1.alt.my}')`}
+            @click={`lightboxImg = '${siteData.services.card1.image}'; lightboxTitle = (lang === 'ja' ? '${siteData.services.card1.alt.ja}' : (lang === 'en' ? '${siteData.services.card1.alt.en}' : '${siteData.services.card1.alt.my}'))`}
           >
             <img
               src={siteData.services.card1.image}
@@ -48,7 +43,9 @@ import { siteData } from '../data/content';
               loading="lazy"
             />
             <div class="px-3 py-1.5 bg-slate-900/5 text-slate-500 text-[11px] text-center font-medium">
-              クリックで拡大表示
+              <span x-show="lang === 'ja'">クリックで拡大表示</span>
+              <span x-show="lang === 'en'" style="display: none;">Click to enlarge</span>
+              <span x-show="lang === 'my'" style="display: none;">နှိပ်၍ အကြီးချဲ့ကြည့်ရှုရန်</span>
             </div>
           </div>
         </div>
@@ -60,6 +57,7 @@ import { siteData } from '../data/content';
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-xl font-bold text-douitsu-navy">
               <span x-show="lang === 'ja'">{siteData.services.card2.title.ja}</span>
+              <span x-show="lang === 'en'" style="display: none;">{siteData.services.card2.title.en}</span>
               <span x-show="lang === 'my'" style="display: none;">{siteData.services.card2.title.my}</span>
             </h3>
             <img src="/images/landing/cherry-48.png" alt="桜" class="w-6 h-6 object-contain opacity-80" />
@@ -67,6 +65,7 @@ import { siteData } from '../data/content';
 
           <p class="text-sm text-slate-700 leading-relaxed">
             <span x-show="lang === 'ja'">{siteData.services.card2.text.ja}</span>
+            <span x-show="lang === 'en'" style="display: none;">{siteData.services.card2.text.en}</span>
             <span x-show="lang === 'my'" style="display: none;">{siteData.services.card2.text.my}</span>
           </p>
         </div>
@@ -78,6 +77,7 @@ import { siteData } from '../data/content';
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-xl font-bold text-douitsu-navy">
               <span x-show="lang === 'ja'">{siteData.services.card3.title.ja}</span>
+              <span x-show="lang === 'en'" style="display: none;">{siteData.services.card3.title.en}</span>
               <span x-show="lang === 'my'" style="display: none;">{siteData.services.card3.title.my}</span>
             </h3>
             <img src="/images/landing/cherry-48.png" alt="桜" class="w-6 h-6 object-contain opacity-80" />
@@ -89,6 +89,7 @@ import { siteData } from '../data/content';
                 <span class="text-douitsu-primary font-bold">{idx + 1}.</span>
                 <span>
                   <span x-show="lang === 'ja'">{item.ja}</span>
+                  <span x-show="lang === 'en'" style="display: none;">{item.en}</span>
                   <span x-show="lang === 'my'" style="display: none;">{item.my}</span>
                 </span>
               </li>

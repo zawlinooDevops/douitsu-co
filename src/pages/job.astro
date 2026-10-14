@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import { siteData } from '../data/content';
 ---
 
-<Layout title="求人票 | DOUITSU合同会社">
+<Layout title="求人票 | DOUITSU LLC (DOUITSU合同会社)">
   <Navbar />
 
   <main class="pt-28 pb-20 md:pt-36 md:pb-28 min-h-screen bg-slate-50">
@@ -15,10 +15,12 @@ import { siteData } from '../data/content';
       <div class="text-center max-w-3xl mx-auto mb-14">
         <h1 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight mb-4">
           <span x-show="lang === 'ja'">求人票</span>
+          <span x-show="lang === 'en'" style="display: none;">Job Openings & Posters</span>
           <span x-show="lang === 'my'" style="display: none;">အလုပ်ခေါ် ကြော်ငြာပိုစတာများ</span>
         </h1>
         <p class="text-sm text-slate-500">
           <span x-show="lang === 'ja'">画像をクリックすると拡大してご確認いただけます。</span>
+          <span x-show="lang === 'en'" style="display: none;">Click on any poster image to view the enlarged flyer.</span>
           <span x-show="lang === 'my'" style="display: none;">ပိုစတာပုံများကို နှိပ်၍ အကြီးချဲ့ ကြည့်ရှုနိုင်ပါသည်။</span>
         </p>
       </div>
@@ -28,7 +30,7 @@ import { siteData } from '../data/content';
         {siteData.jobs.map((flyer) => (
           <div
             class="rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col group cursor-pointer"
-            @click={`lightboxImg = '${flyer.image}'; lightboxTitle = (lang === 'ja' ? '${flyer.alt}' : '${flyer.alt}')`}
+            @click={`lightboxImg = '${flyer.image}'; lightboxTitle = (lang === 'ja' ? '${flyer.alt}' : (lang === 'en' ? 'Job Flyer ${flyer.id}' : '${flyer.alt}'))`}
           >
             <div class="relative aspect-[3/4] bg-slate-100 overflow-hidden">
               <img
@@ -39,7 +41,9 @@ import { siteData } from '../data/content';
               />
               <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
                 <span class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-white/95 rounded-xl text-xs font-bold text-douitsu-navy shadow-md">
-                  拡大表示
+                  <span x-show="lang === 'ja'">拡大表示</span>
+                  <span x-show="lang === 'en'" style="display: none;">Zoom In</span>
+                  <span x-show="lang === 'my'" style="display: none;">အကြီးချဲ့ရန်</span>
                 </span>
               </div>
             </div>
@@ -61,6 +65,7 @@ import { siteData } from '../data/content';
         >
           <span>←</span>
           <span x-show="lang === 'ja'">ホームページへ戻る</span>
+          <span x-show="lang === 'en'" style="display: none;">Back to Home</span>
           <span x-show="lang === 'my'" style="display: none;">ပင်မစာမျက်နှာသို့ ပြန်သွားရန်</span>
         </a>
       </div>

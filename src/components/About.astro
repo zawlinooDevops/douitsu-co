@@ -13,18 +13,17 @@ import { siteData } from '../data/content';
   <div id="section_2" class="absolute -top-24"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- Section Header with Sakura Ornament -->
+    <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-14">
-      <div class="inline-flex items-center gap-2 mb-3">
-        <img src="/images/landing/cherry.png" alt="桜" class="w-6 h-6 object-contain" />
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight">
-          <span x-show="lang === 'ja'">{siteData.about.title.ja}</span>
-          <span x-show="lang === 'my'" style="display: none;">{siteData.about.title.my}</span>
-        </h2>
-      </div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight mb-3">
+        <span x-show="lang === 'ja'">{siteData.about.title.ja}</span>
+        <span x-show="lang === 'en'" style="display: none;">{siteData.about.title.en}</span>
+        <span x-show="lang === 'my'" style="display: none;">{siteData.about.title.my}</span>
+      </h2>
 
       <p class="text-base sm:text-lg text-slate-600 leading-relaxed mt-2">
         <span x-show="lang === 'ja'">{siteData.about.lead.ja}</span>
+        <span x-show="lang === 'en'" style="display: none;">{siteData.about.lead.en}</span>
         <span x-show="lang === 'my'" style="display: none;">{siteData.about.lead.my}</span>
       </p>
     </div>
@@ -36,7 +35,7 @@ import { siteData } from '../data/content';
       <div class="lg:col-span-5 flex justify-center">
         <div
           class="relative w-full max-w-md rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white group cursor-pointer"
-          @click={`lightboxImg = '/images/landing/about-main.png'; lightboxTitle = (lang === 'ja' ? '特定技能 支援活動' : 'သတ်မှတ်ကျွမ်းကျင်လုပ်သား ထောက်ပံ့မှု မှတ်တမ်း')`}
+          @click={`lightboxImg = '/images/landing/about-main.png'; lightboxTitle = (lang === 'ja' ? '特定技能 支援活動' : (lang === 'en' ? 'Specified Skilled Worker Support Gallery' : 'သတ်မှတ်ကျွမ်းကျင်လုပ်သား ထောက်ပံ့မှု မှတ်တမ်း'))`}
         >
           <img
             src="/images/landing/about-main.png"
@@ -46,7 +45,9 @@ import { siteData } from '../data/content';
           />
           <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
             <span class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-white/95 rounded-xl text-xs font-bold text-slate-800 shadow-md">
-              拡大表示
+              <span x-show="lang === 'ja'">拡大表示</span>
+              <span x-show="lang === 'en'" style="display: none;">Zoom In</span>
+              <span x-show="lang === 'my'" style="display: none;">အကြီးချဲ့ရန်</span>
             </span>
           </div>
         </div>
@@ -62,6 +63,7 @@ import { siteData } from '../data/content';
               </span>
               <span class="font-bold text-sm text-douitsu-navy group-hover:text-douitsu-primary transition-colors leading-snug">
                 <span x-show="lang === 'ja'">{pillar.title.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{pillar.title.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{pillar.title.my}</span>
               </span>
             </div>

@@ -28,8 +28,8 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content="DOUITSU合同会社" />
-    <meta name="keywords" content="DOUITSU合同会社, 登録支援機関, 特定技能, 1号特定技能, ミャンマー特定技能, 外国人採用, 介護特定技能, 外食業特定技能, 清瀬市, 支援計画" />
+    <meta name="author" content="DOUITSU LLC / DOUITSU合同会社" />
+    <meta name="keywords" content="DOUITSU LLC, DOUITSU合同会社, 登録支援機関, 特定技能, 1号特定技能, ミャンマー特定技能, 外国人採用, 介護特定技能, 外食業特定技能, 清瀬市, 支援計画" />
     <link rel="canonical" href={canonicalURL} />
     <link rel="preload" as="image" href="/images/landing/hero-bg.webp" type="image/webp" fetchpriority="high" />
 
@@ -44,7 +44,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:site_name" content="DOUITSU合同会社" />
+    <meta property="og:site_name" content="DOUITSU LLC (DOUITSU合同会社)" />
     <meta property="og:locale" content="ja_JP" />
 
     <!-- Twitter Card -->
@@ -66,7 +66,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
       "name": siteData.meta.companyName,
       "alternateName": siteData.meta.companyNameEn,
       "url": siteData.meta.siteUrl,
-      "logo": `${siteData.meta.siteUrl}/images/landing/login-logo.jpg`,
+      "logo": `${siteData.meta.siteUrl}/images/landing/logo.png`,
       "image": `${siteData.meta.siteUrl}/images/landing/banner.jpg`,
       "description": siteData.meta.description.ja,
       "telephone": siteData.meta.phone,
@@ -125,7 +125,11 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
           <img :src="lightboxImg" :alt="lightboxTitle" class="max-h-[75vh] w-auto object-contain rounded-lg shadow-lg" />
         </div>
         <div class="px-6 py-3 bg-slate-100 flex items-center justify-between border-t border-slate-200 text-sm">
-          <span class="text-slate-600 font-medium">DOUITSU合同会社 登録支援機関</span>
+          <span class="text-slate-600 font-medium">
+            <span x-show="lang === 'ja'">DOUITSU合同会社 登録支援機関</span>
+            <span x-show="lang === 'en'" style="display: none;">DOUITSU LLC (Registered Support Organization)</span>
+            <span x-show="lang === 'my'" style="display: none;">DOUITSU LLC (မှတ်ပုံတင်ထောက်ပံ့ရေးအဖွဲ့အစည်း)</span>
+          </span>
           <a
             :href="lightboxImg"
             download
@@ -134,7 +138,9 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
             </svg>
-            画像を保存
+            <span x-show="lang === 'ja'">画像を保存</span>
+            <span x-show="lang === 'en'" style="display: none;">Save Image</span>
+            <span x-show="lang === 'my'" style="display: none;">ပုံကို ဒေါင်းလုဒ်ရယူရန်</span>
           </a>
         </div>
       </div>

@@ -19,7 +19,7 @@ import { siteData } from '../data/content';
     },
     submitForm() {
       if (!this.formData.name || !this.formData.email || !this.formData.phone) {
-        alert('必須項目をすべて入力してください。');
+        alert(lang === 'ja' ? '必須項目をすべて入力してください。' : (lang === 'en' ? 'Please fill in all required fields.' : 'လိုအပ်သော အချက်အလက်များ အားလုံး ဖြည့်သွင်းပေးပါ။'));
         return;
       }
       this.formSubmitted = true;
@@ -30,16 +30,11 @@ import { siteData } from '../data/content';
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- Section Header with Avatar -->
+    <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="flex items-center justify-center mb-4">
-        <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-md">
-          <img src="/images/landing/contact-laptop.jpg" alt="お問い合わせ" class="w-full h-full object-cover" />
-        </div>
-      </div>
-
       <h2 class="text-3xl sm:text-4xl font-extrabold text-douitsu-navy tracking-tight">
         <span x-show="lang === 'ja'">{siteData.contact.title.ja}</span>
+        <span x-show="lang === 'en'" style="display: none;">{siteData.contact.title.en}</span>
         <span x-show="lang === 'my'" style="display: none;">{siteData.contact.title.my}</span>
       </h2>
     </div>
@@ -52,8 +47,14 @@ import { siteData } from '../data/content';
         <div class="p-7 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-6">
           
           <div>
-            <h4 class="text-lg font-extrabold text-douitsu-navy">{siteData.meta.companyName}</h4>
-            <p class="text-xs font-mono text-slate-500 mt-0.5">{siteData.meta.registrationNo}</p>
+            <h4 class="text-lg font-extrabold text-douitsu-navy">
+              <span x-show="lang === 'ja'">{siteData.meta.companyName}</span>
+              <span x-show="lang !== 'ja'" style="display: none;">{siteData.meta.companyNameEn}</span>
+            </h4>
+            <p class="text-xs text-slate-500 font-medium mt-0.5">
+              <span x-show="lang === 'ja'">{siteData.meta.companyNameEn}</span>
+              <span x-show="lang !== 'ja'" style="display: none;">{siteData.meta.companyName}</span>
+            </p>
           </div>
 
           <!-- Address -->
@@ -67,13 +68,13 @@ import { siteData } from '../data/content';
             <div>
               <span class="text-xs font-bold text-slate-500 block mb-0.5">
                 <span x-show="lang === 'ja'">{siteData.contact.address.label.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{siteData.contact.address.label.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.address.label.my}</span>
               </span>
               <p class="text-sm font-semibold text-slate-800 leading-snug">
-                {siteData.contact.address.ja}
-              </p>
-              <p class="text-xs text-slate-500 mt-1" x-show="lang === 'my'" style="display: none;">
-                {siteData.contact.address.my}
+                <span x-show="lang === 'ja'">{siteData.contact.address.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{siteData.contact.address.en}</span>
+                <span x-show="lang === 'my'" style="display: none;">{siteData.contact.address.my}</span>
               </p>
             </div>
           </div>
@@ -88,9 +89,10 @@ import { siteData } from '../data/content';
             <div>
               <span class="text-xs font-bold text-slate-500 block mb-0.5">
                 <span x-show="lang === 'ja'">{siteData.contact.phone.label.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{siteData.contact.phone.label.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.phone.label.my}</span>
               </span>
-              <a href={`tel:${siteData.contact.phone.value}`} class="text-base font-bold text-douitsu-primary hover:underline">
+              <a href={`tel:${siteData.contact.phone.tel || siteData.contact.phone.value}`} class="text-base font-bold text-douitsu-primary hover:underline">
                 {siteData.contact.phone.value}
               </a>
             </div>
@@ -106,6 +108,7 @@ import { siteData } from '../data/content';
             <div>
               <span class="text-xs font-bold text-slate-500 block mb-0.5">
                 <span x-show="lang === 'ja'">{siteData.contact.email.label.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{siteData.contact.email.label.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.email.label.my}</span>
               </span>
               <a href={`mailto:${siteData.contact.email.value}`} class="text-sm font-bold text-douitsu-navy hover:underline">
@@ -114,11 +117,12 @@ import { siteData } from '../data/content';
             </div>
           </div>
 
-          <!-- Quick Navigation Links (from original site) -->
+          <!-- Quick Navigation Links -->
           <div class="pt-4 border-t border-slate-200/80 flex items-center gap-4 text-xs font-semibold text-slate-600">
             {siteData.contact.quickLinks.map((link) => (
               <a href={link.href} class="hover:text-douitsu-primary transition-colors">
                 <span x-show="lang === 'ja'">{link.label.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{link.label.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{link.label.my}</span>
               </a>
             ))}
@@ -136,7 +140,7 @@ import { siteData } from '../data/content';
         </div>
       </div>
 
-      <!-- Right Column: Clean Original Contact Form -->
+      <!-- Right Column: Clean Contact Form -->
       <div class="lg:col-span-7">
         <div class="p-7 sm:p-9 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm relative">
           
@@ -153,6 +157,7 @@ import { siteData } from '../data/content';
             </div>
             <h4 class="text-lg font-bold text-douitsu-navy mb-2">
               <span x-show="lang === 'ja'">{siteData.contact.form.success.ja}</span>
+              <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.success.en}</span>
               <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.success.my}</span>
             </h4>
             <button
@@ -160,7 +165,9 @@ import { siteData } from '../data/content';
               @click="formSubmitted = false; formData = { name: '', email: '', phone: '', message: '' }"
               class="mt-4 px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition-colors"
             >
-              もう一度送信する
+              <span x-show="lang === 'ja'">もう一度送信する</span>
+              <span x-show="lang === 'en'" style="display: none;">Send another message</span>
+              <span x-show="lang === 'my'" style="display: none;">ထပ်မံပေးပို့ရန်</span>
             </button>
           </div>
 
@@ -174,6 +181,7 @@ import { siteData } from '../data/content';
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">
                 <span x-show="lang === 'ja'">{siteData.contact.form.name.label.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.name.label.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.name.label.my}</span>
                 <span class="text-red-500">*</span>
               </label>
@@ -181,7 +189,7 @@ import { siteData } from '../data/content';
                 type="text"
                 x-model="formData.name"
                 required
-                placeholder="名前"
+                :placeholder="lang === 'ja' ? 'お名前を入力してください' : (lang === 'en' ? 'Enter your full name' : 'အမည်')"
                 class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
               />
             </div>
@@ -191,6 +199,7 @@ import { siteData } from '../data/content';
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">
                   <span x-show="lang === 'ja'">{siteData.contact.form.email.label.ja}</span>
+                  <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.email.label.en}</span>
                   <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.email.label.my}</span>
                   <span class="text-red-500">*</span>
                 </label>
@@ -198,7 +207,7 @@ import { siteData } from '../data/content';
                   type="email"
                   x-model="formData.email"
                   required
-                  placeholder="Eメール"
+                  :placeholder="lang === 'ja' ? 'メールアドレスを入力してください' : (lang === 'en' ? 'Enter your email address' : 'အီးမေးလ်')"
                   class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
                 />
               </div>
@@ -206,6 +215,7 @@ import { siteData } from '../data/content';
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">
                   <span x-show="lang === 'ja'">{siteData.contact.form.phone.label.ja}</span>
+                  <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.phone.label.en}</span>
                   <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.phone.label.my}</span>
                   <span class="text-red-500">*</span>
                 </label>
@@ -213,7 +223,7 @@ import { siteData } from '../data/content';
                   type="tel"
                   x-model="formData.phone"
                   required
-                  placeholder="電話"
+                  :placeholder="lang === 'ja' ? '電話番号を入力してください' : (lang === 'en' ? 'Enter your phone number' : 'ဖုန်းနံပါတ်')"
                   class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
                 />
               </div>
@@ -223,12 +233,13 @@ import { siteData } from '../data/content';
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">
                 <span x-show="lang === 'ja'">{siteData.contact.form.message.label.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.message.label.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.message.label.my}</span>
               </label>
               <textarea
                 x-model="formData.message"
                 rows="4"
-                placeholder="メッセージ"
+                :placeholder="lang === 'ja' ? 'ご相談・お問い合わせ内容をご記入ください' : (lang === 'en' ? 'Enter your message or inquiry' : 'မေးမြန်းလိုသော အကြောင်းအရာ')"
                 class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all resize-y"
               ></textarea>
             </div>
@@ -240,6 +251,7 @@ import { siteData } from '../data/content';
                 class="w-full py-3 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
               >
                 <span x-show="lang === 'ja'">{siteData.contact.form.submit.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.submit.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.submit.my}</span>
               </button>
             </div>

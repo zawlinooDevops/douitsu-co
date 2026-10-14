@@ -10,26 +10,36 @@ import { siteData } from '../data/content';
   x-data="{ mobileMenuOpen: false }"
 >
   <!-- 1. TOP INFO BAR -->
-  <div class="bg-douitsu-navy text-slate-200 text-xs py-2 border-b border-white/10 shadow-xs">
+  <div class="bg-douitsu-navy text-slate-200 text-xs py-2 border-b border-white/10 shadow-xs relative z-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
       
-      <!-- Left: Phone Number -->
-      <div class="flex items-center gap-2">
+      <!-- Left: Tel & Email -->
+      <div class="flex items-center gap-3 sm:gap-6 text-slate-300 text-xs flex-wrap">
+        <!-- Phone (Tel) -->
         <a
-          href={`tel:${siteData.meta.phone}`}
-          class="inline-flex items-center gap-2 font-semibold text-slate-100 hover:text-white transition-colors"
+          href={`tel:${siteData.meta.phoneTel || siteData.meta.phone}`}
+          class="inline-flex items-center gap-1.5 font-semibold text-slate-200 hover:text-white transition-colors"
         >
-          <svg class="w-3.5 h-3.5 text-douitsu-sky" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5 text-douitsu-sky shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
           </svg>
           <span class="tracking-wide">TEL: {siteData.meta.phone}</span>
         </a>
+
+        <!-- Email -->
+        <a
+          href={`mailto:${siteData.meta.email}`}
+          class="hidden sm:inline-flex items-center gap-1.5 font-medium text-slate-300 hover:text-white transition-colors"
+        >
+          <svg class="w-3.5 h-3.5 text-douitsu-sky shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2z"></path>
+          </svg>
+          <span>{siteData.meta.email}</span>
+        </a>
       </div>
 
-      <!-- Right: Bilingual Switcher & Contact Us -->
-      <div class="flex items-center gap-4 sm:gap-6">
-        
-        <!-- Language Switcher -->
+      <!-- Right: Trilingual Switcher Only (Japanese, English, Myanmar) -->
+      <div class="flex items-center justify-end shrink-0">
         <div class="inline-flex p-0.5 rounded-lg bg-slate-800/80 border border-slate-700">
           <button
             type="button"
@@ -42,6 +52,15 @@ import { siteData } from '../data/content';
           </button>
           <button
             type="button"
+            @click="lang = 'en'; localStorage.setItem('douitsu_lang', 'en')"
+            :class="{ 'bg-douitsu-blue text-white shadow-xs font-bold': lang === 'en', 'text-slate-300 hover:text-white': lang !== 'en' }"
+            class="px-2 py-0.5 text-[11px] rounded transition-all flex items-center gap-1"
+          >
+            <span>🇺🇸</span>
+            <span>English</span>
+          </button>
+          <button
+            type="button"
             @click="lang = 'my'; localStorage.setItem('douitsu_lang', 'my')"
             :class="{ 'bg-douitsu-blue text-white shadow-xs font-bold': lang === 'my', 'text-slate-300 hover:text-white': lang !== 'my' }"
             class="px-2 py-0.5 text-[11px] rounded transition-all flex items-center gap-1"
@@ -50,48 +69,65 @@ import { siteData } from '../data/content';
             <span>မြန်မာ</span>
           </button>
         </div>
-
-        <!-- Contact Us Link -->
-        <a
-          href="/#contact"
-          class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-100 hover:text-douitsu-sky transition-colors"
-        >
-          <svg class="w-3.5 h-3.5 text-douitsu-sky" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-          </svg>
-          <span x-show="lang === 'ja'">お問い合わせ</span>
-          <span x-show="lang === 'my'" style="display: none;">ဆက်သွယ်ရန်</span>
-        </a>
-
       </div>
 
     </div>
   </div>
 
   <!-- 2. MAIN NAVBAR -->
-  <div class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all duration-300">
+  <div class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all duration-300 relative z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-2 sm:py-2.5">
       
-      <!-- Left: Pure Main Logo (no card box, no border, no side text) -->
-      <a href="/#home" class="inline-flex items-center group">
+      <!-- Left: Brand Logo (Icon + Company Name & Registration Info Exclusively Here) -->
+      <a
+        href="/#home"
+        class="inline-flex items-center gap-2.5 sm:gap-3 group shrink-0"
+        aria-label="DOUITSU合同会社 ホーム"
+      >
         <img
-          src="/images/landing/login-logo.jpg"
-          alt="DOUITSU合同会社"
-          class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-102"
+          src="/images/landing/logo-mark.png"
+          alt="DOUITSU合同会社 ロゴ"
+          class="h-9 sm:h-11 lg:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
         />
+        <div class="flex flex-col justify-center">
+          <div class="flex items-center">
+            <span class="font-extrabold text-douitsu-navy text-base sm:text-lg lg:text-xl tracking-tight group-hover:text-douitsu-primary transition-colors leading-tight">
+              DOUITSU<span x-show="lang === 'ja'" class="text-xs sm:text-sm font-bold text-slate-700 ml-1">合同会社</span><span x-show="lang !== 'ja'" style="display: none;" class="text-xs sm:text-sm font-bold text-slate-700 ml-1">LLC</span>
+            </span>
+          </div>
+          <span class="text-[9px] sm:text-[10px] text-slate-500 font-semibold tracking-wide leading-none mt-1">
+            <span x-show="lang === 'ja'">登録支援機関 ({siteData.meta.registrationNo})</span>
+            <span x-show="lang === 'en'" style="display: none;">Registered Support Org ({siteData.meta.registrationNo})</span>
+            <span x-show="lang === 'my'" style="display: none;">မှတ်ပုံတင်ထောက်ပံ့ရေးအဖွဲ့အစည်း ({siteData.meta.registrationNo})</span>
+          </span>
+        </div>
       </a>
 
-      <!-- Right: Main Menu Links -->
-      <nav class="hidden lg:flex items-center gap-2 xl:gap-3">
+      <!-- Right: Main Menu Links + Contact Us Button -->
+      <nav class="hidden lg:flex items-center gap-1.5 xl:gap-2">
         {siteData.navigation.filter(item => item.id !== 'phone' && item.id !== 'contact').map((item) => (
           <a
             href={item.href}
             class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-douitsu-primary hover:bg-blue-50/80 transition-all"
           >
             <span x-show="lang === 'ja'">{item.label.ja}</span>
+            <span x-show="lang === 'en'" style="display: none;">{item.label.en}</span>
             <span x-show="lang === 'my'" style="display: none;">{item.label.my}</span>
           </a>
         ))}
+
+        <!-- Contact Us CTA Button in Main Menu -->
+        <a
+          href="/#contact"
+          class="ml-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow-sm transition-all"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2z"></path>
+          </svg>
+          <span x-show="lang === 'ja'">お問い合わせ</span>
+          <span x-show="lang === 'en'" style="display: none;">Contact Us</span>
+          <span x-show="lang === 'my'" style="display: none;">ဆက်သွယ်ရန်</span>
+        </a>
       </nav>
 
       <!-- Mobile Hamburger Button -->
@@ -124,18 +160,33 @@ import { siteData } from '../data/content';
         <a
           href={item.href}
           @click="mobileMenuOpen = false"
-          class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-700 hover:text-douitsu-primary hover:bg-blue-50 transition-colors"
+          class:list={[
+            "px-4 py-2.5 rounded-xl text-sm font-bold transition-colors",
+            item.id === 'contact'
+              ? "bg-douitsu-primary text-white hover:bg-douitsu-blue text-center mt-2 shadow-xs"
+              : "text-slate-700 hover:text-douitsu-primary hover:bg-blue-50"
+          ]}
         >
           <span x-show="lang === 'ja'">{item.label.ja}</span>
+          <span x-show="lang === 'en'" style="display: none;">{item.label.en}</span>
           <span x-show="lang === 'my'" style="display: none;">{item.label.my}</span>
         </a>
       ))}
-      <div class="pt-3 mt-2 border-t border-slate-100 flex items-center justify-between">
+      <div class="pt-3 mt-2 border-t border-slate-100 flex flex-col gap-2">
         <a
-          href={`tel:${siteData.meta.phone}`}
-          class="w-full text-center py-2.5 rounded-xl bg-douitsu-primary text-white font-bold text-xs shadow-xs"
+          href={`tel:${siteData.meta.phoneTel || siteData.meta.phone}`}
+          class="w-full text-center py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
         >
+          <svg class="w-3.5 h-3.5 text-douitsu-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+          </svg>
           <span>TEL: {siteData.meta.phone}</span>
+        </a>
+        <a
+          href={`mailto:${siteData.meta.email}`}
+          class="w-full text-center py-1 text-slate-500 hover:text-slate-800 text-xs font-medium"
+        >
+          <span>{siteData.meta.email}</span>
         </a>
       </div>
     </div>
