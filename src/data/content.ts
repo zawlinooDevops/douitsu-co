@@ -91,9 +91,9 @@ export interface CareerJobItem {
 
 export interface WorkerProgram {
   id: string;
-  trackNumber: string;
+  trackNumber?: string;
   theme: 'blue' | 'indigo' | 'emerald';
-  badge: {
+  badge?: {
     ja: string;
     en: string;
     my: string;

@@ -9,7 +9,7 @@ import SectionHeader from './SectionHeader.astro';
 <!-- ============================================================ -->
 <section
   id="contact"
-  class="py-20 md:py-28 bg-white relative overflow-hidden scroll-mt-24"
+  class="py-20 md:py-28 bg-gradient-to-b from-white via-slate-50/50 to-douitsu-ice/30 relative overflow-hidden scroll-mt-24"
   x-data="{
     formSubmitted: false,
     formData: {
@@ -29,7 +29,22 @@ import SectionHeader from './SectionHeader.astro';
 >
   <div id="section_4" class="absolute -top-24"></div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Background Pattern: Topographic Coordinates Matrix -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.035]">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="contact-coords" width="36" height="36" patternUnits="userSpaceOnUse">
+          <path d="M 18,14 L 18,22 M 14,18 L 22,18" stroke="#105c8e" stroke-width="1" />
+          <circle cx="18" cy="18" r="1" fill="#105c8e" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#contact-coords)" />
+    </svg>
+  </div>
+
+
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
     <!-- Section Header -->
     <SectionHeader

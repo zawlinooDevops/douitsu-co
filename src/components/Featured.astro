@@ -9,11 +9,28 @@ import SectionHeader from './SectionHeader.astro';
 <!-- ============================================================ -->
 <section
   id="about"
-  class="py-16 md:py-24 bg-slate-100 border-b border-slate-200/60 relative scroll-mt-24"
+  class="pt-6 sm:pt-8 md:pt-10 pb-16 md:pb-24 bg-slate-100/90 border-b border-slate-200/60 relative overflow-hidden scroll-mt-24"
 >
   <div id="company" class="absolute -top-24"></div>
   <div id="featured" class="absolute -top-24"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+  <!-- Background Pattern: Technical Dot-Grid -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.04]">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="about-dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1.5" fill="#105c8e" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#about-dot-grid)" />
+    </svg>
+  </div>
+
+  <!-- Decorative Ambient Glow Orbs -->
+  <div class="absolute -top-20 -left-20 w-80 h-80 bg-douitsu-sky/15 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-douitsu-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
     <!-- Section Header -->
     <SectionHeader

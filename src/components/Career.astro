@@ -28,7 +28,7 @@ const initialJobs = siteData.career.jobs.map((j) => ({
 <!-- ============================================================ -->
 <section
   id="career"
-  class="py-20 md:py-28 bg-slate-50 border-b border-slate-200/60 relative overflow-hidden scroll-mt-24"
+  class="py-20 md:py-28 bg-slate-50/90 border-b border-slate-200/60 relative overflow-hidden scroll-mt-24"
   x-data="{
     searchQuery: '',
     selectedCategories: [],
@@ -52,7 +52,21 @@ const initialJobs = siteData.career.jobs.map((j) => ({
 >
   <div id="jobs" class="absolute -top-24"></div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Background Pattern: Dynamic 45° Diagonal Lines -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.03]">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="career-stripes" width="16" height="16" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="16" stroke="#105c8e" stroke-width="1.8" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#career-stripes)" />
+    </svg>
+  </div>
+
+
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
     <!-- Section Header (Left-aligned, Modern Japanese Corporate Style) -->
     <SectionHeader

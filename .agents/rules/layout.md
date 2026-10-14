@@ -87,7 +87,9 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
      - Wave 4 base is solid `#f1f5f9` (Slate-100), carving the hero photo with an organic wave cut that flows seamlessly into `#about` (`Featured.astro`) without any straight boundary line or subpixel gap.
 
 ### Section 2: Company Profile & PDF Downloads (`#about` / `src/components/Featured.astro`)
-- **Background**: Slate Tint (`bg-slate-100 border-b border-slate-200/60 py-16 md:py-24`).
+- **Background**: Slate Tint (`bg-slate-100/90 border-b border-slate-200/60 py-16 md:py-24`).
+- **Pattern**: Technical Dot-Grid (`24x24`, `opacity-[0.04]`).
+- **Graphic Shapes**: Top wave continuation, floating soft sky/navy ambient glow orbs (`bg-douitsu-sky/15`, `bg-douitsu-primary/10 blur-3xl`).
 - **2-Column Equal Card Layout (`grid-cols-1 lg:grid-cols-12 gap-8`)**:
   - **Left Card (`lg:col-span-6`) — 会社概要 (Company Profile / About Us)**:
     - Definition list (`<dl>`) with divided rows:
@@ -101,16 +103,20 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
 
 ### Section 3: Service Features (`#services` / `src/components/Services.astro`)
 - **Background**: Clean White (`bg-white border-b border-slate-200/60 py-20 md:py-28`).
+- **Pattern**: Japanese Shippo (七宝 - Connection Rings, `40x40`, `opacity-[0.035]`).
+- **Graphic Shapes**: 3-Track ambient glow orbs (Blue for SSW1, Indigo for SSW2, Emerald for Ikusei Shuro), Sakura floral soft glow accent (`bg-douitsu-sakura-soft/60`).
 - **Heading**: "特定技能・外国人採用支援サービスの特徴".
 - **3 Worker Program Track Cards (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8`)**:
   - **Track 01 (SSW1 - 特定技能 1号)**: Foundation operational workforce, 5-year stay, N4 + skill test requirement, 10 statutory support duties.
   - **Track 02 (SSW2 - 特定技能 2号)**: Advanced supervisory craft track, unlimited stay renewals, family accompaniment, PR path.
   - **Track 03 (Ikusei Shuro - 育成就労制度)**: 3-year structured career pathway into SSW1 superseding Technical Intern Training.
-- **Card Design**: Track pill badge, custom SVG icon box (no sakura icons), trilingual description, structured 3-row specs table, and DOUITSU support badge.
+- **Card Design**: Custom SVG icon box (no sakura icons), trilingual title & description, structured 3-row specs table, and DOUITSU support badge.
 - **Bottom Callout**: Dark gradient B2B consultation box with CTA linking to `#contact`.
 
 ### Section 4: Support Plan & 10 Pillars (`#support` / `src/components/About.astro`)
-- **Background**: Clean White (`bg-white border-b border-slate-200/60 py-20 md:py-28`).
+- **Background**: Ice-Blue Gradient (`bg-gradient-to-b from-douitsu-ice/85 via-blue-50/40 to-slate-50/80 border-b border-slate-200/60 py-20 md:py-28`).
+- **Pattern**: Japanese Seigaiha (青海波 - Calm Ocean Waves, `50x25`, `opacity-[0.035]`).
+- **Graphic Shapes**: Organic ambient glow orbs (`bg-douitsu-primary/10`, `bg-douitsu-sky/15 blur-3xl`), step connector feel.
 - **Heading**: "私たちが全力で支援します" with statutory agency mission statement lead paragraph.
 - **2-Column Responsive Layout (`grid-cols-1 lg:grid-cols-12 gap-10`)**:
   - **Left Column (`lg:col-span-5`)**:
@@ -121,7 +127,9 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
     - Each card displays a prominent numbered square badge (`1` to `10`) in `bg-douitsu-primary` and bold multilingual duty description.
 
 ### Section 5: Careers & Job Openings (`#career` / `src/components/Career.astro`)
-- **Background**: Slate Tint (`bg-slate-50 border-b border-slate-200/60 py-20 md:py-28`).
+- **Background**: Cool Slate Tint (`bg-slate-50/90 border-b border-slate-200/60 py-20 md:py-28`).
+- **Pattern**: 45° Dynamic Micro Diagonal Lines (`16x16`, `opacity-[0.03]`).
+- **Graphic Shapes**: Decorative ambient glow orbs (`bg-douitsu-primary/10`, `bg-douitsu-sky/15 blur-3xl`).
 - **Heading**: "採用・求人情報" with modernized left-aligned section header.
 - **Full-Width Interactive Layout (`max-w-7xl mx-auto`)**:
   - **Top Interactive Search & Filter Bar**:
@@ -134,7 +142,9 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
     - Empty state message when query returns 0 matches.
 
 ### Section 6: Inquiries & Contact (`#contact` / `src/components/Contact.astro`)
-- **Background**: Clean White (`bg-white py-20 md:py-28`).
+- **Background**: Ambient Horizon Gradient (`bg-gradient-to-b from-white via-slate-50/50 to-douitsu-ice/30 py-20 md:py-28`).
+- **Pattern**: Topographic Coordinates Matrix (`36x36`, `opacity-[0.035]`).
+- **Graphic Shapes**: Office beacon glow (`bg-douitsu-sky/15 blur-3xl`), bottom dark horizon transition, soft sakura tint (`bg-douitsu-sakura-soft/40 blur-2xl`).
 - **2-Column Responsive Layout (`grid-cols-1 lg:grid-cols-12 gap-12`)**:
   - **Left Column (`lg:col-span-5`) — Office Information**:
     - Company title lockup.
