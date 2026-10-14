@@ -29,3 +29,6 @@ Thumbs.db
 
 # Raw data & original archive
 raw-data/
+
+# Large downloadable PDF files (hosted on Cloudflare R2: files.douitsu-co.com)
+public/files/

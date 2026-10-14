@@ -11,8 +11,12 @@ All static media, documents, and fonts are stored under `public/`, served direct
 
 ```text
 public/
-├── favicon.ico                         # Root website favicon
-├── apple-touch-icon.png                # Standard iOS touch icon
+├── favicon.ico                         # Root multi-resolution website favicon (16-256px)
+├── favicon-16x16.png                   # Standard 16x16 PNG favicon
+├── favicon-32x32.png                   # Standard 32x32 PNG favicon
+├── favicon-48x48.png                   # Standard 48x48 PNG favicon
+├── apple-touch-icon.png                # Standard iOS touch icon (180x180)
+├── site.webmanifest                    # Web App manifest with icons & brand colors
 ├── files/                              # Official PDF study textbooks
 │   ├── kaigo-tokuteiginou-japanese.pdf # 38.8 MB (Japanese edition)
 │   └── kaigo-tokuteiginou-myanmar.pdf  # 14.1 MB (Myanmar edition)
@@ -26,11 +30,25 @@ public/
 │   ├── local-font-7.ttf                # Plus Jakarta Sans SemiBold (600)
 │   └── local-font-8.ttf                # Plus Jakarta Sans ExtraBold (800)
 └── images/
-    ├── icons/                          # Web icons and favicons
-    │   ├── apple-touch-icon-180x180.png
-    │   ├── apple-touch-icon.png
-    │   ├── favicon.ico
-    │   └── jp-dictionary-icon.png
+    ├── icons/                          # Web icons, Apple device icons & PWA
+    │   ├── android-chrome-192x192.png  # Android home screen icon
+    │   ├── android-chrome-512x512.png  # Android splash screen icon
+    │   ├── maskable-icon-512x512.png   # PWA adaptive maskable icon
+    │   ├── apple-touch-icon-180x180.png# iPhone Retina @3x (180x180)
+    │   ├── apple-touch-icon-167x167.png# iPad Pro @2x (167x167)
+    │   ├── apple-touch-icon-152x152.png# iPad Retina @2x (152x152)
+    │   ├── apple-touch-icon-144x144.png# iPad Retina legacy (144x144)
+    │   ├── apple-touch-icon-120x120.png# iPhone Retina @2x (120x120)
+    │   ├── apple-touch-icon-114x114.png# iPhone legacy Retina (114x114)
+    │   ├── apple-touch-icon-76x76.png  # iPad non-retina (76x76)
+    │   ├── apple-touch-icon-72x72.png  # iPad legacy (72x72)
+    │   ├── apple-touch-icon-60x60.png  # iPhone legacy (60x60)
+    │   ├── apple-touch-icon-57x57.png  # iPhone 1x legacy (57x57)
+    │   ├── apple-touch-icon.png        # Default Apple touch icon (180x180)
+    │   ├── favicon-16x16.png           # 16x16 PNG favicon
+    │   ├── favicon-32x32.png           # 32x32 PNG favicon
+    │   ├── favicon-48x48.png           # 48x48 PNG favicon
+    │   └── favicon.ico                 # Multi-resolution ICO (16-256px)
     ├── jobs/                           # Job recruitment flyers (7 files)
     │   ├── job-1.jpg
     │   ├── job-2025-11fudo.jpg
@@ -63,7 +81,9 @@ public/
 | `logo-mark.png` | PNG (Transparent) | Sticky header and footer emblem | Crisp hexagonal brand mark |
 | `about-main.png` | PNG (High-Res) | `#support` main infographic | Clickable; triggers Alpine.js lightbox zoom |
 | `license-certificate.jpg` | JPEG | `#services` Card 1 official document | Proof of official 2025.7 registration with Immigration Agency |
-| `banner.jpg` | JPEG (1200x630) | OpenGraph and Twitter card preview | Standard 16:9 social share asset |
+| `banner.jpg` | JPEG (1200x630) | OpenGraph and Twitter card preview | Branded card with logo-mark, registration badge & company info |
+| `banner.png` | PNG (1200x630) | Lossless OpenGraph preview | High-fidelity master banner |
+| `twitter-image.jpg` | JPEG (1200x630) | Twitter summary_large_image card | Social card for Twitter / X preview |
 | `cherry-48.png` | PNG (48x48) | Feature card top-right ornament | Japanese Sakura cultural motif |
 | `cherry.png` | PNG | Decorative title accent | Soft floral branding |
 
