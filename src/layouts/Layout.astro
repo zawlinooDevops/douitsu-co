@@ -32,6 +32,14 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="google" content="notranslate" />
 
+    <!-- Critical Preloader Screen Lock (Zero Flash of Content) -->
+    <style id="douitsu-preloader-lock">
+      html, body {
+        overflow: hidden !important;
+        height: 100% !important;
+      }
+    </style>
+
     <!-- Primary Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />

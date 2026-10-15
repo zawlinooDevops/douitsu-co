@@ -4,7 +4,8 @@
 
 <div
   id="douitsu-preloader"
-  class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white/98 backdrop-blur-md transition-opacity duration-500 ease-out"
+  style="position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 99999; background-color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 1; transition: opacity 0.5s ease-out;"
+  class="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white/98 backdrop-blur-md transition-opacity duration-500 ease-out"
   role="status"
   aria-label="Loading DOUITSU LLC"
 >
@@ -74,6 +75,16 @@
       if (!preloader || preloader.dataset.dismissed === 'true') return;
       preloader.dataset.dismissed = 'true';
 
+      // Unlock body & html scroll
+      const lock = document.getElementById('douitsu-preloader-lock');
+      if (lock) {
+        lock.remove();
+      }
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+
       const bar = document.getElementById('douitsu-progress-bar');
       if (bar) {
         bar.style.width = '100%';
@@ -81,6 +92,8 @@
       }
 
       // Smooth fade-out transition
+      preloader.style.opacity = '0';
+      preloader.style.pointerEvents = 'none';
       preloader.classList.add('opacity-0', 'pointer-events-none');
 
       // Remove after transition finishes
