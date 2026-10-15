@@ -1,4 +1,4 @@
-@import './fonts.css';
+@import url('./fonts.css');
 
 @tailwind base;
 @tailwind components;
@@ -31,20 +31,129 @@
 }
 
 .sakura-gradient {
-  background: linear-gradient(135deg, #fff1f2 0%, #ffffff 50%, #eff6ff 100%);
+  background: linear-gradient(135deg, #fff1f2 0%, #fff 50%, #eff6ff 100%);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #94a3b8;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #64748b;
 }
+
+/* Logo Shimmer Animation Utilities */
+.logo-animate-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-shimmer-mask {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: url('/images/landing/logo-mark.png');
+  mask-image: url('/images/landing/logo-mark.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.logo-shimmer-beam {
+  position: absolute;
+  top: -60%;
+  left: -160%;
+  width: 90%;
+  height: 220%;
+  background:
+    linear-gradient(
+      115deg,
+      rgb(255 255 255 / 0%) 0%,
+      rgb(255 255 255 / 10%) 20%,
+      rgb(255 255 255 / 95%) 50%,
+      rgb(123 167 204 / 70%) 65%,
+      rgb(255 255 255 / 0%) 85%
+    );
+  transform: rotate(25deg);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: logo-shimmer-sweep 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Hover effect on logo group */
+.group:hover .logo-shimmer-beam,
+.logo-animate-wrapper:hover .logo-shimmer-beam {
+  animation: logo-shimmer-hover 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes logo-shimmer-sweep {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(25deg);
+  }
+
+  3% {
+    opacity: 1;
+  }
+
+  16% {
+    opacity: 1;
+    transform: translate3d(360%, 0, 0) rotate(25deg);
+  }
+
+  19% {
+    opacity: 0;
+    transform: translate3d(380%, 0, 0) rotate(25deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(380%, 0, 0) rotate(25deg);
+  }
+}
+
+@keyframes logo-shimmer-hover {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0) rotate(25deg);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+    transform: translate3d(360%, 0, 0) rotate(25deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(380%, 0, 0) rotate(25deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-shimmer-beam {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
+

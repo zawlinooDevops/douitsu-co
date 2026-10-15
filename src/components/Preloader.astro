@@ -1,0 +1,110 @@
+---
+// Preloader component with branded light theme and min/max display duration
+---
+
+<div
+  id="douitsu-preloader"
+  class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white/98 backdrop-blur-md transition-opacity duration-500 ease-out"
+  role="status"
+  aria-label="Loading DOUITSU LLC"
+>
+  <div class="relative flex flex-col items-center px-4">
+    <!-- Brand Logo with Smooth Pulsing Ambient Effect -->
+    <div class="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center mb-5">
+      <!-- Soft ambient pulsing ring -->
+      <div class="absolute inset-0 rounded-full bg-douitsu-primary/10 animate-ping opacity-50"></div>
+      <div class="absolute -inset-2.5 rounded-full border border-douitsu-primary/20 border-t-douitsu-primary animate-spin" style="animation-duration: 2s;"></div>
+
+      <!-- DOUITSU Hexagonal Logo Mark -->
+      <img
+        src="/images/landing/logo-mark.png"
+        alt="DOUITSU LLC Logo"
+        width="80"
+        height="80"
+        class="w-16 h-16 sm:w-18 sm:h-18 object-contain drop-shadow-md relative z-10"
+      />
+    </div>
+
+    <!-- Company Branding Title -->
+    <div class="text-center mb-6">
+      <div class="text-xl sm:text-2xl font-black text-douitsu-navy tracking-wider">
+        DOUITSU LLC
+      </div>
+      <div class="text-[11px] sm:text-xs font-semibold text-douitsu-primary tracking-widest uppercase mt-0.5">
+        出入国在留管理庁 登録支援機関
+      </div>
+    </div>
+
+    <!-- Animated Progress Bar -->
+    <div class="w-48 sm:w-56 h-1.5 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200/80 shadow-inner">
+      <div
+        id="douitsu-progress-bar"
+        class="h-full bg-gradient-to-r from-douitsu-primary via-douitsu-accent to-douitsu-sky rounded-full w-0"
+        style="animation: douitsu-progress 1.6s ease-in-out forwards;"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes douitsu-progress {
+    0% {
+      width: 8%;
+    }
+    45% {
+      width: 55%;
+    }
+    85% {
+      width: 90%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const startTime = performance.now();
+    const minTime = 1000; // အနည်းဆုံး ၁ စက္ကန့် (1000ms)
+    const maxTime = 2000; // အများဆုံး ၂ စက္ကန့် (2000ms - Safety timeout)
+
+    function dismissPreloader() {
+      const preloader = document.getElementById('douitsu-preloader');
+      if (!preloader || preloader.dataset.dismissed === 'true') return;
+      preloader.dataset.dismissed = 'true';
+
+      const bar = document.getElementById('douitsu-progress-bar');
+      if (bar) {
+        bar.style.width = '100%';
+        bar.style.animation = 'none';
+      }
+
+      // Smooth fade-out transition
+      preloader.classList.add('opacity-0', 'pointer-events-none');
+
+      // Remove after transition finishes
+      setTimeout(function () {
+        preloader.style.display = 'none';
+        if (preloader.parentNode) {
+          preloader.parentNode.removeChild(preloader);
+        }
+      }, 500);
+    }
+
+    // 1. If document is already loaded
+    if (document.readyState === 'complete') {
+      const elapsed = performance.now() - startTime;
+      setTimeout(dismissPreloader, Math.max(0, minTime - elapsed));
+    } else {
+      // Wait for window load event, then ensure minTime is satisfied
+      window.addEventListener('load', function () {
+        const elapsed = performance.now() - startTime;
+        setTimeout(dismissPreloader, Math.max(0, minTime - elapsed));
+      });
+    }
+
+    // 2. Safety timeout fallback (Never stuck > 2s)
+    setTimeout(dismissPreloader, maxTime);
+  })();
+</script>

@@ -18,6 +18,7 @@ All future AI agents working on this codebase must read and adhere to the specia
 | [**`data-and-i18n.md`**](./.agents/rules/data-and-i18n.md) | Centralized content schema (`src/data/content.ts`), trilingual schema (`ja`, `en`, `my`), Alpine.js zero-reload toggle patterns, and legal immigration terminology glossary. |
 | [**`assets-and-images.md`**](./.agents/rules/assets-and-images.md) | Complete directory inventory of images (`public/images/`), 7 job recruitment flyers (`public/images/jobs/`), Kaigo exam PDF textbooks (38.8MB & 14.1MB), and local font files. |
 | [**`deployment.md`**](./.agents/rules/deployment.md) | Build commands (`npm run build`), static output directory (`dist/index.html`), Cloudflare Pages / Nginx configuration, caching headers, and pre-deployment verification checklist. |
+| [**`validation-pipeline.md`**](./.agents/rules/validation-pipeline.md) | 5-stage pre-flight quality gate: ESLint, Stylelint CSS check, Astro check, static SSG build, and HTML5 validator on `dist/`. Mandatory before git commits and pushes. |
 | [**`roadmap.md`**](./.agents/rules/roadmap.md) | Completed Phase 1 modernization milestones, and Phase 2 backlog (API form submission, dynamic job filters, sitemap generation). |
 
 ---
@@ -27,6 +28,9 @@ All future AI agents working on this codebase must read and adhere to the specia
 ```bash
 # Start local development server with hot-reload
 npm run dev
+
+# Run full 5-stage validation pipeline (ESLint, CSS, Astro check, Build, HTML Validate)
+npm run validate
 
 # Run static site production build
 npm run build

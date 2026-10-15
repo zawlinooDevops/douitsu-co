@@ -149,11 +149,17 @@ import { siteData } from '../data/content';
         class="inline-flex items-center gap-2.5 sm:gap-3 group shrink-0"
         aria-label="DOUITSU合同会社 ホーム"
       >
-        <img
-          src="/images/landing/logo-mark.png"
-          alt="DOUITSU合同会社 ロゴ"
-          class="h-9 sm:h-11 lg:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
-        />
+        <!-- Animated Brand Logo Container (Masked Shimmer Beam) -->
+        <div class="logo-animate-wrapper">
+          <img
+            src="/images/landing/logo-mark.png"
+            alt="DOUITSU合同会社 ロゴ"
+            class="h-9 sm:h-11 lg:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+          />
+          <div class="logo-shimmer-mask" aria-hidden="true">
+            <div class="logo-shimmer-beam"></div>
+          </div>
+        </div>
         <div class="flex flex-col justify-center">
           <div class="flex items-center">
             <span class="font-extrabold text-douitsu-navy text-base sm:text-lg lg:text-xl tracking-tight group-hover:text-douitsu-primary transition-colors leading-tight">
@@ -169,7 +175,7 @@ import { siteData } from '../data/content';
       </a>
 
       <!-- Right: Main Menu Links + Contact Us Button -->
-      <nav class="hidden lg:flex items-center gap-1 xl:gap-1.5">
+      <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-1 xl:gap-1.5">
         {siteData.navigation.filter(item => item.id !== 'phone' && item.id !== 'contact').map((item) => (
           <a
             href={item.href}

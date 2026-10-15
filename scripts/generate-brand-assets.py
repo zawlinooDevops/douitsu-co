@@ -106,162 +106,108 @@ def generate_android_pwa_icons(logo: Image.Image):
     print("✓ Android & PWA Icons generated.")
 
 def generate_og_twitter_banner(logo: Image.Image):
-    print("Generating OpenGraph & Twitter Cards (1200x630)...")
+    print("Generating Minimalist OpenGraph & Twitter Cards (1200x630)...")
     W, H = 1200, 630
 
-    # Load Background: Mt Fuji darkened with navy overlay
-    bg_photo = Image.open('public/images/landing/hero-bg.webp').convert('RGBA')
-    bg_ratio = max(W / bg_photo.width, H / bg_photo.height)
-    bg_resized = bg_photo.resize((int(bg_photo.width * bg_ratio), int(bg_photo.height * bg_ratio)), Image.Resampling.LANCZOS)
-    left = (bg_resized.width - W) // 2
-    top = (bg_resized.height - H) // 2
-    bg = bg_resized.crop((left, top, left + W, top + H))
-    bg = bg.filter(ImageFilter.GaussianBlur(radius=4))
+    # Fonts
+    f_jp_title = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc', 46)
+    f_jp_sub = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', 19)
+    f_jp_badge = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc', 15)
+    f_en_title = ImageFont.truetype('public/fonts/local-font-8.ttf', 24)
+    f_en_url = ImageFont.truetype('public/fonts/local-font-7.ttf', 16)
 
-    # Rich Navy Gradient Overlay
-    overlay = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    draw_ol = ImageDraw.Draw(overlay)
-    for y in range(H):
-        factor = y / H
-        r = int(11 + factor * 6)
-        g = int(22 + factor * 12)
-        b = int(42 + factor * 22)
-        alpha = int(225 + factor * 20)
-        draw_ol.line([(0, y), (W, y)], fill=(r, g, b, alpha))
-    bg.paste(overlay, (0, 0), overlay)
-
-    # Accent gradient glow behind logo & header
+    # Luxury Deep Navy Background
+    bg = Image.new('RGBA', (W, H), (11, 21, 38, 255))
+    
+    # Soft ambient glow behind card
     glow = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    draw_glow = ImageDraw.Draw(glow)
-    draw_glow.ellipse([70, 90, 480, 500], fill=(37, 99, 235, 75))
-    draw_glow.ellipse([650, 40, 1150, 320], fill=(30, 58, 138, 55))
-    glow = glow.filter(ImageFilter.GaussianBlur(radius=65))
+    draw_g = ImageDraw.Draw(glow)
+    draw_g.ellipse([W//2 - 400, H//2 - 260, W//2 + 400, H//2 + 260], fill=(16, 92, 142, 65))
+    draw_g.ellipse([W//2 - 200, H//2 - 150, W//2 + 200, H//2 + 150], fill=(24, 116, 179, 45))
+    glow = glow.filter(ImageFilter.GaussianBlur(radius=80))
     bg.paste(glow, (0, 0), glow)
 
-    # Left: White Card for Logo-Mark
-    card_w, card_h = 330, 370
-    card_x, card_y = 70, (H - card_h) // 2 - 20
+    # Floating Minimalist White Card
+    cw, ch = 950, 420
+    cx, cy = (W - cw) // 2, (H - ch) // 2
 
-    # Soft shadow for card
-    shadow = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    draw_sh = ImageDraw.Draw(shadow)
-    draw_sh.rounded_rectangle([card_x-4, card_y+10, card_x+card_w+4, card_y+card_h+20], radius=28, fill=(0, 0, 0, 110))
-    shadow = shadow.filter(ImageFilter.GaussianBlur(radius=16))
-    bg.paste(shadow, (0, 0), shadow)
+    # Drop shadow
+    sh = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    draw_s = ImageDraw.Draw(sh)
+    draw_s.rounded_rectangle([cx - 4, cy + 12, cx + cw + 4, cy + ch + 26], radius=32, fill=(0, 0, 0, 115))
+    sh = sh.filter(ImageFilter.GaussianBlur(radius=22))
+    bg.paste(sh, (0, 0), sh)
 
-    card = Image.new('RGBA', (card_w, card_h), (255, 255, 255, 248))
-    draw_card = ImageDraw.Draw(card)
-    draw_card.rounded_rectangle([0, 0, card_w-1, card_h-1], radius=24, outline=(226, 232, 240, 255), width=2)
+    # Crisp White Card
+    card = Image.new('RGBA', (cw, ch), (255, 255, 255, 255))
+    draw_c = ImageDraw.Draw(card)
+    draw_c.rounded_rectangle([0, 0, cw-1, ch-1], radius=28, outline=(226, 232, 240, 255), width=2)
 
-    # Place logo in card
-    logo_target_h = int(card_h * 0.74)
-    l_ratio = logo_target_h / logo.height
-    logo_target_w = int(logo.width * l_ratio)
-    logo_r = logo.resize((logo_target_w, logo_target_h), Image.Resampling.LANCZOS)
-    card.paste(logo_r, ((card_w - logo_target_w) // 2, (card_h - logo_target_h) // 2), logo_r)
+    # Left: Logo Mark
+    logo_h = 240
+    ratio = logo_h / logo.height
+    logo_w = int(logo.width * ratio)
+    logo_resized = logo.resize((logo_w, logo_h), Image.Resampling.LANCZOS)
+    
+    lx = 60 + (230 - logo_w) // 2
+    ly = (ch - logo_h) // 2
+    card.paste(logo_resized, (lx, ly), logo_resized)
 
-    mask_card = Image.new('L', (card_w, card_h), 0)
-    ImageDraw.Draw(mask_card).rounded_rectangle([0, 0, card_w-1, card_h-1], radius=24, fill=255)
-    bg.paste(card, (card_x, card_y), mask_card)
+    # Vertical subtle separator
+    sep_x = 330
+    draw_c.line([(sep_x, 55), (sep_x, ch - 55)], fill=(226, 232, 240, 255), width=1)
 
-    # Right: Typography & Content
-    draw = ImageDraw.Draw(bg)
+    # Right Content Area (Clean, Uncluttered)
+    rx = 375
+    ry = 70
 
-    tx = 445
-    ty = card_y + 8
+    # 1. Authority Badge Pill
+    badge_text = "出入国在留管理庁 登録支援機関 (REG:0A32ES43)"
+    bbox = f_jp_badge.getbbox(badge_text)
+    bw = bbox[2] - bbox[0] + 46
+    bh = 32
+    b_img = Image.new('RGBA', (bw, bh), (0, 0, 0, 0))
+    b_draw = ImageDraw.Draw(b_img)
+    b_draw.rounded_rectangle([0, 0, bw-1, bh-1], radius=16, fill=(240, 253, 244, 255), outline=(187, 247, 208, 255), width=1)
+    b_draw.ellipse([14, 11, 22, 19], fill=(16, 185, 129, 255))
+    b_draw.text((28, 6), badge_text, font=f_jp_badge, fill=(22, 101, 52, 255))
+    card.paste(b_img, (rx, ry), b_img)
 
-    # 1. Government Registration Badge
-    f_badge = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc', 16)
-    badge_text = '出入国在留管理庁 登録支援機関 (REG:0A32ES43)'
-    badge_bbox = f_badge.getbbox(badge_text)
-    bw = badge_bbox[2] - badge_bbox[0] + 50
-    bh = 34
-    badge_img = Image.new('RGBA', (bw, bh), (0, 0, 0, 0))
-    draw_b = ImageDraw.Draw(badge_img)
-    draw_b.rounded_rectangle([0, 0, bw-1, bh-1], radius=17, fill=(15, 38, 72, 230), outline=(59, 130, 246, 140), width=1)
-    # Green pulse dot
-    draw_b.ellipse([14, 12, 22, 20], fill=(16, 185, 129, 255))
-    draw_b.text((30, 7), badge_text, font=f_badge, fill=(240, 247, 255, 255))
-    bg.paste(badge_img, (tx, ty), badge_img)
+    # 2. Main Title
+    ry += 52
+    draw_c.text((rx, ry), "DOUITSU合同会社", font=f_jp_title, fill=(13, 27, 42, 255))
 
-    # 2. Main Title Row
-    ty += 48
-    f_jp_title = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc', 48)
-    f_en_title = ImageFont.truetype('public/fonts/local-font-8.ttf', 28)
-    draw.text((tx, ty), 'DOUITSU合同会社', font=f_jp_title, fill=(255, 255, 255, 255))
+    # 3. English Subtitle
+    ry += 66
+    draw_c.text((rx, ry), "DOUITSU LLC", font=f_en_title, fill=(16, 92, 142, 255))
 
-    # Subtitle / English Company
-    ty += 64
-    draw.text((tx, ty), 'DOUITSU LLC  —  Registered Support Organization', font=f_en_title, fill=(96, 165, 250, 255))
+    # 4. Clean Focus Tagline
+    ry += 42
+    draw_c.text((rx, ry), "特定技能外国人の受入れ支援・生活就労サポート", font=f_jp_sub, fill=(100, 116, 139, 255))
 
-    # 3. Tagline / Services
-    ty += 52
-    f_sub = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc', 23)
-    draw.text((tx, ty), '特定技能 1号 外国人採用・生活就労支援', font=f_sub, fill=(241, 245, 249, 255))
+    # 5. Clean Domain Pill
+    ry += 48
+    domain_text = "demo.douitsu-co.com"
+    d_bbox = f_en_url.getbbox(domain_text)
+    dw = d_bbox[2] - d_bbox[0] + 32
+    dh = 30
+    d_img = Image.new('RGBA', (dw, dh), (0, 0, 0, 0))
+    d_draw = ImageDraw.Draw(d_img)
+    d_draw.rounded_rectangle([0, 0, dw-1, dh-1], radius=15, fill=(239, 246, 255, 255), outline=(191, 219, 254, 255), width=1)
+    d_draw.text((16, 5), domain_text, font=f_en_url, fill=(2, 132, 199, 255))
+    card.paste(d_img, (rx, ry), d_img)
 
-    # 4. Sector Pills
-    ty += 44
-    f_pill = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc', 15)
-
-    pills = [
-        '介護 (Kaigo)',
-        '外食業 (Food Service)',
-        '食品製造業 (Food Mfg)'
-    ]
-    px = tx
-    for p_label in pills:
-        p_box = f_pill.getbbox(p_label)
-        pw = p_box[2] - p_box[0] + 32
-        ph = 32
-        p_img = Image.new('RGBA', (pw, ph), (0, 0, 0, 0))
-        p_draw = ImageDraw.Draw(p_img)
-        p_draw.rounded_rectangle([0, 0, pw-1, ph-1], radius=10, fill=(30, 58, 105, 210), outline=(96, 165, 250, 110), width=1)
-        p_draw.ellipse([10, 13, 16, 19], fill=(96, 165, 250, 255))
-        p_draw.text((22, 6), p_label, font=f_pill, fill=(255, 255, 255, 255))
-        bg.paste(p_img, (px, ty), p_img)
-        px += pw + 10
-
-    # Language indicators pill (Shaped with RAQM)
-    f_pill_my = ImageFont.truetype('public/fonts/local-font-6.ttf', 15, layout_engine=ImageFont.Layout.RAQM)
-    lang_img = Image.new('RGBA', (215, 32), (0, 0, 0, 0))
-    l_draw = ImageDraw.Draw(lang_img)
-    l_draw.rounded_rectangle([0, 0, 214, 31], radius=10, fill=(16, 35, 60, 200), outline=(148, 163, 184, 80), width=1)
-    f_lang_en = ImageFont.truetype('public/fonts/local-font-7.ttf', 13)
-    f_lang_jp = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc', 13)
-    l_draw.text((12, 7), '日本語', font=f_lang_jp, fill=(203, 213, 225, 255))
-    l_draw.text((64, 7), '|', font=f_lang_en, fill=(100, 116, 139, 255))
-    l_draw.text((78, 7), 'ENGLISH', font=f_lang_en, fill=(203, 213, 225, 255))
-    l_draw.text((144, 7), '|', font=f_lang_en, fill=(100, 116, 139, 255))
-    l_draw.text((158, 6), 'မြန်မာ', font=f_pill_my, fill=(203, 213, 225, 255))
-    bg.paste(lang_img, (px, ty), lang_img)
-
-    # Statutory summary
-    ty += 46
-    f_stat = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', 18)
-    draw.text((tx, ty), '法定支援10項目を完全網羅  •  企業と外国人財をつなぐワンストップ伴走', font=f_stat, fill=(148, 163, 184, 255))
-
-    # Bottom Bar
-    f_foot_en = ImageFont.truetype('public/fonts/local-font-7.ttf', 18)
-    f_foot_jp = ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', 17)
-
-    draw.line([(70, H - 72), (W - 70, H - 72)], fill=(255, 255, 255, 45), width=1)
-
-    bot_y = H - 50
-    draw.text((70, bot_y), 'WEB: www.douitsu-co.com', font=f_foot_en, fill=(147, 197, 253, 255))
-    draw.text((450, bot_y), '所在地: 東京都清瀬市元町1-11-21', font=f_foot_jp, fill=(148, 163, 184, 255))
-    draw.text((860, bot_y), 'TEL: 042-497-1537', font=f_foot_en, fill=(226, 232, 240, 255))
-
-    # Corner sakura accent
-    cherry = Image.open('public/images/landing/cherry-48.png').convert('RGBA')
-    cherry_r = cherry.resize((36, 36), Image.Resampling.LANCZOS)
-    bg.paste(cherry_r, (W - 80, 36), cherry_r)
+    # Mask and paste onto background
+    mask = Image.new('L', (cw, ch), 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, cw-1, ch-1], radius=28, fill=255)
+    bg.paste(card, (cx, cy), mask)
 
     # Save Output Formats
     bg_rgb = bg.convert('RGB')
     bg_rgb.save('public/images/landing/banner.jpg', format='JPEG', quality=95)
     bg.save('public/images/landing/banner.png', format='PNG')
     bg_rgb.save('public/images/landing/twitter-image.jpg', format='JPEG', quality=95)
-    print("✓ OpenGraph and Twitter images saved to public/images/landing/.")
+    print("✓ Minimalist OpenGraph and Twitter images saved to public/images/landing/.")
 
 def generate_manifest():
     print("Writing site.webmanifest...")
@@ -287,7 +233,7 @@ def generate_manifest():
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#1e3a8a",
+  "theme_color": "#105c8e",
   "background_color": "#ffffff",
   "display": "standalone",
   "start_url": "/"

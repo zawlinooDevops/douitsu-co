@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { siteData } from '../data/content';
+import Preloader from '../components/Preloader.astro';
 
 interface Props {
   title?: string;
@@ -115,7 +116,9 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
     })} />
   </head>
   <body class="bg-slate-50 text-slate-800 font-sans selection:bg-douitsu-primary selection:text-white relative">
-    
+    <!-- Brand Preloader (Min 1s, Max 2s Safety Fallback) -->
+    <Preloader />
+
     <!-- Slot for Page Content -->
     <slot />
 
@@ -152,6 +155,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
 
         <!-- Pure Clean Image with Border Radius -->
         <img
+          src=""
           :src="lightboxImg"
           alt="DOUITSU"
           class="max-h-[85vh] sm:max-h-[88vh] max-w-full w-auto object-contain rounded-2xl sm:rounded-3xl shadow-2xl border-2 sm:border-4 border-white/90 ring-1 ring-slate-900/20"
@@ -162,8 +166,6 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
     <!-- Alpine.js Local Bundle Execution -->
     <script>
       import Alpine from 'alpinejs';
-      // Load saved language or default to Japanese
-      const savedLang = localStorage.getItem('douitsu_lang') || 'ja';
       // @ts-ignore
       window.Alpine = Alpine;
       Alpine.start();
