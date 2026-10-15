@@ -1,0 +1,72 @@
+---
+import { siteData } from '../data/content';
+import SectionHeader from './SectionHeader.astro';
+---
+
+<!-- ============================================================ -->
+<!-- SECTION: PROCESS / FLOW (ご利用の流れ)                          -->
+<!-- ID: #flow / ご利用の流れ                                      -->
+<!-- ============================================================ -->
+<section
+  id="flow"
+  class="py-20 md:py-28 bg-white border-b border-slate-200/60 relative overflow-hidden scroll-mt-24"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <!-- Section Header -->
+    <SectionHeader
+      eyebrow="PROCESS"
+      title={siteData.flow.title}
+      subtitle={siteData.flow.subtitle}
+    />
+
+    <!-- 6 Process Steps Grid (Support Section List Card Style) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+      {siteData.flow.steps.map((step) => (
+        <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-douitsu-primary/50 shadow-xs hover:shadow-md transition-all flex items-center gap-4 group">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-douitsu-primary group-hover:bg-douitsu-blue text-white font-mono font-bold text-sm flex items-center justify-center transition-all shadow-xs group-hover:scale-105">
+            {step.number}
+          </span>
+          <div class="flex-1 min-w-0">
+            <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-douitsu-primary/80 block mb-0.5 font-mono">
+              STEP {String(step.number).padStart(2, '0')}
+            </span>
+            <h3 class="font-bold text-sm sm:text-base text-douitsu-navy group-hover:text-douitsu-primary transition-colors leading-snug">
+              <span x-show="lang === 'ja'">{step.title.ja}</span>
+              <span x-show="lang === 'en'" style="display: none;">{step.title.en}</span>
+              <span x-show="lang === 'my'" style="display: none;">{step.title.my}</span>
+            </h3>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom Consultation Callout Banner -->
+    <div class="mt-10 sm:mt-12 p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="text-center sm:text-left">
+        <h4 class="text-sm sm:text-base font-bold text-douitsu-navy mb-1">
+          <span x-show="lang === 'ja'">特定技能外国人の受入れに関するご相談は随時承っております</span>
+          <span x-show="lang === 'en'" style="display: none;">Inquiries & Consultations for SSW Recruitment are Always Welcome</span>
+          <span x-show="lang === 'my'" style="display: none;">သတ်မှတ်ကျွမ်းကျင်လုပ်သား ခေါ်ယူခန့်ထားခြင်းဆိုင်ရာ မေးမြန်းဆွေးနွေးမှုများကို အချိန်မရွေး ကြိုဆိုပါသည်</span>
+        </h4>
+        <p class="text-xs text-slate-500">
+          <span x-show="lang === 'ja'">受入れ企業の体制確認から支援計画の策定、ビザ申請までワンストップでサポートいたします。</span>
+          <span x-show="lang === 'en'" style="display: none;">We provide one-stop companion support from preliminary setup review to visa application and onboarding.</span>
+          <span x-show="lang === 'my'" style="display: none;">လုပ်ငန်းရှင်များ၏ လုပ်ငန်းခွင်အခြေအနေ စစ်ဆေးခြင်းမှသည် ထောက်ပံ့ရေးအစီအစဉ် ရေးဆွဲခြင်း၊ ဗီဇာလျှောက်ထားခြင်းအထိ အစအဆုံး ကူညီဆောင်ရွက်ပေးပါသည်။</span>
+        </p>
+      </div>
+      <a
+        href="#contact"
+        class="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white text-xs font-bold shadow-md hover:shadow-lg transition-all"
+      >
+        <span>
+          <span x-show="lang === 'ja'">お問い合わせ・事前相談</span>
+          <span x-show="lang === 'en'" style="display: none;">Contact Us for Consultation</span>
+          <span x-show="lang === 'my'" style="display: none;">ဆက်သွယ်ဆွေးနွေးရန်</span>
+        </span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

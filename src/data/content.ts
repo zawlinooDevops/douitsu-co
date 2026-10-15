@@ -17,6 +17,29 @@ export interface SupportPillar {
   };
 }
 
+export interface FlowStep {
+  number: number;
+  title: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+}
+
+export interface FaqItem {
+  id: string;
+  question: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  answer: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+}
+
 export interface JobFlyer {
   id: string;
   image: string;
@@ -48,46 +71,6 @@ export interface SupportPhoto {
   };
 }
 
-export interface CareerJobItem {
-  no: number;
-  category: string;
-  categoryLabel: {
-    ja: string;
-    en: string;
-    my: string;
-  };
-  title: {
-    ja: string;
-    en: string;
-    my: string;
-  };
-  salary: {
-    ja: string;
-    en: string;
-    my: string;
-    line1: {
-      ja: string;
-      en: string;
-      my: string;
-    };
-    line2: {
-      ja: string;
-      en: string;
-      my: string;
-    };
-  };
-  joinDate: {
-    ja: string;
-    en: string;
-    my: string;
-  };
-  ageLimit: {
-    ja: string;
-    en: string;
-    my: string;
-  };
-  image: string;
-}
 
 export interface WorkerProgram {
   id: string;
@@ -148,20 +131,21 @@ export const siteData = {
     address: {
       postalCode: "〒204-0021",
       ja: "東京都清瀬市元町1-11-21 フローレス元町205号",
-      en: "Flawless Motomachi 205, 1-11-21 Motomachi, Kiyose-shi, Tokyo",
-      my: "တိုကျိုမြို့၊ ခီယိုဆဲမြို့နယ်၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလော်လက်စ် မိုတိုမာချီ ၂၀၅ ခန်း",
+      en: "Room 205, Flores Motomachi, 1-11-21 Motomachi, Kiyose-shi, Tokyo 204-0021, Japan",
+      my: "တိုကျိုမြို့၊ ခီယိုဆဲမြို့၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလိုရက်စ် မိုတိုမာချီ အခန်း ၂၀၅",
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
   },
 
-  // Semantic Navigation Bar (Home, About Us, Services, Support, Careers, Contact Us)
+  // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
   navigation: [
     { id: "home", href: "/#home", label: { ja: "ホーム", en: "Home", my: "ပင်မစာမျက်နှာ" } },
     { id: "about", href: "/#about", label: { ja: "会社概要", en: "About Us", my: "ကုမ္ပဏီအကြောင်း" } },
     { id: "services", href: "/#services", label: { ja: "サービス", en: "Services", my: "ဝန်ဆောင်မှုများ" } },
     { id: "support", href: "/#support", label: { ja: "支援内容", en: "Support", my: "ထောက်ပံ့မှုများ" } },
-    { id: "career", href: "/#career", label: { ja: "採用・求人", en: "Careers", my: "အလုပ်အကိုင်များ" } },
+    { id: "flow", href: "/#flow", label: { ja: "ご利用の流れ", en: "Process", my: "လုပ်ငန်းစဉ်" } },
+    { id: "faq", href: "/#faq", label: { ja: "よくあるご質問", en: "FAQ", my: "အမေး/အဖြေ" } },
     { id: "contact", href: "/#contact", label: { ja: "お問い合わせ", en: "Contact Us", my: "ဆက်သွယ်ရန်" } },
     { id: "phone", href: "tel:+81424971537", label: { ja: "042-497-1537", en: "042-497-1537", my: "042-497-1537" } },
   ] as NavItem[],
@@ -187,12 +171,6 @@ export const siteData = {
       en: "View 10 Pillars",
       my: "ထောက်ပံ့မှု ၁၀ ချက် ကြည့်ရန်",
       href: "#support",
-    },
-    ctaSecondary: {
-      ja: "求人情報を見る",
-      en: "View Job Openings",
-      my: "အလုပ်ခေါ်ယူမှုများ ကြည့်ရန်",
-      href: "#career",
     },
     highlights: [
       {
@@ -224,14 +202,14 @@ export const siteData = {
 
   about: {
     title: {
-      ja: "私たちが全力で支援します",
-      en: "We Support You with Complete Dedication",
-      my: "ကျွန်ုပ်တို့မှ အစွမ်းကုန် ကူညီထောက်ပံ့ပေးပါမည်",
+      ja: "支援内容",
+      en: "Support",
+      my: "ထောက်ပံ့မှုများ",
     },
     lead: {
-      ja: "１号特定技能外国人が「特定技能」の在留資格に基づく活動を安定的かつ円滑に行うことができるようにするための職業生活上，日常生活上又は社会生活上の支援を行う機関です。",
-      en: "We are an accredited agency dedicated to providing seamless living, working, and social integration support for Specified Skilled Workers (i) throughout their stay in Japan.",
-      my: "အမှတ် (၁) သတ်မှတ်ကျွမ်းကျင်လုပ်သား (Tokutei Ginou 1) ဗီဇာဖြင့် နေထိုင်ခွင့်ရရှိထားသော နိုင်ငံခြားသားများ အနေဖြင့် မိမိတို့၏ အလုပ်အကိုင်၊ နေ့စဉ်လူနေမှုဘဝနှင့် လူမှုဆက်ဆံရေးနယ်ပယ်တို့တွင် တည်ငြိမ်ချောမွေ့စွာ နေထိုင်လုပ်ကိုင်နိုင်ရန်အတွက် ဥပဒေအရ သတ်မှတ်ထားသော ပံ့ပိုးကူညီမှုများကို ပေးအပ်ဆောင်ရွက်ပေးပါသည်။",
+      ja: "私たちが全力で支援します。１号特定技能外国人が「特定技能」の在留資格に基づく活動を安定的かつ円滑に行うことができるようにするための職業生活上，日常生活上又は社会生活上の支援を行う機関です。",
+      en: "We Support You with Complete Dedication. We are an accredited agency dedicated to providing seamless living, working, and social integration support for Specified Skilled Workers (i) throughout their stay in Japan.",
+      my: "ကျွန်ုပ်တို့မှ အစွမ်းကုန် ကူညီထောက်ပံ့ပေးပါမည်။ အမှတ် (၁) သတ်မှတ်ကျွမ်းကျင်လုပ်သား (Tokutei Ginou 1) ဗီဇာဖြင့် နေထိုင်ခွင့်ရရှိထားသော နိုင်ငံခြားသားများ အနေဖြင့် မိမိတို့၏ အလုပ်အကိုင်၊ နေ့စဉ်လူနေမှုဘဝနှင့် လူမှုဆက်ဆံရေးနယ်ပယ်တို့တွင် တည်ငြိမ်ချောမွေ့စွာ နေထိုင်လုပ်ကိုင်နိုင်ရန်အတွက် ဥပဒေအရ သတ်မှတ်ထားသော ပံ့ပိုးကူညီမှုများကို ပေးအပ်ဆောင်ရွက်ပေးပါသည်။",
     },
     pillars: [
       { number: 1, title: { ja: "事前ガイダンスの実施", en: "Implementation of Pre-arrival Guidance", my: "ကြိုတင်ရှင်းလင်း လမ်းညွှန်မှု ပြုလုပ်ပေးခြင်း" } },
@@ -535,6 +513,149 @@ export const siteData = {
     },
   },
 
+  flow: {
+    title: {
+      ja: "ご利用の流れ",
+      en: "Process",
+      my: "လုပ်ငန်းစဉ်",
+    },
+    subtitle: {
+      ja: "特定技能外国人の受入れおよび支援開始までの標準的な流れをご案内します。",
+      en: "Standard process and workflow from initial consultation to employment and onboarding support.",
+      my: "သတ်မှတ်ကျွမ်းကျင်လုပ်သား ခေါ်ယူခန့်ထားခြင်းနှင့် ထောက်ပံ့မှု စတင်ခြင်းဆိုင်ရာ အဆင့်ဆင့် လုပ်ငန်းစဉ်များ။",
+    },
+    steps: [
+      {
+        number: 1,
+        title: {
+          ja: "お問い合わせ・ご相談",
+          en: "Inquiry & Consultation",
+          my: "မေးမြန်းတိုင်ပင်ခြင်း",
+        },
+      },
+      {
+        number: 2,
+        title: {
+          ja: "受入れ体制の確認",
+          en: "Review of Your Hiring Setup",
+          my: "လက်ခံမည့် အခြေအနေ စစ်ဆေးခြင်း",
+        },
+      },
+      {
+        number: 3,
+        title: {
+          ja: "支援委託契約の締結",
+          en: "Support Outsourcing Agreement",
+          my: "ထောက်ပံ့မှု လွှဲအပ်စာချုပ် ချုပ်ဆိုခြင်း",
+        },
+      },
+      {
+        number: 4,
+        title: {
+          ja: "在留資格の申請",
+          en: "Residence Status Application",
+          my: "နေထိုင်ခွင့် (ဗီဇာ) လျှောက်ထားခြင်း",
+        },
+      },
+      {
+        number: 5,
+        title: {
+          ja: "入国・就労開始",
+          en: "Arrival & Start of Work",
+          my: "ဂျပန်ရောက်ရှိခြင်းနှင့် အလုပ်စတင်ခြင်း",
+        },
+      },
+      {
+        number: 6,
+        title: {
+          ja: "定期面談・継続支援",
+          en: "Regular Interviews & Ongoing Support",
+          my: "ပုံမှန်တွေ့ဆုံမေးမြန်းခြင်းနှင့် ဆက်လက်ထောက်ပံ့ခြင်း",
+        },
+      },
+    ] as FlowStep[],
+  },
+
+  faq: {
+    title: {
+      ja: "よくあるご質問",
+      en: "FAQ",
+      my: "မေးလေ့ရှိသောမေးခွန်းများ",
+    },
+    subtitle: {
+      ja: "受入れ企業様や外国人材の皆様からよくいただくご質問と回答を掲載しています。",
+      en: "Answers to frequently asked questions from host companies and international candidates.",
+      my: "လက်ခံခန့်အပ်မည့် လုပ်ငန်းရှင်များနှင့် နိုင်ငံခြားသား ဝန်ထမ်းများ မကြာခဏ မေးလေ့ရှိသော မေးခွန်းများနှင့် အဖြေများ။",
+    },
+    items: [
+      {
+        id: "faq-1",
+        question: {
+          ja: "登録支援機関に委託できる支援の範囲は？",
+          en: "What support can we entrust to a Registered Support Organization?",
+          my: "登録支援機関 ကို ဘယ်လို ထောက်ပံ့မှုတွေ လွှဲအပ်လို့ရလဲ။",
+        },
+        answer: {
+          ja: "法定10項目の支援（事前ガイダンス、出入国の送迎、住居確保の支援、生活オリエンテーション、公的手続きへの同行、日本語学習の支援、相談・苦情対応、日本人との交流促進、転職支援、定期的な面談）を、すべて委託いただけます。",
+          en: "You can entrust all 10 statutory support items, from pre-arrival guidance and airport pickup to housing support, living orientation, accompaniment to public procedures, Japanese learning support, consultation, exchange facilitation, job-change support, and regular interviews.",
+          my: "ဥပဒေပြဋ္ဌာန်းထားတဲ့ ထောက်ပံ့မှု ၁၀ ချက် အားလုံးကို လွှဲအပ်နိုင်ပါတယ်။",
+        },
+      },
+      {
+        id: "faq-2",
+        question: {
+          ja: "介護分野でも対応できますか？",
+          en: "Can you support the nursing care sector?",
+          my: "ဘိုးဘွားစောင့်ရှောက်ရေး (介護) ကဏ္ဍမှာလည်း ကူညီနိုင်လား။",
+        },
+        answer: {
+          ja: "はい。介護分野を中心に、特定技能外国人の支援に対応しています。",
+          en: "Yes. We support Specified Skilled Workers with a focus on the nursing care sector.",
+          my: "ရပါတယ်။ 介護 ကို အဓိကထား ဆောင်ရွက်ပါတယ်။",
+        },
+      },
+      {
+        id: "faq-3",
+        question: {
+          ja: "ミャンマー人材の受入れは可能ですか？",
+          en: "Can we hire Myanmar workers?",
+          my: "မြန်မာလုပ်သားတွေ ခေါ်ယူလို့ ရလား။",
+        },
+        answer: {
+          ja: "はい、可能です。ミャンマー語での支援に対応しており、来日前のガイダンスから来日後の生活支援まで、ミャンマー語でサポートします。",
+          en: "Yes. We provide support in the Myanmar language, from pre-arrival guidance to living support after arrival.",
+          my: "ရပါတယ်။ မြန်မာဘာသာနဲ့ ကူညီပေးပါတယ်။",
+        },
+      },
+      {
+        id: "faq-4",
+        question: {
+          ja: "支援委託費の目安は？",
+          en: "What is the typical fee for outsourcing support?",
+          my: "ထောက်ပံ့မှု လွှဲအပ်ခ ဘယ်လောက်ကျလဲ။",
+        },
+        answer: {
+          ja: "対象の人数や支援内容により異なります。個別にお見積りしますので、お気軽にお問い合わせください。",
+          en: "It depends on the number of workers and the scope of support. We provide an individual quote, so please feel free to contact us.",
+          my: "လုပ်သားဦးရေနဲ့ ထောက်ပံ့မှုပေါ် မူတည်ပြီး တစ်ဦးချင်း ဈေးနှုန်း ထုတ်ပေးပါတယ်။",
+        },
+      },
+      {
+        id: "faq-5",
+        question: {
+          ja: "自社で支援する場合と、委託する場合の違いは？",
+          en: "What is the difference between supporting in-house and outsourcing?",
+          my: "ကိုယ်တိုင် ထောက်ပံ့တာနဲ့ လွှဲအပ်တာ ဘာကွာလဲ။",
+        },
+        answer: {
+          ja: "自社で支援を行うには、支援責任者・担当者の選任や、外国人が理解できる言語での対応など、一定の基準を満たす必要があります。委託する場合は、これらの支援を登録支援機関が担います。",
+          en: "To provide support in-house, a company must meet certain standards, such as appointing support staff and communicating in a language the worker understands. When you outsource, a Registered Support Organization handles these duties.",
+          my: "လွှဲအပ်ရင် ထောက်ပံ့မှုအားလုံးကို 登録支援機関 က တာဝန်ယူပါတယ်။",
+        },
+      },
+    ] as FaqItem[],
+  },
+
   contact: {
     title: { ja: "お問い合わせ", en: "Contact Us", my: "ဆက်သွယ်ရန်" },
     subtitle: {
@@ -545,8 +666,8 @@ export const siteData = {
     address: {
       label: { ja: "所在地", en: "Address", my: "လိပ်စာ" },
       ja: "東京都清瀬市元町1-11-21 フローレス元町205号",
-      en: "Flawless Motomachi 205, 1-11-21 Motomachi, Kiyose-shi, Tokyo",
-      my: "တိုကျိုမြို့၊ ခီယိုဆဲမြို့နယ်၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလော်လက်စ် မိုတိုမာချီ ၂၀၅ ခန်း",
+      en: "Room 205, Flores Motomachi, 1-11-21 Motomachi, Kiyose-shi, Tokyo, Japan",
+      my: "တိုကျိုမြို့၊ ခီယိုဆဲမြို့၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလိုရက်စ် မိုတိုမာချီ အခန်း ၂၀၅",
     },
     email: {
       label: { ja: "Eメール", en: "Email", my: "အီးမေးလ်" },
@@ -559,22 +680,22 @@ export const siteData = {
     },
     form: {
       name: {
-        label: { ja: "名前", en: "Full Name", my: "အမည်" },
-        placeholder: { ja: "お名前を入力してください", en: "Enter your full name", my: "အမည်" }
+        label: { ja: "お名前", en: "Full Name", my: "အမည်" },
+        placeholder: { ja: "お名前を入力してください", en: "Enter your full name", my: "အမည် အပြည့်အစုံ ရိုက်ထည့်ပါ" }
       },
       email: {
-        label: { ja: "Eメール", en: "Email", my: "အီးမေးလ်" },
-        placeholder: { ja: "メールアドレスを入力してください", en: "Enter your email address", my: "အီးမေးလ်" }
+        label: { ja: "メールアドレス", en: "Email Address", my: "အီးမေးလ်" },
+        placeholder: { ja: "メールアドレスを入力してください", en: "Enter your email address", my: "အီးမေးလ်လိပ်စာ ရိုက်ထည့်ပါ" }
       },
       phone: {
-        label: { ja: "電話", en: "Phone", my: "ဖုန်းနံပါတ်" },
-        placeholder: { ja: "電話番号を入力してください", en: "Enter your phone number", my: "ဖုန်းနံပါတ်" }
+        label: { ja: "電話番号", en: "Phone Number", my: "ဖုန်းနံပါတ်" },
+        placeholder: { ja: "電話番号を入力してください", en: "Enter your phone number", my: "ဖုန်းနံပါတ် ရိုက်ထည့်ပါ" }
       },
       message: {
-        label: { ja: "メッセージ", en: "Message", my: "မေးမြန်းလိုသော စာသား" },
-        placeholder: { ja: "ご相談・お問い合わせ内容をご記入ください", en: "Enter your inquiry or message", my: "မေးမြန်းလိုသော အကြောင်းအရာ" }
+        label: { ja: "お問い合わせ内容", en: "Inquiry Details", my: "မေးမြန်းလိုသော အကြောင်းအရာ" },
+        placeholder: { ja: "ご相談・お問い合わせ内容をご記入ください", en: "Enter your consultation or inquiry details", my: "ဆွေးနွေးမေးမြန်းလိုသည့် အကြောင်းအရာများကို ရေးသားပါ" }
       },
-      submit: { ja: "送信", en: "Send Message", my: "ပေးပို့မည်" },
+      submit: { ja: "送信する", en: "Send Message", my: "ပေးပို့မည်" },
       success: {
         ja: "お問い合わせありがとうございます。送信が完了しました。",
         en: "Thank you for contacting us. Your message has been sent successfully.",
@@ -583,303 +704,6 @@ export const siteData = {
     },
   },
 
-  career: {
-    title: {
-      ja: "採用・求人情報",
-      en: "Job Openings & Careers",
-      my: "အလုပ်ခေါ်ယူမှုနှင့် အလုပ်အကိုင်များ",
-    },
-    subtitle: {
-      ja: "特定技能外国人の皆様へ、安心・安定して日本で働ける最新の求人情報をご案内いたします。",
-      en: "Explore our latest verified Specified Skilled Worker job opportunities across Japan.",
-      my: "ဂျပန်နိုင်ငံတွင် တည်ငြိမ်စိတ်ချစွာ လုပ်ကိုင်နိုင်မည့် နောက်ဆုံးရ သတ်မှတ်ကျွမ်းကျင်လုပ်သား အလုပ်အကိုင်များ ဖြစ်ပါသည်။",
-    },
-    featuredImage: "/images/jobs/job-2025-11fudo.jpg",
-    filter: {
-      searchPlaceholder: {
-        ja: "職種・キーワードで検索 (例: 介護, 食品, 農業)...",
-        en: "Search by title or keyword (e.g. Care, Food)...",
-        my: "အလုပ်အကိုင် သို့မဟုတ် စကားလုံးဖြင့် ရှာဖွေရန်...",
-      },
-      sectorLabel: {
-        ja: "業種で絞り込み (複数選択可)",
-        en: "Filter by Industry Sector",
-        my: "လုပ်ငန်းကဏ္ဍအလိုက် စစ်ထုတ်ရန်",
-      },
-      resultsLabel: {
-        ja: "該当求人",
-        en: "Jobs Found",
-        my: "တွေ့ရှိသည့် အလုပ်",
-      },
-      resetLabel: {
-        ja: "条件クリア",
-        en: "Reset Filters",
-        my: "စစ်ထုတ်မှု ရှင်းလင်းမည်",
-      },
-      noResults: {
-        ja: "該当する求人は見つかりませんでした。検索条件を変更するか、条件をリセットしてください。",
-        en: "No job openings found matching your criteria. Please adjust your filters or reset.",
-        my: "ရှာဖွေမှုနှင့် ကိုက်ညီသော အလုပ် မတွေ့ရှိပါ။ စစ်ထုတ်မှုများကို ပြန်လည်ချိန်ညှိပါ။",
-      },
-      categories: [
-        { id: "kaigo", label: { ja: "介護 (Nursing)", en: "Nursing Care", my: "ဘိုးဘွားရိပ်သာ" } },
-        { id: "food", label: { ja: "食品加工 (Food)", en: "Food Processing", my: "စားသောက်ကုန်" } },
-        { id: "restaurant", label: { ja: "外食業 (Restaurant)", en: "Food Service", my: "စားသောက်ဆိုင်" } },
-        { id: "agriculture", label: { ja: "農業 (Agriculture)", en: "Agriculture", my: "စိုက်ပျိုးရေး" } },
-        { id: "manufacturing", label: { ja: "機械・製造 (Manufacturing)", en: "Manufacturing", my: "စက်မှုထုတ်လုပ်ရေး" } },
-        { id: "cleaning", label: { ja: "清掃・ビルメン (Cleaning)", en: "Building Cleaning", my: "သန့်ရှင်းရေး" } },
-      ],
-    },
-    tableHeaders: {
-      no: { ja: "No.", en: "No.", my: "စဉ်" },
-      title: { ja: "職種 / 業務内容", en: "Job Title", my: "အလုပ်အကိုင်" },
-      salary: { ja: "給与 (月給目安)", en: "Salary", my: "လစာ" },
-      joinDate: { ja: "入社時期", en: "Join Date", my: "ဝင်ရောက်ရမည့် ကာလ" },
-      ageLimit: { ja: "年齢制限", en: "Age Limit", my: "အသက်ကန့်သတ်ချက်" },
-    },
-    jobs: [
-      {
-        no: 1,
-        category: "kaigo",
-        categoryLabel: {
-          ja: "介護",
-          en: "Care",
-          my: "ခိုင်ဂို",
-        },
-        title: {
-          ja: "介護施設スタッフ (高齢者ケア)",
-          en: "Nursing Care Staff (Elderly Care)",
-          my: "ဘိုးဘွားရိပ်သာ စောင့်ရှောက်ရေး (ခိုင်ဂို)",
-        },
-        salary: {
-          ja: "月給 210,000円〜260,000円",
-          en: "¥210,000 - ¥260,000 / mo",
-          my: "လစာ ၂၁၀,၀၀၀ ~ ၂၆၀,၀၀၀ ယန်း",
-          line1: {
-            ja: "月給 210,000円〜",
-            en: "¥210,000 ~",
-            my: "၂၁၀,၀၀၀ ယန်း〜",
-          },
-          line2: {
-            ja: "260,000円",
-            en: "¥260,000",
-            my: "၂၆၀,၀၀၀ ယန်း",
-          },
-        },
-        joinDate: {
-          ja: "随時 (2026年5月〜)",
-          en: "Rolling (May 2026~)",
-          my: "အမြဲမပြတ် (၂၀၂၆ မေလ~)",
-        },
-        ageLimit: {
-          ja: "18歳〜38歳",
-          en: "18 - 38 years",
-          my: "၁၈ နှစ် ~ ၃၈ နှစ်",
-        },
-        image: "/images/jobs/job-2025-11fudo.jpg",
-      },
-      {
-        no: 2,
-        category: "food",
-        categoryLabel: {
-          ja: "食品加工",
-          en: "Food",
-          my: "စားသောက်ကုန်",
-        },
-        title: {
-          ja: "食品加工・お弁当惣菜製造",
-          en: "Food Processing & Bento Manufacturing",
-          my: "စားသောက်ကုန်နှင့် ဘင်တိုထုတ်လုပ်ရေး",
-        },
-        salary: {
-          ja: "月給 200,000円〜245,000円",
-          en: "¥200,000 - ¥245,000 / mo",
-          my: "လစာ ၂၀၀,၀၀၀ ~ ၂၄၅,၀၀၀ ယန်း",
-          line1: {
-            ja: "月給 200,000円〜",
-            en: "¥200,000 ~",
-            my: "၂၀၀,၀၀၀ ယန်း〜",
-          },
-          line2: {
-            ja: "245,000円",
-            en: "¥245,000",
-            my: "၂၄၅,၀၀၀ ယန်း",
-          },
-        },
-        joinDate: {
-          ja: "2026年6月入社",
-          en: "June 2026",
-          my: "၂၀၂၆ ဇွန်လ",
-        },
-        ageLimit: {
-          ja: "18歳〜35歳",
-          en: "18 - 35 years",
-          my: "၁၈ နှစ် ~ ၃၅ နှစ်",
-        },
-        image: "/images/jobs/job-2025-11fudo.jpg",
-      },
-      {
-        no: 3,
-        category: "restaurant",
-        categoryLabel: {
-          ja: "外食業",
-          en: "Restaurant",
-          my: "စားသောက်ဆိုင်",
-        },
-        title: {
-          ja: "外食業 (ホール・キッチンスタッフ)",
-          en: "Food Service (Hall & Kitchen Staff)",
-          my: "စားသောက်ဆိုင် ဝန်ဆောင်မှုနှင့် မီးဖိုချောင်",
-        },
-        salary: {
-          ja: "月給 205,000円〜250,000円",
-          en: "¥205,000 - ¥250,000 / mo",
-          my: "လစာ ၂၀၅,၀၀၀ ~ ၂၅၀,၀၀၀ ယန်း",
-          line1: {
-            ja: "月給 205,000円〜",
-            en: "¥205,000 ~",
-            my: "၂၀၅,၀၀၀ ယန်း〜",
-          },
-          line2: {
-            ja: "250,000円",
-            en: "¥250,000",
-            my: "၂၅၀,၀၀၀ ယန်း",
-          },
-        },
-        joinDate: {
-          ja: "2026年6月入社",
-          en: "June 2026",
-          my: "၂၀၂၆ ဇွန်လ",
-        },
-        ageLimit: {
-          ja: "18歳〜32歳",
-          en: "18 - 32 years",
-          my: "၁၈ နှစ် ~ ၃၂ နှစ်",
-        },
-        image: "/images/jobs/job-2025-11fudo.jpg",
-      },
-      {
-        no: 4,
-        category: "agriculture",
-        categoryLabel: {
-          ja: "農業",
-          en: "Agriculture",
-          my: "စိုက်ပျိုးရေး",
-        },
-        title: {
-          ja: "農業・施設園芸・野菜果物栽培",
-          en: "Agriculture & Crop Cultivation",
-          my: "စိုက်ပျိုးရေးနှင့် သီးနှံစိုက်ပျိုးစနစ်",
-        },
-        salary: {
-          ja: "月給 195,000円〜235,000円",
-          en: "¥195,000 - ¥235,000 / mo",
-          my: "လစာ ၁၉၅,၀၀၀ ~ ၂၃၅,၀၀၀ ယန်း",
-          line1: {
-            ja: "月給 195,000円〜",
-            en: "¥195,000 ~",
-            my: "၁၉၅,၀၀၀ ယန်း〜",
-          },
-          line2: {
-            ja: "235,000円",
-            en: "¥235,000",
-            my: "၂၃၅,၀၀၀ ယန်း",
-          },
-        },
-        joinDate: {
-          ja: "2026年7月入社",
-          en: "July 2026",
-          my: "၂၀၂၆ ဇူလိုင်လ",
-        },
-        ageLimit: {
-          ja: "18歳〜40歳",
-          en: "18 - 40 years",
-          my: "၁၈ နှစ် ~ ၄၀ နှစ်",
-        },
-        image: "/images/jobs/job-yamaguchi.jpg",
-      },
-      {
-        no: 5,
-        category: "manufacturing",
-        categoryLabel: {
-          ja: "機械・製造",
-          en: "Manufacturing",
-          my: "စက်မှုထုတ်လုပ်ရေး",
-        },
-        title: {
-          ja: "機械加工・工場製造ラインオペレーター",
-          en: "Machinery Processing & Factory Line",
-          my: "စက်မှုစက်ရုံ ထုတ်လုပ်ရေးလိုင်း",
-        },
-        salary: {
-          ja: "月給 215,000円〜270,000円",
-          en: "¥215,000 - ¥270,000 / mo",
-          my: "လစာ ၂၁၅,၀၀၀ ~ ၂၇၀,၀၀၀ ယန်း",
-          line1: {
-            ja: "月給 215,000円〜",
-            en: "¥215,000 ~",
-            my: "၂၁၅,၀၀၀ ယန်း〜",
-          },
-          line2: {
-            ja: "270,000円",
-            en: "¥270,000",
-            my: "၂၇၀,၀၀၀ ယန်း",
-          },
-        },
-        joinDate: {
-          ja: "2026年7月入社",
-          en: "July 2026",
-          my: "၂၀၂၆ ဇူလိုင်လ",
-        },
-        ageLimit: {
-          ja: "18歳〜35歳",
-          en: "18 - 35 years",
-          my: "၁၈ နှစ် ~ ၃၅ နှစ်",
-        },
-        image: "/images/jobs/job-yamaguchi.jpg",
-      },
-      {
-        no: 6,
-        category: "cleaning",
-        categoryLabel: {
-          ja: "清掃",
-          en: "Cleaning",
-          my: "သန့်ရှင်းရေး",
-        },
-        title: {
-          ja: "ビルクリーニング・施設衛生管理",
-          en: "Building Cleaning & Sanitation Management",
-          my: "အဆောက်အအုံ သန့်ရှင်းရေးနှင့် ထိန်းသိမ်းရေး",
-        },
-        salary: {
-          ja: "月給 198,000円〜240,000円",
-          en: "¥198,000 - ¥240,000 / mo",
-          my: "လစာ ၁၉၈,၀၀၀ ~ ၂၄၀,၀၀၀ ယန်း",
-          line1: {
-            ja: "月給 198,000円〜",
-            en: "¥198,000 ~",
-            my: "၁၉၈,၀၀၀ ယန်း〜",
-          },
-          line2: {
-            ja: "240,000円",
-            en: "¥240,000",
-            my: "၂၄၀,၀၀၀ ယန်း",
-          },
-        },
-        joinDate: {
-          ja: "随時 (2026年5月〜)",
-          en: "Rolling (May 2026~)",
-          my: "အမြဲမပြတ် (၂၀၂၆ မေလ~)",
-        },
-        ageLimit: {
-          ja: "18歳〜42歳",
-          en: "18 - 42 years",
-          my: "၁၈ နှစ် ~ ၄၂ နှစ်",
-        },
-        image: "/images/jobs/job-yamaguchi.jpg",
-      },
-    ] as CareerJobItem[],
-  },
 
   jobs: [
     { id: "1", image: "/images/jobs/job-2025-11fudo.jpg", alt: "求人票 (食品加工・お弁当惣菜製造)" },

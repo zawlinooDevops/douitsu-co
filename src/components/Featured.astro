@@ -9,26 +9,70 @@ import SectionHeader from './SectionHeader.astro';
 <!-- ============================================================ -->
 <section
   id="about"
-  class="pt-6 sm:pt-8 md:pt-10 pb-16 md:pb-24 bg-slate-100/90 border-b border-slate-200/60 relative overflow-hidden scroll-mt-24"
+  class="pt-6 sm:pt-8 md:pt-10 pb-16 md:pb-24 bg-white border-b border-slate-200/60 relative overflow-hidden scroll-mt-24"
 >
   <div id="company" class="absolute -top-24"></div>
   <div id="featured" class="absolute -top-24"></div>
 
-  <!-- Background Pattern: Technical Dot-Grid -->
-  <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.04]">
+  <!-- Background Pattern: Japanese Sakura Chirashi (桜散らし - Floating Cherry Flowers & Petals) with Top Fade -->
+  <div class="absolute inset-x-0 top-0 h-[480px] md:h-[540px] pointer-events-none overflow-hidden opacity-[0.14] [mask-image:linear-gradient(to_bottom,black_0%,black_35%,transparent_90%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_35%,transparent_90%)]">
     <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <pattern id="about-dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1.5" fill="#105c8e" />
+        <pattern id="about-sakura-chirashi" width="80" height="80" patternUnits="userSpaceOnUse">
+          <g fill="none" stroke="#105c8e" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Center Full Blossom (40, 40) -->
+            <g transform="translate(40, 40) rotate(15) scale(0.8)">
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(72)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(144)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(216)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(288)" />
+              <circle cx="0" cy="0" r="1.8" fill="#105c8e" />
+            </g>
+            <!-- Corner Blossoms (tiled at 0,0 / 80,0 / 0,80 / 80,80) -->
+            <g transform="translate(0, 0) rotate(48) scale(0.8)">
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(72)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(144)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(216)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(288)" />
+              <circle cx="0" cy="0" r="1.8" fill="#105c8e" />
+            </g>
+            <g transform="translate(80, 0) rotate(48) scale(0.8)">
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(72)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(144)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(216)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(288)" />
+              <circle cx="0" cy="0" r="1.8" fill="#105c8e" />
+            </g>
+            <g transform="translate(0, 80) rotate(48) scale(0.8)">
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(72)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(144)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(216)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(288)" />
+              <circle cx="0" cy="0" r="1.8" fill="#105c8e" />
+            </g>
+            <g transform="translate(80, 80) rotate(48) scale(0.8)">
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(72)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(144)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(216)" />
+              <path d="M 0,0 C -3.5,-3.5 -6.5,-8.5 -4.5,-13 C -2.5,-15.5 -0.8,-13.2 0,-10.5 C 0.8,-13.2 2.5,-15.5 4.5,-13 C 6.5,-8.5 3.5,-3.5 0,0 Z" transform="rotate(288)" />
+              <circle cx="0" cy="0" r="1.8" fill="#105c8e" />
+            </g>
+            <!-- Floating Petals Dancing in the Breeze -->
+            <path d="M 0,-6 C -2.2,-4 -3.8,-1 -2.2,2.2 C -1,4.5 1.5,5 2.5,3 C 3.8,0.8 3.2,-2 1.5,-4.2 C 0.8,-5.5 0,-6 0,-6 Z" transform="translate(20, 22) rotate(75) scale(1.1)" />
+            <path d="M 0,-6 C -2.2,-4 -3.8,-1 -2.2,2.2 C -1,4.5 1.5,5 2.5,3 C 3.8,0.8 3.2,-2 1.5,-4.2 C 0.8,-5.5 0,-6 0,-6 Z" transform="translate(62, 18) rotate(-40) scale(0.95)" />
+            <path d="M 0,-6 C -2.2,-4 -3.8,-1 -2.2,2.2 C -1,4.5 1.5,5 2.5,3 C 3.8,0.8 3.2,-2 1.5,-4.2 C 0.8,-5.5 0,-6 0,-6 Z" transform="translate(18, 60) rotate(35) scale(1.15)" />
+            <path d="M 0,-6 C -2.2,-4 -3.8,-1 -2.2,2.2 C -1,4.5 1.5,5 2.5,3 C 3.8,0.8 3.2,-2 1.5,-4.2 C 0.8,-5.5 0,-6 0,-6 Z" transform="translate(60, 62) rotate(-15) scale(1.0)" />
+          </g>
         </pattern>
       </defs>
-      <rect width="100%" height="100%" fill="url(#about-dot-grid)" />
+      <rect width="100%" height="100%" fill="url(#about-sakura-chirashi)" />
     </svg>
   </div>
-
-  <!-- Decorative Ambient Glow Orbs -->
-  <div class="absolute -top-20 -left-20 w-80 h-80 bg-douitsu-sky/15 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-douitsu-primary/10 rounded-full blur-3xl pointer-events-none"></div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     

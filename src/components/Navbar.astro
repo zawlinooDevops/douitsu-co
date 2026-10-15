@@ -12,7 +12,7 @@ import { siteData } from '../data/content';
     activeSection: 'home',
     isClicking: false,
     _clickTimer: null,
-    sections: ['home', 'about', 'services', 'support', 'career', 'contact'],
+    sections: ['home', 'about', 'services', 'support', 'flow', 'faq', 'contact'],
 
     scrollToSection(id) {
       this.activeSection = id;
@@ -107,7 +107,7 @@ import { siteData } from '../data/content';
         <div class="inline-flex p-0.5 rounded-lg bg-slate-800/80 border border-slate-700">
           <button
             type="button"
-            @click="lang = 'ja'; localStorage.setItem('douitsu_lang', 'ja')"
+            @click="lang = 'ja'"
             :class="{ 'bg-douitsu-primary text-white shadow-xs font-bold': lang === 'ja', 'text-slate-300 hover:text-white': lang !== 'ja' }"
             class="px-2 py-0.5 text-[11px] rounded transition-all flex items-center gap-1"
           >
@@ -116,7 +116,7 @@ import { siteData } from '../data/content';
           </button>
           <button
             type="button"
-            @click="lang = 'en'; localStorage.setItem('douitsu_lang', 'en')"
+            @click="lang = 'en'"
             :class="{ 'bg-douitsu-primary text-white shadow-xs font-bold': lang === 'en', 'text-slate-300 hover:text-white': lang !== 'en' }"
             class="px-2 py-0.5 text-[11px] rounded transition-all flex items-center gap-1"
           >
@@ -125,7 +125,7 @@ import { siteData } from '../data/content';
           </button>
           <button
             type="button"
-            @click="lang = 'my'; localStorage.setItem('douitsu_lang', 'my')"
+            @click="lang = 'my'"
             :class="{ 'bg-douitsu-primary text-white shadow-xs font-bold': lang === 'my', 'text-slate-300 hover:text-white': lang !== 'my' }"
             class="px-2 py-0.5 text-[11px] rounded transition-all flex items-center gap-1"
           >
@@ -175,12 +175,12 @@ import { siteData } from '../data/content';
       </a>
 
       <!-- Right: Main Menu Links + Contact Us Button -->
-      <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-1 xl:gap-1.5">
+      <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-0.5 xl:gap-1.5">
         {siteData.navigation.filter(item => item.id !== 'phone' && item.id !== 'contact').map((item) => (
           <a
             href={item.href}
             @click={`scrollToSection('${item.id}')`}
-            class="relative px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200"
+            class="whitespace-nowrap relative px-2 lg:px-2.5 xl:px-3 py-2 rounded-xl text-xs xl:text-sm font-bold transition-all duration-200 shrink-0"
             :class={`activeSection === '${item.id}'
               ? 'text-douitsu-primary bg-douitsu-ice ring-1 ring-douitsu-primary/20 shadow-xs font-extrabold'
               : 'text-slate-700 hover:text-douitsu-primary hover:bg-slate-100/80'`}
@@ -205,7 +205,7 @@ import { siteData } from '../data/content';
         <a
           href="/#contact"
           @click="scrollToSection('contact')"
-          class="ml-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200"
+          class="whitespace-nowrap ml-1.5 xl:ml-2 inline-flex items-center gap-1.5 px-3 xl:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 shrink-0"
           :class="activeSection === 'contact'
             ? 'bg-douitsu-navy text-white ring-2 ring-douitsu-primary ring-offset-2 shadow-md'
             : 'bg-douitsu-primary hover:bg-douitsu-blue text-white shadow-xs hover:shadow-sm'"

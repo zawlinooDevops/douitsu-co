@@ -31,6 +31,30 @@ export interface SupportPillar {
   };
 }
 
+export interface ProcessStep {
+  number: number;
+  stepTag: string;
+  title: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+}
+
+export interface FaqItem {
+  id: string;
+  q: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  a: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+}
+
 export interface JobFlyer {
   id: string;
   image: string;
@@ -65,7 +89,7 @@ Declared on `<html>` in `src/layouts/Layout.astro`:
 <html
   lang="ja"
   x-data="{
-    lang: (typeof localStorage !== 'undefined' && localStorage.getItem('douitsu_lang')) || 'ja'
+    lang: 'ja'
   }"
 >
 ```
@@ -80,13 +104,13 @@ To prevent brief flashes of translated content during initial page load, non-def
 ```
 
 ### Language Switcher Implementation (`Navbar.astro`)
-The switcher updates both the Alpine reactive variable and `localStorage` simultaneously:
+The switcher updates the Alpine reactive variable instantly (always defaulting to Japanese on fresh load / reload; browser `localStorage` retention is disabled per user rule to ensure canonical Japanese initial presentation for all visitors):
 
 ```html
 <button
   type="button"
-  @click="lang = 'ja'; localStorage.setItem('douitsu_lang', 'ja')"
-  :class="{ 'bg-douitsu-blue text-white shadow-xs font-bold': lang === 'ja', 'text-slate-300 hover:text-white': lang !== 'ja' }"
+  @click="lang = 'ja'"
+  :class="{ 'bg-douitsu-primary text-white shadow-xs font-bold': lang === 'ja', 'text-slate-300 hover:text-white': lang !== 'ja' }"
   class="px-2 py-0.5 text-[11px] rounded transition-all flex items-center gap-1"
 >
   <span>🇯🇵</span>
@@ -100,6 +124,7 @@ The switcher updates both the Alpine reactive variable and `localStorage` simult
 
 When updating or modifying translations, agents must adhere to the standardized terminology below:
 
+### A. Statutory & Immigration Terminology
 | English | Japanese (Official Legal Term) | Myanmar (မြန်မာပြန် ဝေါဟာရ) |
 |---|---|---|
 | Specified Skilled Worker (SSW) | 特定技能 (Tokutei Ginou) | သတ်မှတ်ကျွမ်းကျင်လုပ်သား |
@@ -113,6 +138,29 @@ When updating or modifying translations, agents must adhere to the standardized 
 | Nursing Care Sector | 介護 (Kaigo) | ဘိုးဘွားရိပ်သာ စောင့်ရှောက်ရေး (ခိုင်ဂို) |
 | Food Service / Restaurant Sector | 外食業 (Gaishokugyou) | စားသောက်ဆိုင်နှင့် ဝန်ဆောင်မှုလုပ်ငန်း |
 | Food & Beverage Manufacturing | 飲食料品製造業 / 食品加工 | စားသောက်ကုန် ထုတ်လုပ်ရေးလုပ်ငန်း |
+
+### B. Verified Address Terminology
+| Component | Japanese | English | Myanmar |
+|---|---|---|---|
+| Tokyo Metropolis | 東京都 | Tokyo / Tokyo Metropolis | တိုကျိုမြို့ |
+| Kiyose City | 清瀬市 | Kiyose-shi / Kiyose City | ခီယိုဆဲမြို့ |
+| Motomachi 1-11-21 | 元町1-11-21 | 1-11-21 Motomachi | မိုတိုမာချီ ၁-၁၁-၂၁ |
+| Flores Motomachi (Building) | フローレス元町 | Flores Motomachi | ဖလိုရက်စ် မိုတိုမာချီ |
+| Room 205 | 205号 | Room 205 | အခန်း ၂၀၅ |
+| Complete Address Line | 東京都清瀬市元町1-11-21 フローレス元町205号 | Room 205, Flores Motomachi, 1-11-21 Motomachi, Kiyose-shi, Tokyo, Japan | တိုကျိုမြို့၊ ခီယိုဆဲမြို့၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလိုရက်စ် မိုတိုမာချီ အခန်း ၂၀၅ |
+
+### C. Contact Form Labels & Placeholders (B2B Etiquette)
+| Element | Japanese | English | Myanmar |
+|---|---|---|---|
+| Name Label | お名前 (Polite) | Full Name | အမည် |
+| Name Placeholder | お名前を入力してください | Enter your full name | အမည် အပြည့်အစုံ ရိုက်ထည့်ပါ |
+| Email Label | メールアドレス | Email Address | အီးမေးလ် |
+| Email Placeholder | メールアドレスを入力してください | Enter your email address | အီးမေးလ်လိပ်စာ ရိုက်ထည့်ပါ |
+| Phone Label | 電話番号 | Phone Number | ဖုန်းနံပါတ် |
+| Phone Placeholder | 電話番号を入力してください | Enter your phone number | ဖုန်းနံပါတ် ရိုက်ထည့်ပါ |
+| Inquiry Label | お問い合わせ内容 | Inquiry Details | မေးမြန်းလိုသော အကြောင်းအရာ |
+| Inquiry Placeholder | ご相談・お問い合わせ内容をご記入ください | Enter your consultation or inquiry details | ဆွေးနွေးမေးမြန်းလိုသည့် အကြောင်းအရာများကို ရေးသားပါ |
+| Submit Button | 送信する (Active Verb) | Send Message | ပေးပို့မည် |
 
 ---
 

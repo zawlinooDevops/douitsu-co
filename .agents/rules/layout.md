@@ -15,7 +15,8 @@ The website uses a unified, high-performance single-page scroll layout:
   ├── #about       (alias #company)     -> Company Profile / About Us & Kaigo PDF Downloads
   ├── #services    (alias #section_3)   -> 3 Feature Cards & Official Registration Certificate
   ├── #support     (alias #section_2)   -> 10 Statutory Support Pillars & Support Gallery
-  ├── #career      (alias #jobs)        -> Career Openings (Left Poster Visual, Right 6-Job Table with Flyer Lightbox)
+  ├── #flow                             -> Process / Service Flow (ご利用の流れ)
+  ├── #faq                              -> Frequently Asked Questions (よくあるご質問)
   └── #contact     (alias #section_4)   -> Office Location & Interactive Contact Form
 ```
 
@@ -47,13 +48,14 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
   - `/#about` (会社概要 / About Us / ကုမ္ပဏီအကြောင်း)
   - `/#services` (サービス / Services / ဝန်ဆောင်မှုများ)
   - `/#support` (支援内容 / Support / ထောက်ပံ့မှုများ)
-  - `/#career` (採用・求人 / Careers / အလုပ်အကိုင်များ)
+  - `/#flow` (ご利用の流れ / Process / လုပ်ငန်းစဉ်)
+  - `/#faq` (よくあるご質問 / FAQ / အမေး/အဖြေ)
   - CTA Button: `/#contact` (お問い合わせ / Contact Us / ဆက်သွယ်ရန်) styled with `bg-douitsu-primary hover:bg-douitsu-blue text-white font-bold px-4 py-2 rounded-xl`.
 - **Reactive Scrollspy Active Menu Engine**:
   - Managed via Alpine.js on `<header>` (`activeSection: 'home'`).
   - Active desktop menu items highlight with `text-douitsu-primary bg-douitsu-ice ring-1 ring-douitsu-primary/20 shadow-xs font-extrabold` and an animated accent pill line at the bottom.
   - Active mobile drawer items highlight with `border-l-4 border-douitsu-primary bg-douitsu-ice text-douitsu-primary font-extrabold` and a blue indicator dot.
-  - Dynamically detects viewport scroll position across all 6 sections with bottom-of-page contact fallback and hash URL support.
+  - Dynamically detects viewport scroll position across all 7 sections with bottom-of-page contact fallback and hash URL support.
 - **Mobile Hamburger Trigger (`lg:hidden`)**:
   - Toggles Alpine.js boolean `mobileMenuOpen`.
 - **Mobile Slide-Down Drawer**:
@@ -117,7 +119,7 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
 - **Background**: Ice-Blue Gradient (`bg-gradient-to-b from-douitsu-ice/85 via-blue-50/40 to-slate-50/80 border-b border-slate-200/60 py-20 md:py-28`).
 - **Pattern**: Japanese Seigaiha (青海波 - Calm Ocean Waves, `50x25`, `opacity-[0.035]`).
 - **Graphic Shapes**: Organic ambient glow orbs (`bg-douitsu-primary/10`, `bg-douitsu-sky/15 blur-3xl`), step connector feel.
-- **Heading**: "私たちが全力で支援します" with statutory agency mission statement lead paragraph.
+- **Heading**: "支援内容" (Support / 私たちが全力で支援します) with statutory agency mission statement lead paragraph.
 - **2-Column Responsive Layout (`grid-cols-1 lg:grid-cols-12 gap-10`)**:
   - **Left Column (`lg:col-span-5`)**:
     - Main visual poster (`/images/landing/about-main.png`) inside a rounded card with hover zoom effect.
@@ -126,35 +128,58 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
     - Sub-grid of 10 support cards (`grid-cols-1 sm:grid-cols-2 gap-3.5`).
     - Each card displays a prominent numbered square badge (`1` to `10`) in `bg-douitsu-primary` and bold multilingual duty description.
 
-### Section 5: Careers & Job Openings (`#career` / `src/components/Career.astro`)
-- **Background**: Cool Slate Tint (`bg-slate-50/90 border-b border-slate-200/60 py-20 md:py-28`).
-- **Pattern**: 45° Dynamic Micro Diagonal Lines (`16x16`, `opacity-[0.03]`).
-- **Graphic Shapes**: Decorative ambient glow orbs (`bg-douitsu-primary/10`, `bg-douitsu-sky/15 blur-3xl`).
-- **Heading**: "採用・求人情報" with modernized left-aligned section header.
-- **Full-Width Interactive Layout (`max-w-7xl mx-auto`)**:
-  - **Top Interactive Search & Filter Bar**:
-    - Real-time search box (`searchQuery`) with clear action.
-    - Sector multi-select checkboxes for 6 key shortage sectors (Care, Food, Restaurant, Agriculture, Manufacturing, Cleaning).
-    - Result count indicator pill and filter reset button.
-  - **Full-Width Job Table (`min-w-[720px]`)**:
-    - Responsive table with columns: No., Title (with sector tag), Salary (compact 2-line vertical display), Join Date, Age Limit, Flyer View Action.
-    - Clicking any row triggers Alpine.js lightbox popup displaying that job's detailed recruitment flyer.
-    - Empty state message when query returns 0 matches.
+### Section 5: Process & Workflow (`#flow` / `src/components/Flow.astro`)
+- **Background**: Pure White (`bg-white border-b border-slate-200/60 py-20 md:py-28`).
+- **Heading**: "ご利用の流れ" (Process / လုပ်ငန်းစဉ်) with standard onboarding process lead.
+- **6-Step Statutory Onboarding Cards (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`)**:
+  - Structured after the `#support` statutory list card style.
+  - Each card features a solid primary blue number badge (`w-10 h-10` or `w-12 h-12`), a `STEP 01` tag, and bold multilingual duty titles:
+    1. お問い合わせ・ご相談 / Inquiry & Consultation / မေးမြန်းတိုင်ပင်ခြင်း
+    2. 受入れ体制の確認 / Review of Your Hiring Setup / လက်ခံမည့် အခြေအနေ စစ်ဆေးခြင်း
+    3. 支援委託契約の締結 / Support Outsourcing Agreement / ထောက်ပံ့မှု လွှဲအပ်စာချုပ် ချုပ်ဆိုခြင်း
+    4. 在留資格の申請 / Residence Status Application / နေထိုင်ခွင့် (ဗီဇာ) လျှောက်ထားခြင်း
+    5. 入国・就労開始 / Arrival & Start of Work / ဂျပန်ရောက်ရှိခြင်းနှင့် အလုပ်စတင်ခြင်း
+    6. 定期面談・継続支援 / Regular Interviews & Ongoing Support / ပုံမှန်တွေ့ဆုံမေးမြန်းခြင်းနှင့် ဆက်လက်ထောက်ပံ့ခြင်း
+- **Bottom Callout**: Consultation invitation banner linking directly to `#contact`.
 
-### Section 6: Inquiries & Contact (`#contact` / `src/components/Contact.astro`)
-- **Background**: Ambient Horizon Gradient (`bg-gradient-to-b from-white via-slate-50/50 to-douitsu-ice/30 py-20 md:py-28`).
-- **Pattern**: Topographic Coordinates Matrix (`36x36`, `opacity-[0.035]`).
-- **Graphic Shapes**: Office beacon glow (`bg-douitsu-sky/15 blur-3xl`), bottom dark horizon transition, soft sakura tint (`bg-douitsu-sakura-soft/40 blur-2xl`).
+### Section 6: Frequently Asked Questions (`#faq` / `src/components/Faq.astro`)
+- **Background**: Pure White (`bg-white border-b border-slate-200/60 py-20 md:py-28`).
+- **Pattern**: Dual Dashed Square Grid Flanks (`stroke="#94a3b8"`, `32x32` grid, `stroke-dasharray="3,3"`, masked with inward horizontal gradient) positioned symmetrically on left and right borders.
+- **Heading**: "よくあるご質問" (FAQ / မေးလေ့ရှိသောမေးခွန်းများ) with inquiry prompt.
+- **5 Trilingual Accordion Cards**:
+  - Independent Alpine.js toggle state (`x-data="{ isOpen: index === 0 }"`).
+  - Prominent question badge `Q` (`bg-douitsu-primary/10 text-douitsu-primary font-bold`), animated rotating chevron, and answer box with `A` badge (`bg-emerald-50 text-emerald-600 font-bold`).
+  - Covers:
+    1. 登録支援機関に委託できる支援の範囲は？ (Scope of 10 statutory items)
+    2. 介護分野でも対応できますか？ (Nursing care sector expertise)
+    3. ミャンマー人材の受入れは可能ですか？ (Myanmar personnel recruitment)
+    4. 支援委託費の目安は？ (Outsourcing fee estimate)
+    5. 自社で支援する場合と、委託する場合の違いは？ (In-house vs outsourcing requirements)
+
+### Section 7: Inquiries & Contact (`#contact` / `src/components/Contact.astro`)
+- **Background**: Solid Ice-Blue (`bg-douitsu-ice relative overflow-hidden scroll-mt-24` / `#eff6fa`) providing high-contrast visual separation and reassuring stability.
 - **2-Column Responsive Layout (`grid-cols-1 lg:grid-cols-12 gap-12`)**:
   - **Left Column (`lg:col-span-5`) — Office Information**:
-    - Company title lockup.
-    - Office Address card with map pin icon.
+    - Company title lockup (`DOUITSU合同会社 / DOUITSU LLC`).
+    - Office Address card with map pin icon and fully verified trilingual address:
+      - **JA**: `東京都清瀬市元町1-11-21 フローレス元町205号`
+      - **EN**: `Room 205, Flores Motomachi, 1-11-21 Motomachi, Kiyose-shi, Tokyo, Japan` (Corrected "Flores", added "Room 205")
+      - **MY**: `တိုကျိုမြို့၊ ခီယိုဆဲမြို့၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလိုရက်စ် မိုတိုမာချီ အခန်း ၂၀၅` (Corrected "ဖလိုရက်စ်", "အခန်း ၂၀၅", and "ခီယိုဆဲမြို့")
     - Direct phone link (`042-497-1537`).
     - Direct email link (`info@douitsu-co.com`).
   - **Right Column (`lg:col-span-7`) — Interactive Form**:
-    - Form fields: Name (お名前), Email (Eメール), Phone (電話番号), Message (メッセージ).
-    - Handled via Alpine.js component state (`formData`, `submitForm()`, `formSubmitted`).
-    - Required field validation and success message notification box.
+    - Professional B2B form labels:
+      - Name: `お名前` / `Full Name` / `အမည်`
+      - Email: `メールアドレス` / `Email Address` / `အီးမေးလ်`
+      - Phone: `電話番号` / `Phone Number` / `ဖုန်းနံပါတ်`
+      - Message: `お問い合わせ内容` / `Inquiry Details` / `မေးမြန်းလိုသော အကြောင်းအရာ`
+    - Actionable dynamic placeholders bound to `siteData.contact.form`:
+      - Name: `お名前を入力してください` / `Enter your full name` / `အမည် အပြည့်အစုံ ရိုက်ထည့်ပါ`
+      - Email: `メールアドレスを入力してください` / `Enter your email address` / `အီးမေးလ်လိပ်စာ ရိုက်ထည့်ပါ`
+      - Phone: `電話番号を入力してください` / `Enter your phone number` / `ဖုန်းနံပါတ် ရိုက်ထည့်ပါ`
+      - Message: `ご相談・お問い合わせ内容をご記入ください` / `Enter your consultation or inquiry details` / `ဆွေးနွေးမေးမြန်းလိုသည့် အကြောင်းအရာများကို ရေးသားပါ`
+    - Submit Button: `送信する` / `Send Message` / `ပေးပို့မည်`
+    - Alpine.js validation alert (`必須項目をすべて入力してください。` / `Please fill in all required fields.` / `လိုအပ်သော အချက်အလက်များ အားလုံး ဖြည့်သွင်းပေးပါ။`) and emerald success confirmation box.
 
 ---
 

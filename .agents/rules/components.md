@@ -15,7 +15,8 @@ src/layouts/Layout.astro (Root Shell, HTML, SEO, Alpine Lightbox Modal)
 │   ├── src/components/Featured.astro (Company Profile DL / About Us, Kaigo PDF Downloads)
 │   ├── src/components/Services.astro (3 Feature Cards, Certificate Lightbox)
 │   ├── src/components/About.astro (10 Statutory Support Pillars, Main Visual Lightbox)
-│   ├── src/components/Career.astro (Career Job Openings, Left Poster Visual, Right 6-Job Table with Flyer Lightbox)
+│   ├── src/components/Flow.astro (Process & Service Flow, Header & Placeholder)
+│   ├── src/components/Faq.astro (Frequently Asked Questions, Header & Placeholder)
 │   └── src/components/Contact.astro (Office Details Card, Alpine Interactive Form)
 └── src/components/Footer.astro (Global Dark Footer, Copyright, Back-to-Top)
 ```
@@ -58,7 +59,7 @@ interface Props {
 1. **Top Utility Bar**:
    - Direct telephone tap link (`tel:042-497-1537`).
    - Direct email tap link (`mailto:info@douitsu-co.com`).
-   - Trilingual toggle pills (`🇯🇵 日本語`, `🇺🇸 English`, `🇲🇲 မြန်မာ`) setting `lang` and `localStorage.douitsu_lang`.
+   - Trilingual toggle pills (`🇯🇵 日本語`, `🇺🇸 English`, `🇲🇲 မြန်မာ`) setting `lang` (always defaulting to Japanese on load).
 2. **Sticky Main Navigation**:
    - Company brand emblem and registration number subtitle.
    - Filtered desktop nav items (`siteData.navigation` excluding `'phone'` and `'contact'`).
@@ -100,7 +101,7 @@ interface Props {
 
 ### Responsibilities:
 1. **Section Heading & Lead**:
-   - Title: "私たちが全力で支援します".
+   - Title: "支援内容" (Support / 私たちが全力で支援します).
    - Official Touroku Shien Kikan mission definition.
 2. **Main Visual Card (`lg:col-span-5`)**:
    - Renders `about-main.png` illustration.
@@ -144,27 +145,50 @@ interface Props {
 
 ---
 
-## 8. Career Component (`src/components/Career.astro`)
+## 8. Flow Component (`src/components/Flow.astro`)
 
 ### Responsibilities:
-1. **Full-Width Interactive Search & Filter Form**:
-   - Search input box (`x-model="searchQuery"`) with clear button and real-time query matching across titles, categories, salary ranges, and dates.
-   - Multi-select sector checkboxes (`x-model="selectedCategories"`) for 6 shortage sectors: 介護 (Care), 食品加工 (Food), 外食業 (Restaurant), 農業 (Agriculture), 機械・製造 (Manufacturing), 清掃 (Cleaning).
-   - Reactive result counter pill (`x-text="visibleCount"`) and filter reset button (`@click="resetFilters()"`).
-2. **Full-Width Job Table (`min-w-[720px]`)**:
-   - Renders 6 in-demand job items from `siteData.career.jobs`.
-   - Table columns: No., Job Title (with sector category pill badge), Salary (2-line compact display), Join Date, Age Limit, and Flyer Action.
-   - **Compact Two-Line Salary**:
-     - Line 1: `[月給] 210,000円〜` (Starting pay with period badge).
-     - Line 2: `〜 260,000円` (Maximum pay in bold brand blue).
-     - Minimizes column width (~120px) to prevent layout cramping.
-   - Each row is interactive (`cursor-pointer`): clicking any row opens the global lightbox modal with that job's full recruitment flyer (`job.image`).
-   - Empty state row displayed when search/filter returns zero results with a "Show All Jobs" button.
-   - Bottom inquiry prompt with CTA button linking directly to `#contact`.
+1. **Section Heading & Subtitle**:
+   - Eyebrow: `PROCESS`
+   - Title: "ご利用の流れ" (Process / လုပ်ငန်းစဉ်)
+   - Subtitle: Standard SSW onboarding procedure explanation.
+2. **6 Process Steps Grid (`siteData.flow.steps`)**:
+   - Step 1: お問い合わせ・ご相談 / Inquiry & Consultation / မေးမြန်းတိုင်ပင်ခြင်း
+   - Step 2: 受入れ体制の確認 / Review of Your Hiring Setup / လက်ခံမည့် အခြေအနေ စစ်ဆေးခြင်း
+   - Step 3: 支援委託契約の締結 / Support Outsourcing Agreement / ထောက်ပံ့မှု လွှဲအပ်စာချုပ် ချုပ်ဆိုခြင်း
+   - Step 4: 在留資格の申請 / Residence Status Application / နေထိုင်ခွင့် (ဗီဇာ) လျှောက်ထားခြင်း
+   - Step 5: 入国・就労開始 / Arrival & Start of Work / ဂျပန်ရောက်ရှိခြင်းနှင့် အလုပ်စတင်ခြင်း
+   - Step 6: 定期面談・継続支援 / Regular Interviews & Ongoing Support / ပုံမှန်တွေ့ဆုံမေးမြန်းခြင်းနှင့် ဆက်လက်ထောက်ပံ့ခြင်း
+3. **Card Styling (Support List Card Style)**:
+   - 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`) with primary blue number badge (`1` to `6`), `STEP 01` tag, and bold trilingual titles.
+4. **Bottom Consultation Callout Banner**:
+   - CTA banner linking directly to `#contact` for corporate consultations.
 
 ---
 
-## 9. Contact Component (`src/components/Contact.astro`)
+## 9. FAQ Component (`src/components/Faq.astro`)
+
+### Responsibilities:
+1. **Section Heading & Subtitle**:
+   - Eyebrow: `FAQ`
+   - Title: "よくあるご質問" (Frequently Asked Questions / မေးလေ့ရှိသောမေးခွန်းများ)
+   - Subtitle: Prompt for host company and candidate inquiries.
+2. **5 FAQ Interactive Accordion Items (`siteData.faq.items`)**:
+   - Q1: 登録支援機関に委託できる支援の範囲は？ (Scope of support)
+   - Q2: 介護分野でも対応できますか？ (Nursing care sector support)
+   - Q3: ミャンマー人材の受入れは可能ですか？ (Myanmar workers recruitment)
+   - Q4: 支援委託費の目安は？ (Outsourcing fee estimate)
+   - Q5: 自社で支援する場合と、委託する場合の違いは？ (In-house vs outsourcing differences)
+3. **Card & Accordion Architecture**:
+   - Pure white background flanked by left and right dashed square grid patterns (`stroke="#94a3b8"`, `32x32` square grid with inward gradient masks).
+   - Independent Alpine.js accordion state (`x-data="{ isOpen: index === 0 }"`) with Q-badge, chevron rotation, and A-badge answer box.
+
+---
+
+## 10. Contact Component (`src/components/Contact.astro`)
+
+### Background & Visual Rhythm:
+- **Background**: Solid Ice-Blue (`bg-douitsu-ice relative overflow-hidden scroll-mt-24` / `#eff6fa`), providing strong contrast and visual anchor above the dark navy footer.
 
 ### Interactive State Contract (Alpine.js):
 ```javascript
@@ -187,19 +211,32 @@ x-data="{
 ```
 
 ### Responsibilities:
-1. **Office Information Column**:
-   - Displays office address in Tokyo Kiyose-shi.
-   - Clickable telephone link (`042-497-1537`).
-   - Clickable email link (`info@douitsu-co.com`).
-2. **Interactive Form Column**:
-   - Inputs for Name, Email, Phone, and Message textarea.
-   - Placeholder and label react smoothly to active language `lang`.
-   - Client-side validation for required fields.
-   - Displays emerald confirmation success box upon submission.
+1. **Office Information Column (`lg:col-span-5`)**:
+   - Company title lockup (`DOUITSU合同会社 / DOUITSU LLC`).
+   - Audited & verified trilingual address:
+     - **JA**: `東京都清瀬市元町1-11-21 フローレス元町205号`
+     - **EN**: `Room 205, Flores Motomachi, 1-11-21 Motomachi, Kiyose-shi, Tokyo, Japan`
+     - **MY**: `တိုကျိုမြို့၊ ခီယိုဆဲမြို့၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလိုရက်စ် မိုတိုမာချီ အခန်း ၂၀၅`
+   - Direct phone link (`042-497-1537`).
+   - Direct email link (`info@douitsu-co.com`).
+2. **Interactive Form Column (`lg:col-span-7`)**:
+   - Professional B2B Japanese field labels:
+     - `お名前` (Your Name / Full Name / အမည်)
+     - `メールアドレス` (Email Address / အီးမေးလ်)
+     - `電話番号` (Phone Number / ဖုန်းနံပါတ်)
+     - `お問い合わせ内容` (Inquiry Details / မေးမြန်းလိုသော အကြောင်းအရာ)
+   - Dynamic placeholders dynamically bound via `:placeholder` to `siteData.contact.form`:
+     - Name: `お名前を入力してください` / `Enter your full name` / `အမည် အပြည့်အစုံ ရိုက်ထည့်ပါ`
+     - Email: `メールアドレスを入力してください` / `Enter your email address` / `အီးမေးလ်လိပ်စာ ရိုက်ထည့်ပါ`
+     - Phone: `電話番号を入力してください` / `Enter your phone number` / `ဖုန်းနံပါတ် ရိုက်ထည့်ပါ`
+     - Message: `ご相談・お問い合わせ内容をご記入ください` / `Enter your consultation or inquiry details` / `ဆွေးနွေးမေးမြန်းလိုသည့် အကြောင်းအရာများကို ရေးသားပါ`
+   - Submit Button: `送信する` (Polite active verb) / `Send Message` / `ပေးပို့မည်`
+   - Client-side validation alert for required inputs (`必須項目をすべて入力してください。` / `Please fill in all required fields.` / `လိုအပ်သော အချက်အလက်များ အားလုံး ဖြည့်သွင်းပေးပါ။`).
+   - Displays emerald confirmation success box upon submission with reset option (`もう一度送信する` / `Send another message` / `ထပ်မံပေးပို့ရန်`).
 
 ---
 
-## 10. Footer Component (`src/components/Footer.astro`)
+## 11. Footer Component (`src/components/Footer.astro`)
 
 ### Responsibilities:
 1. **Brand Lockup**: White-backed DOUITSU logo mark with company name and registration code.
@@ -210,7 +247,7 @@ x-data="{
 
 ---
 
-## 11. Reusable Section Header (`src/components/SectionHeader.astro`)
+## 12. Reusable Section Header (`src/components/SectionHeader.astro`)
 
 ### Props Interface:
 ```typescript

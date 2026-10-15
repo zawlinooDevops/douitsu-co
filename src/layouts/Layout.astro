@@ -23,7 +23,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
   lang="ja"
   translate="no"
   class="scroll-smooth notranslate"
-  x-data="{ lang: (typeof localStorage !== 'undefined' && localStorage.getItem('douitsu_lang')) || 'ja', lightboxImg: null, lightboxTitle: '', mobileMenuOpen: false }"
+  x-data="{ lang: 'ja', lightboxImg: null, lightboxTitle: '', mobileMenuOpen: false }"
   @open-lightbox.window="lightboxImg = $event.detail.img; lightboxTitle = $event.detail.title"
 >
   <head>

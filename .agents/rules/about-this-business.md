@@ -23,8 +23,8 @@ description: Comprehensive Business Profile, Legal Registrations, Statutory Duti
 - **Headquarters Address**:
   - **Postal Code**: 〒204-0021
   - **Japanese**: 東京都清瀬市元町1-11-21 フローレス元町205号
-  - **English**: Flawless Motomachi Room 205, 1-11-21 Motomachi, Kiyose-shi, Tokyo, Japan
-  - **Myanmar**: တိုကျိုမြို့၊ ခီယိုဆဲမြို့နယ်၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလော်လက်စ် မိုတိုမာချီ ၂၀၅ ခန်း
+  - **English**: Room 205, Flores Motomachi, 1-11-21 Motomachi, Kiyose-shi, Tokyo, Japan
+  - **Myanmar**: တိုကျိုမြို့၊ ခီယိုဆဲမြို့၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလိုရက်စ် မိုတိုမာချီ အခန်း ၂၀၅
   - **Geo-Coordinates**: Latitude `35.7876`, Longitude `139.5298`
 - **Phone Numbers**:
   - Main Office / Landline: `042-497-1537`

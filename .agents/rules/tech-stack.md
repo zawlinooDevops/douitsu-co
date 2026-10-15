@@ -92,7 +92,7 @@ Declared on the `<html>` root tag in `Layout.astro`:
   lang="ja"
   class="scroll-smooth"
   x-data="{
-    lang: (typeof localStorage !== 'undefined' && localStorage.getItem('douitsu_lang')) || 'ja',
+    lang: 'ja',
     lightboxImg: null,
     lightboxTitle: '',
     mobileMenuOpen: false
@@ -102,8 +102,8 @@ Declared on the `<html>` root tag in `Layout.astro`:
 
 #### Reactive State Variables:
 1. `lang`: Current active language code (`'ja'` | `'en'` | `'my'`).
-   - Defaults to `'ja'`.
-   - Persisted to browser `localStorage.setItem('douitsu_lang', lang)`.
+   - Always defaults to `'ja'` on initial load and page refresh.
+   - User language choice is reactive within the active session without persistent localStorage retention.
    - All components react instantly via `x-show="lang === 'ja'"` with zero page reloads.
 2. `lightboxImg`: String URL of active image for modal enlargement, or `null` when closed.
 3. `lightboxTitle`: String caption for current lightbox view.

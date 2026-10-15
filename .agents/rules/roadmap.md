@@ -18,6 +18,10 @@ The legacy web presence has been overhauled and modernized into a high-performan
 - [x] **Kaigo PDF Study Guides**: Direct downloads for official Nursing Care examination textbooks in both Japanese (38.8 MB) and Myanmar (14.1 MB).
 - [x] **SEO & Schema.org**: Fully integrated `LocalBusiness` JSON-LD structured data and OpenGraph tags.
 - [x] **Hero Transparent 3-Wave SVG Divider**: Multi-layer organic wave divider using official DOUITSU brand logo blue tokens with seamless cutout transition into `#about`.
+- [x] **6-Step Statutory Onboarding Flow (`#flow`)**: Structured process cards matching `#support` statutory list style with primary blue numbered badges (`1` to `6`).
+- [x] **Interactive FAQ Accordion (`#faq`)**: 5 core Q&As in interactive Alpine.js accordion format with symmetric dashed square grid accents.
+- [x] **Audited Contact Section & B2B Form (`#contact`)**: Solid Ice-Blue background (`bg-douitsu-ice`), fully audited trilingual address (`Flores Motomachi`, `Kiyose City`, `Room 205`), polite Japanese B2B form labels, and actionable dynamic placeholders.
+- [x] **Canonical Japanese Default Language**: Defaulting strictly to Japanese (`ja`) on fresh load/refresh without browser `localStorage` retention.
 
 ---
 
@@ -43,4 +47,3 @@ The legacy web presence has been overhauled and modernized into a high-performan
 
 ### 4. Media & Testimonials Section
 - Add video embed or worker interview testimonials showcasing successful workplace adaptations in Japan.
-- Add an interactive FAQ accordion answering frequent host company and foreign worker inquiries.

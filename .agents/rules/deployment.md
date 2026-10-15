@@ -22,7 +22,7 @@ npm run preview
 ```
 
 ### Build Artifacts (`dist/`):
-- `dist/index.html` (Main Landing Page with all sections including #career)
+- `dist/index.html` (Main Landing Page with all active sections)
 - `dist/_astro/*.js` (Bundled Alpine.js and scripts, ~19.7 kB gzipped)
 - `dist/_astro/*.css` (Tailwind CSS stylesheet)
 - `dist/images/` (Optimized logos, hero background, certificates, flyers)
@@ -92,7 +92,7 @@ Before pushing changes to production, agents must verify:
 - [ ] Static build generates clean unified output: `dist/index.html`.
 - [ ] Trilingual toggling works across Japanese, English, and Myanmar.
 - [ ] Language state persists across page navigation via `localStorage`.
-- [ ] Clicking any job row in the `#career` table opens the enlarged recruitment flyer lightbox modal.
+- [ ] Image lightbox modals open and close correctly.
 - [ ] Download links for both Kaigo PDF textbooks trigger file downloads.
 - [ ] Form submission validation works when required fields are blank.
 - [ ] No broken links or external CDN dependencies are introduced.

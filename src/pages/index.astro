@@ -5,13 +5,14 @@ import Hero from '../components/Hero.astro';
 import Featured from '../components/Featured.astro';
 import Services from '../components/Services.astro';
 import About from '../components/About.astro';
-import Career from '../components/Career.astro';
+import Flow from '../components/Flow.astro';
+import Faq from '../components/Faq.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
-  <!-- HEADER & NAVIGATION (Home, About Us, Services, Careers, Contact Us) -->
+  <!-- HEADER & NAVIGATION (Home, About Us, Services, Support, Process, FAQ, Contact Us) -->
   <Navbar />
 
   <main>
@@ -24,13 +25,16 @@ import Footer from '../components/Footer.astro';
     <!-- 3. SERVICES (#services / 特定技能・外国人採用支援サービスの特徴) -->
     <Services />
 
-    <!-- 4. SUPPORT PLAN & 10 PILLARS (#support / 私たちが全力で支援します - 10 Support Pillars) -->
+    <!-- 4. SUPPORT PLAN & 10 PILLARS (#support / 支援内容 - 10 Support Pillars) -->
     <About />
 
-    <!-- 5. CAREER & JOBS (#career / 採用・求人情報) -->
-    <Career />
+    <!-- 5. PROCESS & WORKFLOW (#flow / ご利用の流れ) -->
+    <Flow />
 
-    <!-- 6. CONTACT (#contact / お問い合わせ) -->
+    <!-- 6. FREQUENTLY ASKED QUESTIONS (#faq / よくあるご質問) -->
+    <Faq />
+
+    <!-- 7. CONTACT (#contact / お問い合わせ) -->
     <Contact />
   </main>
 

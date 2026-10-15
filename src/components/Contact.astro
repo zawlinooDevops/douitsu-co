@@ -9,7 +9,7 @@ import SectionHeader from './SectionHeader.astro';
 <!-- ============================================================ -->
 <section
   id="contact"
-  class="py-20 md:py-28 bg-gradient-to-b from-white via-slate-50/50 to-douitsu-ice/30 relative overflow-hidden scroll-mt-24"
+  class="py-20 md:py-28 bg-douitsu-ice relative overflow-hidden scroll-mt-24"
   x-data="{
     formSubmitted: false,
     formData: {
@@ -29,26 +29,11 @@ import SectionHeader from './SectionHeader.astro';
 >
   <div id="section_4" class="absolute -top-24"></div>
 
-  <!-- Background Pattern: Topographic Coordinates Matrix -->
-  <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.035]">
-    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="contact-coords" width="36" height="36" patternUnits="userSpaceOnUse">
-          <path d="M 18,14 L 18,22 M 14,18 L 22,18" stroke="#105c8e" stroke-width="1" />
-          <circle cx="18" cy="18" r="1" fill="#105c8e" />
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#contact-coords)" />
-    </svg>
-  </div>
-
-
-
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
     <!-- Section Header -->
     <SectionHeader
-      eyebrow="CONTACT US"
+      eyebrow="CONTACT"
       title={siteData.contact.title}
       subtitle={siteData.contact.subtitle}
     />
@@ -58,7 +43,7 @@ import SectionHeader from './SectionHeader.astro';
       
       <!-- Left Column: Office Details -->
       <div class="lg:col-span-5 flex flex-col gap-6">
-        <div class="p-7 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-6">
+        <div class="p-7 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex flex-col gap-6">
           
           <div>
             <h4 class="text-lg font-extrabold text-douitsu-navy">
@@ -136,7 +121,7 @@ import SectionHeader from './SectionHeader.astro';
 
       <!-- Right Column: Clean Contact Form -->
       <div class="lg:col-span-7">
-        <div class="p-7 sm:p-9 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm relative">
+        <div class="p-7 sm:p-9 rounded-2xl bg-white border border-slate-200/80 shadow-sm relative">
           
           <!-- Success State -->
           <div
@@ -183,7 +168,7 @@ import SectionHeader from './SectionHeader.astro';
                 type="text"
                 x-model="formData.name"
                 required
-                :placeholder="lang === 'ja' ? 'お名前を入力してください' : (lang === 'en' ? 'Enter your full name' : 'အမည်')"
+                :placeholder={`lang === 'ja' ? '${siteData.contact.form.name.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.name.placeholder.en}' : '${siteData.contact.form.name.placeholder.my}')`}
                 class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
               />
             </div>
@@ -201,7 +186,7 @@ import SectionHeader from './SectionHeader.astro';
                   type="email"
                   x-model="formData.email"
                   required
-                  :placeholder="lang === 'ja' ? 'メールアドレスを入力してください' : (lang === 'en' ? 'Enter your email address' : 'အီးမေးလ်')"
+                  :placeholder={`lang === 'ja' ? '${siteData.contact.form.email.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.email.placeholder.en}' : '${siteData.contact.form.email.placeholder.my}')`}
                   class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
                 />
               </div>
@@ -217,7 +202,7 @@ import SectionHeader from './SectionHeader.astro';
                   type="tel"
                   x-model="formData.phone"
                   required
-                  :placeholder="lang === 'ja' ? '電話番号を入力してください' : (lang === 'en' ? 'Enter your phone number' : 'ဖုန်းနံပါတ်')"
+                  :placeholder={`lang === 'ja' ? '${siteData.contact.form.phone.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.phone.placeholder.en}' : '${siteData.contact.form.phone.placeholder.my}')`}
                   class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
                 />
               </div>
@@ -233,7 +218,7 @@ import SectionHeader from './SectionHeader.astro';
               <textarea
                 x-model="formData.message"
                 rows="4"
-                :placeholder="lang === 'ja' ? 'ご相談・お問い合わせ内容をご記入ください' : (lang === 'en' ? 'Enter your message or inquiry' : 'မေးမြန်းလိုသော အကြောင်းအရာ')"
+                :placeholder={`lang === 'ja' ? '${siteData.contact.form.message.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.message.placeholder.en}' : '${siteData.contact.form.message.placeholder.my}')`}
                 class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all resize-y"
               ></textarea>
             </div>
