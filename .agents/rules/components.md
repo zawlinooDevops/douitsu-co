@@ -120,7 +120,7 @@ interface Props {
    - Clean definition list (`<dl>`) displaying:
      - 会社名: DOUITSU合同会社
      - 設立年: 2025.3.31
-     - スタッフ数: 30
+     - スタッフ数: 6
      - 登録: REG:0A32ES43
 2. **PDF Study Materials Card (`lg:col-span-6`)**:
    - Download cards for official Nursing Care (Kaigo) exams:

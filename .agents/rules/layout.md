@@ -95,7 +95,7 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
     - Definition list (`<dl>`) with divided rows:
       - 会社名: DOUITSU合同会社
       - 設立年: 2025.3.31
-      - スタッフ数: 30
+      - スタッフ数: 6
       - 登録: REG:0A32ES43
   - **Right Card (`lg:col-span-6`) — Download PDF (介護テキスト)**:
     - Card 1: Japanese Nursing Care Exam Textbook (38.8 MB) with direct download button.

@@ -152,7 +152,7 @@ export const siteData = {
       my: "တိုကျိုမြို့၊ ခီယိုဆဲမြို့နယ်၊ မိုတိုမာချီ ၁-၁၁-၂၁၊ ဖလော်လက်စ် မိုတိုမာချီ ၂၀၅ ခန်း",
     },
     establishmentDate: "2025.3.31",
-    staffCount: "30",
+    staffCount: "6",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Careers, Contact Us)
@@ -338,7 +338,7 @@ export const siteData = {
           },
         },
         { label: { ja: "設立年", en: "Established", my: "တည်ထောင်သည့်ရက်စွဲ" }, value: "2025.3.31" },
-        { label: { ja: "スタッフ数", en: "Staff Members", my: "ဝန်ထမ်းအင်အား" }, value: "30" },
+        { label: { ja: "スタッフ数", en: "Staff Members", my: "ဝန်ထမ်းအင်အား" }, value: "6" },
         { label: { ja: "登録", en: "Registration", my: "မှတ်ပုံတင်အမှတ်" }, value: "REG:0A32ES43" },
       ],
     },
