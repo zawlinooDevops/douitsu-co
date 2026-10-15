@@ -75,16 +75,6 @@
       if (!preloader || preloader.dataset.dismissed === 'true') return;
       preloader.dataset.dismissed = 'true';
 
-      // Unlock body & html scroll
-      const lock = document.getElementById('douitsu-preloader-lock');
-      if (lock) {
-        lock.remove();
-      }
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.height = '';
-      document.body.style.overflow = '';
-      document.body.style.height = '';
-
       const bar = document.getElementById('douitsu-progress-bar');
       if (bar) {
         bar.style.width = '100%';
