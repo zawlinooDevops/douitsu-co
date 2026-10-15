@@ -29,6 +29,7 @@ To prevent visual fatigue and create a structured B2B corporate browsing journey
 
 | Section ID & Component | Background Styling | Vector Pattern | Graphic Shapes & Accents | Psychological Intent |
 |---|---|---|---|---|
+| **#home** (`Hero.astro`) | Full-bleed background of Mt. Fuji & Sakura (`/images/landing/hero-bg.webp`) with `.hero-bg-animated` 22s breathing motion | **Interactive Sakura Petals Falling Canvas (`#sakura-canvas`)** (HTML5 Canvas 2D, 3D tumbling petals, cleft notch geometry, dynamic wind breeze, viewport pause) | 3-Wave SVG divider (`#1a486c`, `#105c8e`, `#7ba7cc`, `#ffffff`) at bottom, Frosted Glass typography card | Majestic natural calm, Japanese spring warmth, living corporate presence |
 | **#about** (`Featured.astro`) | `bg-white border-b border-slate-200/60` | **Japanese Sakura Chirashi (桜散らし - Floating Cherry Flowers & Petals)** (`80x80` tile, top fade mask, `opacity-[0.14]`) | Base wave continuation from Hero (`fill="#ffffff"`), floating 5-petal cherry blossoms with drifting petals | Spring fresh start, welcoming foreign talent, warm corporate authenticity |
 | **#services** (`Services.astro`) | `bg-white border-b border-slate-200/60` | **Japanese Shippo (七宝)** (`40x40` intersecting connection circles, `opacity-[0.035]`) | Clean minimal presentation with subtle geometric hover borders on cards | Harmony, bilateral partnership (Japan ⇄ Myanmar), structured career growth |
 | **#support** (`About.astro`) | `bg-gradient-to-b from-douitsu-ice/85 via-blue-50/40 to-slate-50/80 border-b border-slate-200/60` | **Japanese Seigaiha (青海波)** (`50x25` traditional calm ocean waves, `opacity-[0.035]`) | Flowing organic wave ribbons, step connector lines between the 10 statutory pillar cards, soft navy glow | Peace, long-term safety, compassionate statutory care for foreign personnel |
@@ -180,3 +181,26 @@ To prevent visual fatigue and create a structured B2B corporate browsing journey
   </svg>
 </div>
 ```
+
+### G. Interactive Sakura Petals Falling Canvas & Breathing Motion (`#home`)
+```html
+<!-- Background Image Layer with Subtle Cinematic Breathing Motion -->
+<div
+  class="absolute inset-0 bg-cover bg-center pointer-events-none hero-bg-animated z-0"
+  style="background-image: url('/images/landing/hero-bg.webp');"
+  aria-hidden="true"
+></div>
+
+<!-- Interactive Sakura Petals Falling Animation Canvas -->
+<canvas
+  id="sakura-canvas"
+  class="absolute inset-0 w-full h-full pointer-events-none z-[1]"
+  aria-hidden="true"
+></canvas>
+```
+- **Ken Burns Animation (`.hero-bg-animated`)**: 22s infinite ease-in-out subtle zoom (`scale(1)` to `scale(1.04)`) with `translate3d(-0.6%, -0.4%, 0)` giving natural mountain air breathing.
+- **Petal Geometry**: Parametric bezier curve with cleft notch at apex (`(0, -h*0.88)`), rendered in HTML5 Canvas 2D.
+- **3D Tumbling**: Projection scaling using `cos(rotationX)` and `sin(rotationY)` with `rotate(rotationZ)` simulating authentic 3D tumbling in the wind.
+- **Interactive Mouse Wind**: Cursor movement gently influences drift vector (`mouseWind`).
+- **Resource Optimization**: `IntersectionObserver` automatically halts `requestAnimationFrame` when scrolled away from `#home`. Listens to `visibilitychange` to sleep on background tabs.
+- **Accessibility**: Full override under `@media (prefers-reduced-motion: reduce)`.

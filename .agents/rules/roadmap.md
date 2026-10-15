@@ -22,6 +22,7 @@ The legacy web presence has been overhauled and modernized into a high-performan
 - [x] **Interactive FAQ Accordion (`#faq`)**: 5 core Q&As in interactive Alpine.js accordion format with symmetric dashed square grid accents.
 - [x] **Audited Contact Section & B2B Form (`#contact`)**: Solid Ice-Blue background (`bg-douitsu-ice`), fully audited trilingual address (`Flores Motomachi`, `Kiyose City`, `Room 205`), polite Japanese B2B form labels, and actionable dynamic placeholders.
 - [x] **Canonical Japanese Default Language**: Defaulting strictly to Japanese (`ja`) on fresh load/refresh without browser `localStorage` retention.
+- [x] **Hero Section Sakura Petals Falling Canvas & Mt. Fuji Cinematic Breathing Motion**: Ultra-lightweight native Canvas 2D simulation with 3D tumbling petals, interactive mouse breeze, viewport intersection observer auto-pause, and smooth 22s Ken Burns background breathing effect.
 
 ---
 

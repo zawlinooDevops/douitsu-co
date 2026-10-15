@@ -8,11 +8,24 @@ import { siteData } from '../data/content';
 <!-- ============================================================ -->
 <section
   id="home"
-  class="relative min-h-[600px] md:min-h-[70vh] flex items-center pt-32 pb-16 sm:pt-40 sm:pb-20 lg:pt-44 lg:pb-24 bg-cover bg-center overflow-hidden"
-  style="background-image: url('/images/landing/hero-bg.webp');"
+  class="relative min-h-[600px] md:min-h-[70vh] flex items-center pt-32 pb-16 sm:pt-40 sm:pb-20 lg:pt-44 lg:pb-24 overflow-hidden"
 >
   <!-- Invisible backwards-compatibility anchor -->
   <div id="section_1" class="absolute -top-32"></div>
+
+  <!-- Background Image Layer with Subtle Cinematic Breathing Motion -->
+  <div
+    class="absolute inset-0 bg-cover bg-center pointer-events-none hero-bg-animated z-0"
+    style="background-image: url('/images/landing/hero-bg.webp');"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Interactive Sakura Petals Falling Animation Canvas -->
+  <canvas
+    id="sakura-canvas"
+    class="absolute inset-0 w-full h-full pointer-events-none z-[1]"
+    aria-hidden="true"
+  ></canvas>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
     <div class="max-w-xl lg:max-w-2xl">
@@ -74,3 +87,257 @@ import { siteData } from '../data/content';
     </svg>
   </div>
 </section>
+
+<script>
+  interface PetalPalette {
+    base: string;
+    mid: string;
+    tip: string;
+  }
+
+  interface Petal {
+    x: number;
+    y: number;
+    size: number;
+    speedY: number;
+    speedX: number;
+    swaySpeed: number;
+    swayAngle: number;
+    rotationX: number;
+    rotationY: number;
+    rotationZ: number;
+    rotSpeedX: number;
+    rotSpeedY: number;
+    rotSpeedZ: number;
+    colorBase: string;
+    colorMid: string;
+    colorTip: string;
+    opacity: number;
+  }
+
+  const PALETTES: PetalPalette[] = [
+    {
+      base: 'rgba(255, 245, 248, 0.95)',
+      mid: 'rgba(251, 113, 133, 0.85)',
+      tip: 'rgba(244, 63, 94, 0.75)',
+    },
+    {
+      base: 'rgba(255, 255, 255, 0.95)',
+      mid: 'rgba(254, 205, 211, 0.8)',
+      tip: 'rgba(251, 113, 133, 0.7)',
+    },
+    {
+      base: 'rgba(255, 240, 243, 0.9)',
+      mid: 'rgba(244, 63, 94, 0.85)',
+      tip: 'rgba(225, 29, 72, 0.7)',
+    },
+    {
+      base: 'rgba(255, 250, 250, 0.95)',
+      mid: 'rgba(253, 164, 175, 0.75)',
+      tip: 'rgba(244, 63, 94, 0.65)',
+    },
+  ];
+
+  function initSakura(): void {
+    const canvas = document.getElementById('sakura-canvas') as HTMLCanvasElement | null;
+    const heroSection = document.getElementById('home');
+    if (!canvas || !heroSection) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    const petals: Petal[] = [];
+    let animationId: number | null = null;
+    let isRunning = false;
+    let mouseWind = 0;
+    let targetMouseWind = 0;
+
+    function resize(): void {
+      if (!canvas || !heroSection || !ctx) return;
+      const rect = heroSection.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+
+      const targetCount = width < 768 ? 24 : 48;
+      if (petals.length === 0) {
+        for (let i = 0; i < targetCount; i++) {
+          petals.push(createPetal(true));
+        }
+      } else if (petals.length < targetCount) {
+        while (petals.length < targetCount) {
+          petals.push(createPetal(false));
+        }
+      } else if (petals.length > targetCount) {
+        petals.length = targetCount;
+      }
+    }
+
+    function createPetal(isInitial = false): Petal {
+      const palette = PALETTES[Math.floor(Math.random() * PALETTES.length)];
+      const size = Math.random() * 8 + 8;
+      const depthFactor = (size - 8) / 8;
+      const opacity = 0.5 + depthFactor * 0.45;
+
+      return {
+        x: Math.random() * (width + 120) - 20,
+        y: isInitial ? Math.random() * height : -20 - Math.random() * 40,
+        size,
+        speedY: 0.8 + depthFactor * 1.1 + Math.random() * 0.4,
+        speedX: -0.6 - Math.random() * 0.7,
+        swaySpeed: 0.015 + Math.random() * 0.02,
+        swayAngle: Math.random() * Math.PI * 2,
+        rotationX: Math.random() * 360,
+        rotationY: Math.random() * 360,
+        rotationZ: Math.random() * 360,
+        rotSpeedX: (Math.random() - 0.5) * 2.0,
+        rotSpeedY: (Math.random() - 0.5) * 2.0,
+        rotSpeedZ: (Math.random() - 0.5) * 1.4,
+        colorBase: palette.base,
+        colorMid: palette.mid,
+        colorTip: palette.tip,
+        opacity,
+      };
+    }
+
+    function drawPetal(p: Petal): void {
+      if (!ctx) return;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rotationZ * Math.PI) / 180);
+
+      const scaleX = Math.cos((p.rotationX * Math.PI) / 180);
+      const scaleY = Math.sin((p.rotationY * Math.PI) / 180);
+      ctx.scale(scaleX, scaleY);
+
+      const w = p.size;
+      const h = p.size * 1.35;
+
+      const grad = ctx.createLinearGradient(0, 0, 0, -h);
+      grad.addColorStop(0, p.colorBase);
+      grad.addColorStop(0.6, p.colorMid);
+      grad.addColorStop(1, p.colorTip);
+
+      ctx.fillStyle = grad;
+      ctx.globalAlpha = p.opacity;
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-w * 0.75, -h * 0.35, -w * 0.85, -h * 0.75, -w * 0.22, -h);
+      ctx.quadraticCurveTo(0, -h * 0.88, w * 0.22, -h);
+      ctx.bezierCurveTo(w * 0.85, -h * 0.75, w * 0.75, -h * 0.35, 0, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    let lastTime = performance.now();
+
+    function render(now: number): void {
+      if (!isRunning || !ctx) return;
+
+      const delta = Math.min((now - lastTime) / 16.67, 2.5);
+      lastTime = now;
+
+      ctx.clearRect(0, 0, width, height);
+
+      mouseWind += (targetMouseWind - mouseWind) * 0.05;
+      const naturalGust = Math.sin(now * 0.001) * 0.4;
+      const totalWind = mouseWind + naturalGust;
+
+      for (let i = 0; i < petals.length; i++) {
+        const p = petals[i];
+        p.swayAngle += p.swaySpeed * delta;
+        p.x += (p.speedX + Math.sin(p.swayAngle) * 0.7 + totalWind) * delta;
+        p.y += p.speedY * delta;
+
+        p.rotationX += p.rotSpeedX * delta;
+        p.rotationY += p.rotSpeedY * delta;
+        p.rotationZ += p.rotSpeedZ * delta;
+
+        if (p.y > height + 25 || p.x < -30) {
+          p.y = -20 - Math.random() * 30;
+          p.x = Math.random() * (width + 60);
+          p.swayAngle = Math.random() * Math.PI * 2;
+        }
+
+        drawPetal(p);
+      }
+
+      animationId = requestAnimationFrame(render);
+    }
+
+    function start(): void {
+      if (isRunning) return;
+      isRunning = true;
+      lastTime = performance.now();
+      animationId = requestAnimationFrame(render);
+    }
+
+    function stop(): void {
+      isRunning = false;
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+    }
+
+    heroSection.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = heroSection.getBoundingClientRect();
+      const relX = (e.clientX - rect.left) / rect.width;
+      targetMouseWind = (relX - 0.5) * 1.5;
+    });
+
+    heroSection.addEventListener('mouseleave', () => {
+      targetMouseWind = 0;
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            start();
+          } else {
+            stop();
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(heroSection);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stop();
+      } else {
+        start();
+      }
+    });
+
+    window.addEventListener('resize', resize);
+    resize();
+    start();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSakura);
+  } else {
+    initSakura();
+  }
+</script>

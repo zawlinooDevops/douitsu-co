@@ -74,26 +74,27 @@ interface Props {
 ## 4. Hero Component (`src/components/Hero.astro`)
 
 ### Key Design & Structural Features:
-1. **Background & Atmosphere**:
-   - Full-bleed background of Mt. Fuji & Sakura (`/images/landing/hero-bg.webp`).
-   - Dark gradient overlay for text readability without obscuring scenic elements.
-2. **Government Registration Badge**:
-   - Green pulsing live indicator dot (`w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-emerald-200 animate-pulse`).
-   - Text: `出入国在留管理庁 登録支援機関 (登録番号: 0A32ES43)`.
-3. **Dual Action CTA Buttons**:
-   - Primary: Anchor link to `#support` with chevron-down icon.
-   - Secondary: Route link to `/#career` with briefcase icon.
-4. **3 Trust Highlight Pills**:
-   - Bilingual/Trilingual capability (日英ミャンマー語対応).
-   - 10 Statutory Pillars coverage (法定支援10項目を網羅).
-   - Full one-stop companion support (ワンストップ伴走支援).
-5. **Bottom Organic SVG Wave Divider (3 Transparent Waves with Logo Colors)**:
-   - Replaces the legacy flat bottom border with an organic multi-layer wave that slices into the hero image.
+1. **Background & Cinematic Atmosphere**:
+   - Dedicated background layer (`.hero-bg-animated`) displaying Mt. Fuji & Sakura (`/images/landing/hero-bg.webp`).
+   - Powered by `@keyframes hero-kenburns` (22s ease-in-out infinite subtle breathing scale from `scale(1)` to `scale(1.04)`).
+2. **Interactive 3D Sakura Petals Falling Canvas (`#sakura-canvas`)**:
+   - Ultra-lightweight HTML5 Canvas 2D particle simulation running at 60 FPS (Zero CDN).
+   - Authentic sakura petal geometry with notched apex (cleft) and multi-stop pink/rose gradient shading.
+   - 3D tumbling physics (pitch, yaw, roll rotation across X, Y, Z axes).
+   - Dynamic density: 48 petals on desktop, 24 petals on mobile screens (< 768px).
+   - Interactive mouse breeze: Mouse cursor tracking adds a gentle directional breeze vector.
+   - Viewport pause: `IntersectionObserver` halts animation loop when scrolled away from `#home`, preserving CPU/GPU and battery. Listens to `visibilitychange`.
+   - Accessibility: Complete motion cancellation under `@media (prefers-reduced-motion: reduce)`.
+3. **Frosted Glassmorphism Typography Card**:
+   - Clean, elevated frosted glass container (`p-6 sm:p-10 md:p-12 rounded-3xl bg-white/92 backdrop-blur-md border border-white/90 shadow-2xl relative z-10`).
+   - Positioned above the falling petals canvas so petals float behind the frosted card, creating a subtle frosted blur through the glass while preserving 100% typography readability.
+4. **Bottom Organic SVG Wave Divider (3 Transparent Waves with Logo Colors)**:
+   - Layered at `relative z-10 -mb-[1px]` so falling petals pass naturally behind the waves.
    - **Wave 1 (Deep Navy Blue)**: `#1a486c` at 30% opacity, providing subtle shadow depth across Mt. Fuji's foothills.
    - **Wave 2 (Primary Signature Blue)**: `#105c8e` at 45% opacity, creating rich oceanic brand color blending.
    - **Wave 3 (Light Sky Blue)**: `#7ba7cc` at 60% opacity, adding a vibrant crest highlight.
-   - **Wave 4 (Seamless Slate-100 Base)**: Solid `#f1f5f9` matching `#about` (`Featured.astro`) background with `-mb-[1px]` subpixel gap protection, eliminating all straight boundary lines.
-   - Responsive height: `h-16 sm:h-22 md:h-28 lg:h-36 xl:h-40` with `preserveAspectRatio="none"`.
+   - **Wave 4 (Seamless Base Wave)**: Solid `#ffffff` matching `#about` (`Featured.astro`) background with `-mb-[1px]` subpixel gap protection, eliminating all straight boundary lines.
+   - Responsive height: `h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28` with `preserveAspectRatio="none"`.
 
 ---
 
