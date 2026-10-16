@@ -136,7 +136,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.2.1",
+    version: "1.2.2",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
@@ -757,6 +757,44 @@ export const siteData = {
       ja: "オンラインに復帰しました",
       en: "Online connection restored",
       my: "အင်တာနက် ပြန်လည်ချိတ်ဆက်မိပါပြီ",
+    },
+  },
+
+  notFound: {
+    badge: {
+      ja: "404 エラー",
+      en: "404 Error",
+      my: "၄၀၄ ချို့ယွင်းချက်",
+    },
+    title: {
+      ja: "お探しのページが見つかりませんでした",
+      en: "Page Not Found",
+      my: "ရှာဖွေနေသော စာမျက်နှာ မတွေ့ရှိပါ",
+    },
+    description: {
+      ja: "アクセスしようとしたページは削除されたか、URLが変更されたか、一時的に利用できない可能性があります。",
+      en: "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+      my: "သင်ဝင်ရောက်လိုသော စာမျက်နှာသည် ပယ်ဖျက်ခံရခြင်း၊ လိပ်စာပြောင်းလဲခြင်း သို့မဟုတ် ယာယီအသုံးပြု၍မရခြင်း ဖြစ်နိုင်ပါသည်။",
+    },
+    backHome: {
+      ja: "トップページへ戻る",
+      en: "Back to Home",
+      my: "ပင်မစာမျက်နှာသို့ ပြန်သွားရန်",
+    },
+    contactUs: {
+      ja: "お問い合わせはこちら",
+      en: "Contact Us",
+      my: "ဆက်သွယ်မေးမြန်းရန်",
+    },
+    phoneLabel: {
+      ja: "お電話でのご相談・お問い合わせ",
+      en: "Telephone Inquiry & Support",
+      my: "ဖုန်းဖြင့် ဆက်သွယ်ဆွေးနွေးရန်",
+    },
+    supportHours: {
+      ja: "平日 9:00〜18:00（土日祝日を除く）",
+      en: "Weekdays 9:00 - 18:00 (Excl. Weekends & Holidays)",
+      my: "တနင်္လာ မှ သောကြာ (၉:၀၀ မှ ၁၈:၀၀ ထိ)",
     },
   },
 
