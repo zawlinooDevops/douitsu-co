@@ -1,7 +1,12 @@
 ---
 import { siteData } from '../data/content';
 import SectionHeader from './SectionHeader.astro';
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAFYQzIK4TKPrb3od';
 ---
+
+<!-- Cloudflare Turnstile API Script -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <!-- ============================================================ -->
 <!-- SECTION: CONTACT & INQUIRIES                                 -->
@@ -10,22 +15,118 @@ import SectionHeader from './SectionHeader.astro';
 <section
   id="contact"
   class="py-20 md:py-28 bg-douitsu-ice relative overflow-hidden scroll-mt-24"
-  x-data="{
+  x-data={`{
     formSubmitted: false,
+    isSubmitting: false,
+    errorMessage: '',
     formData: {
       name: '',
       email: '',
       phone: '',
       message: ''
     },
-    submitForm() {
+    errors: {
+      required: {
+        ja: "${siteData.contact.form.requiredError.ja}",
+        en: "${siteData.contact.form.requiredError.en}",
+        my: "${siteData.contact.form.requiredError.my}"
+      },
+      email: {
+        ja: "${siteData.contact.form.emailError.ja}",
+        en: "${siteData.contact.form.emailError.en}",
+        my: "${siteData.contact.form.emailError.my}"
+      },
+      captcha: {
+        ja: "${siteData.contact.form.captchaError.ja}",
+        en: "${siteData.contact.form.captchaError.en}",
+        my: "${siteData.contact.form.captchaError.my}"
+      },
+      general: {
+        ja: "${siteData.contact.form.error.ja}",
+        en: "${siteData.contact.form.error.en}",
+        my: "${siteData.contact.form.error.my}"
+      }
+    },
+    resetForm() {
+      this.formSubmitted = false;
+      this.isSubmitting = false;
+      this.errorMessage = '';
+      this.formData = { name: '', email: '', phone: '', message: '' };
+      if (typeof window !== 'undefined' && window.turnstile) {
+        try { window.turnstile.reset(); } catch (e) { /* ignore */ }
+      }
+    },
+    async submitForm() {
+      this.errorMessage = '';
+
+      // Validate required text fields
       if (!this.formData.name || !this.formData.email || !this.formData.phone) {
-        alert(lang === 'ja' ? '必須項目をすべて入力してください。' : (lang === 'en' ? 'Please fill in all required fields.' : 'လိုအပ်သော အချက်အလက်များ အားလုံး ဖြည့်သွင်းပေးပါ။'));
+        this.errorMessage = this.errors.required[lang] || this.errors.required.ja;
         return;
       }
-      this.formSubmitted = true;
+
+      // Validate email pattern
+      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if (!emailRegex.test(this.formData.email)) {
+        this.errorMessage = this.errors.email[lang] || this.errors.email.ja;
+        return;
+      }
+
+      // Retrieve Turnstile CAPTCHA response
+      let turnstileToken = '';
+      const turnstileInput = document.querySelector('[name=cf-turnstile-response]');
+      if (turnstileInput && turnstileInput.value) {
+        turnstileToken = turnstileInput.value;
+      } else if (typeof window !== 'undefined' && window.turnstile && typeof window.turnstile.getResponse === 'function') {
+        turnstileToken = window.turnstile.getResponse() || '';
+      }
+
+      if (!turnstileToken) {
+        this.errorMessage = this.errors.captcha[lang] || this.errors.captcha.ja;
+        return;
+      }
+
+      this.isSubmitting = true;
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: this.formData.name,
+            email: this.formData.email,
+            phone: this.formData.phone,
+            message: this.formData.message,
+            turnstileToken: turnstileToken
+          })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          this.formSubmitted = true;
+          this.formData = { name: '', email: '', phone: '', message: '' };
+          if (typeof window !== 'undefined' && window.turnstile) {
+            try { window.turnstile.reset(); } catch (e) { /* ignore */ }
+          }
+        } else {
+          this.errorMessage = result.message || (this.errors.general[lang] || this.errors.general.ja);
+          if (typeof window !== 'undefined' && window.turnstile) {
+            try { window.turnstile.reset(); } catch (e) { /* ignore */ }
+          }
+        }
+      } catch (err) {
+        this.errorMessage = this.errors.general[lang] || this.errors.general.ja;
+        if (typeof window !== 'undefined' && window.turnstile) {
+          try { window.turnstile.reset(); } catch (e) { /* ignore */ }
+        }
+      } finally {
+        this.isSubmitting = false;
+      }
     }
-  }"
+  }`}
 >
   <div id="section_4" class="absolute -top-24"></div>
 
@@ -141,8 +242,8 @@ import SectionHeader from './SectionHeader.astro';
             </h4>
             <button
               type="button"
-              @click="formSubmitted = false; formData = { name: '', email: '', phone: '', message: '' }"
-              class="mt-4 px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition-colors"
+              @click="resetForm()"
+              class="mt-4 px-5 py-2.5 rounded-xl bg-douitsu-primary/10 hover:bg-douitsu-primary/20 text-douitsu-primary text-xs font-bold transition-colors cursor-pointer"
             >
               <span x-show="lang === 'ja'">もう一度送信する</span>
               <span x-show="lang === 'en'" style="display: none;">Send another message</span>
@@ -156,6 +257,18 @@ import SectionHeader from './SectionHeader.astro';
             @submit.prevent="submitForm()"
             class="space-y-4"
           >
+            <!-- Error Banner -->
+            <div
+              x-show="errorMessage"
+              x-cloak
+              class="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center gap-2.5"
+            >
+              <svg class="w-4 h-4 flex-shrink-0 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+              </svg>
+              <span x-text="errorMessage"></span>
+            </div>
+
             <!-- Name -->
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">
@@ -167,9 +280,10 @@ import SectionHeader from './SectionHeader.astro';
               <input
                 type="text"
                 x-model="formData.name"
+                :disabled="isSubmitting"
                 required
                 :placeholder={`lang === 'ja' ? '${siteData.contact.form.name.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.name.placeholder.en}' : '${siteData.contact.form.name.placeholder.my}')`}
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all disabled:bg-slate-100 disabled:cursor-not-allowed"
               />
             </div>
 
@@ -185,25 +299,27 @@ import SectionHeader from './SectionHeader.astro';
                 <input
                   type="email"
                   x-model="formData.email"
+                  :disabled="isSubmitting"
                   required
                   :placeholder={`lang === 'ja' ? '${siteData.contact.form.email.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.email.placeholder.en}' : '${siteData.contact.form.email.placeholder.my}')`}
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all disabled:bg-slate-100 disabled:cursor-not-allowed"
                 />
               </div>
 
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">
                   <span x-show="lang === 'ja'">{siteData.contact.form.phone.label.ja}</span>
-                  <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.phone.label.en}</span>
-                  <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.phone.label.my}</span>
+                  <span x-show="lang === 'en'" style="display: none;">{siteData.contact.phone.label.en}</span>
+                  <span x-show="lang === 'my'" style="display: none;">{siteData.contact.phone.label.my}</span>
                   <span class="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
                   x-model="formData.phone"
+                  :disabled="isSubmitting"
                   required
                   :placeholder={`lang === 'ja' ? '${siteData.contact.form.phone.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.phone.placeholder.en}' : '${siteData.contact.form.phone.placeholder.my}')`}
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all disabled:bg-slate-100 disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -217,21 +333,57 @@ import SectionHeader from './SectionHeader.astro';
               </label>
               <textarea
                 x-model="formData.message"
+                :disabled="isSubmitting"
                 rows="4"
                 :placeholder={`lang === 'ja' ? '${siteData.contact.form.message.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.message.placeholder.en}' : '${siteData.contact.form.message.placeholder.my}')`}
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all resize-y"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all resize-y disabled:bg-slate-100 disabled:cursor-not-allowed"
               ></textarea>
+            </div>
+
+            <!-- Cloudflare Turnstile CAPTCHA Widget -->
+            <div class="py-2 flex justify-center">
+              <div
+                class="cf-turnstile"
+                data-sitekey={turnstileSiteKey}
+                data-theme="light"
+              ></div>
             </div>
 
             <!-- Submit Button -->
             <div class="pt-2">
               <button
                 type="submit"
-                class="w-full py-3 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
+                :disabled="isSubmitting"
+                class="w-full py-3.5 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <span x-show="lang === 'ja'">{siteData.contact.form.submit.ja}</span>
-                <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.submit.en}</span>
-                <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.submit.my}</span>
+                <!-- Loading Spinner -->
+                <svg
+                  x-show="isSubmitting"
+                  x-cloak
+                  class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+
+                <!-- Sending Label -->
+                <span x-show="isSubmitting" x-cloak>
+                  <span x-show="lang === 'ja'">{siteData.contact.form.sending.ja}</span>
+                  <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.sending.en}</span>
+                  <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.sending.my}</span>
+                </span>
+
+                <!-- Default Submit Label & Icon -->
+                <span x-show="!isSubmitting" class="flex items-center gap-2">
+                  <span x-show="lang === 'ja'">{siteData.contact.form.submit.ja}</span>
+                  <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.submit.en}</span>
+                  <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.submit.my}</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                  </svg>
+                </span>
               </button>
             </div>
           </form>

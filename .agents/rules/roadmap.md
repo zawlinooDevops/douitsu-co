@@ -29,12 +29,7 @@ The legacy web presence has been overhauled and modernized into a high-performan
 
 ## 2. Planned Features & Enhancements (Phase 2)
 
-### 1. Transactional Form API Integration
-- **Current State**: Contact form performs client-side validation and sets `formSubmitted = true`.
-- **Target**:
-  - Connect form submission to Cloudflare Workers or serverless function.
-  - Implement spam prevention using Cloudflare Turnstile CAPTCHA.
-  - Deliver transactional email notifications to `info@douitsu-co.com` via Resend API or SMTP provider.
+- [x] **Transactional Form API Integration (Cloudflare Pages + Turnstile + Resend)**: Connected contact form to serverless Cloudflare Pages Functions (`functions/api/contact.ts`) with local Vite dev proxy, Cloudflare Turnstile bot protection, and automated transactional email dispatch via Resend API.
 
 ### 2. Job Openings Dynamic Filtering
 - **Current State**: Static 7-flyer grid on `/job.html`.

@@ -136,7 +136,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.1.0",
+    version: "1.2.0",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
@@ -697,10 +697,31 @@ export const siteData = {
         placeholder: { ja: "ご相談・お問い合わせ内容をご記入ください", en: "Enter your consultation or inquiry details", my: "ဆွေးနွေးမေးမြန်းလိုသည့် အကြောင်းအရာများကို ရေးသားပါ" }
       },
       submit: { ja: "送信する", en: "Send Message", my: "ပေးပို့မည်" },
+      sending: { ja: "送信中...", en: "Sending...", my: "ပေးပို့နေပါသည်..." },
       success: {
         ja: "お問い合わせありがとうございます。送信が完了しました。",
         en: "Thank you for contacting us. Your message has been sent successfully.",
         my: "မေးမြန်းစုံစမ်းမှုအတွက် ကျေးဇူးတင်ရှိပါသည်။ မကြာမီ ပြန်လည်ဆက်သွယ်ပေးပါမည်။",
+      },
+      error: {
+        ja: "送信に失敗しました。時間をおいてもう一度お試しください。",
+        en: "Failed to send message. Please try again later.",
+        my: "ပေးပို့မှု မအောင်မြင်ပါ။ ခေတ္တစောင့်ဆိုင်းပြီး နောက်တစ်ကြိမ် ထပ်မံကြိုးစားပေးပါ။",
+      },
+      captchaError: {
+        ja: "セキュリティ認証（Turnstile）を完了してください。",
+        en: "Please complete the security check (Turnstile).",
+        my: "ကျေးဇူးပြု၍ လုံခြုံရေးအတည်ပြုချက် (Turnstile) ကို လုပ်ဆောင်ပေးပါ။",
+      },
+      requiredError: {
+        ja: "必須項目をすべて入力してください。",
+        en: "Please fill in all required fields.",
+        my: "လိုအပ်သော အချက်အလက်များ အားလုံး ဖြည့်သွင်းပေးပါ။",
+      },
+      emailError: {
+        ja: "有効なメールアドレスを入力してください。",
+        en: "Please enter a valid email address.",
+        my: "မှန်ကန်သော အီးမေးလ်လိပ်စာ ရိုက်ထည့်ပေးပါ။",
       },
     },
   },
