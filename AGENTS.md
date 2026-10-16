@@ -20,6 +20,7 @@ All future AI agents working on this codebase must read and adhere to the specia
 | [**`deployment.md`**](./.agents/rules/deployment.md) | Build commands (`npm run build`), static output directory (`dist/index.html`), Cloudflare Pages / Nginx configuration, caching headers, and pre-deployment verification checklist. |
 | [**`validation-pipeline.md`**](./.agents/rules/validation-pipeline.md) | 5-stage pre-flight quality gate: ESLint, Stylelint CSS check, Astro check, static SSG build, and HTML5 validator on `dist/`. Mandatory before git commits and pushes. |
 | [**`versioning-and-releases.md`**](./.agents/rules/versioning-and-releases.md) | Semantic versioning (`major.minor.patch`), pre-push confirmation protocol (asking user with recommendation), and footer version badge sync. |
+| [**`form-validation-pipeline.md`**](./.agents/rules/form-validation-pipeline.md) | Multi-tier validation pipeline: Frontend field rules, dual honeypots (field + time heuristic), Cloudflare Turnstile canonical siteverify, CSRF/Origin checks, and Resend delivery. |
 | [**`roadmap.md`**](./.agents/rules/roadmap.md) | Completed Phase 1 modernization milestones, and Phase 2 backlog (API form submission, dynamic job filters, sitemap generation). |
 
 ---

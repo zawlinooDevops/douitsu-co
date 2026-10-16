@@ -1,12 +1,18 @@
 /**
- * DOUITSU LLC — Contact Form API Handler
+ * DOUITSU LLC — Form Validation & Anti-Abuse Pipeline
  * 
  * Target Platforms:
- *   - Cloudflare Pages Functions (Production Edge Runtime)
- *   - Local Vite Middleware in astro.config.mjs (Local Dev Runtime)
+ *   - Cloudflare Pages Functions (Edge Runtime: functions/api/contact.ts)
+ *   - Local Vite Dev Middleware (Node Runtime in astro.config.mjs)
  * 
- * Verifies Cloudflare Turnstile CAPTCHA and dispatches transactional
- * notification emails via Resend API.
+ * Pipeline Stages:
+ *   1. Method & Content-Type Gate
+ *   2. Payload Size Guard (10KB limit)
+ *   3. CSRF & Origin/Referer Verification
+ *   4. Dual Bot Heuristics (Website Honeypot + Time Heuristic -> Silent 200 Shadow Drop)
+ *   5. Strict Field-Level Validation (Name, Email, Phone, Message)
+ *   6. Canonical Turnstile Verification (spin/prompt.md contract: action="contact", hostname allowlist)
+ *   7. Transactional Email Dispatch via Resend API
  */
 
 interface Env {
@@ -25,7 +31,30 @@ interface ContactPayload {
   email?: string;
   phone?: string;
   message?: string;
-  turnstileToken?: string;
+  website?: string;        // Field Honeypot (must be empty)
+  renderedAt?: number;     // Time-based Honeypot (timestamp when form mounted)
+  turnstileToken?: string; // Cloudflare Turnstile single-use token
+}
+
+// Canonical Hostname Allowlist for DOUITSU LLC
+const APPROVED_HOSTNAMES = new Set([
+  'douitsu-co.com',
+  'www.douitsu-co.com',
+  'demo.douitsu-co.com',
+  'localhost',
+  '127.0.0.1'
+]);
+
+// In-memory cache for 30s duplicate submission guard
+const recentSubmissions = new Map<string, number>();
+
+function cleanRecentSubmissions(): void {
+  const now = Date.now();
+  for (const [key, timestamp] of recentSubmissions.entries()) {
+    if (now - timestamp > 60_000) {
+      recentSubmissions.delete(key);
+    }
+  }
 }
 
 function escapeHtml(str: string): string {
@@ -41,17 +70,49 @@ export async function handleContactSubmission(
   request: Request,
   env: Env
 ): Promise<Response> {
-  // Enforce POST method
+  cleanRecentSubmissions();
+
+  // --------------------------------------------------------------------------
+  // Stage 1: HTTP Method & Content-Type Gate
+  // --------------------------------------------------------------------------
   if (request.method !== 'POST') {
     return new Response(
       JSON.stringify({ success: false, error: 'METHOD_NOT_ALLOWED', message: 'Method Not Allowed' }),
-      { status: 405, headers: { 'Content-Type': 'application/json' } }
+      { status: 405, headers: { 'Content-Type': 'application/json', 'Allow': 'POST' } }
+    );
+  }
+
+  const contentType = request.headers.get('content-type') || '';
+  if (!contentType.toLowerCase().includes('application/json')) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'UNSUPPORTED_MEDIA_TYPE', message: 'Content-Type must be application/json' }),
+      { status: 415, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // --------------------------------------------------------------------------
+  // Stage 2: Payload Size Guard (Max 10 KB to prevent buffer flooding)
+  // --------------------------------------------------------------------------
+  let rawBody: string;
+  try {
+    rawBody = await request.text();
+  } catch {
+    return new Response(
+      JSON.stringify({ success: false, error: 'READ_BODY_FAILED', message: 'Failed to read request payload' }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  if (rawBody.length > 10_240) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'PAYLOAD_TOO_LARGE', message: 'Payload exceeds maximum limit of 10KB' }),
+      { status: 413, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
   let payload: ContactPayload;
   try {
-    payload = await request.json() as ContactPayload;
+    payload = JSON.parse(rawBody) as ContactPayload;
   } catch {
     return new Response(
       JSON.stringify({ success: false, error: 'INVALID_JSON', message: 'Invalid JSON request payload' }),
@@ -59,50 +120,180 @@ export async function handleContactSubmission(
     );
   }
 
+  // --------------------------------------------------------------------------
+  // Stage 3: CSRF & Origin / Referer Validation
+  // --------------------------------------------------------------------------
+  const originHeader = request.headers.get('origin');
+  const refererHeader = request.headers.get('referer');
+  const checkUrl = originHeader || refererHeader;
+
+  if (checkUrl) {
+    try {
+      const parsed = new URL(checkUrl);
+      if (!APPROVED_HOSTNAMES.has(parsed.hostname)) {
+        return new Response(
+          JSON.stringify({ success: false, error: 'CSRF_FORBIDDEN', message: 'Cross-origin request rejected' }),
+          { status: 403, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+    } catch {
+      return new Response(
+        JSON.stringify({ success: false, error: 'INVALID_ORIGIN_HEADER', message: 'Malformed origin header' }),
+        { status: 403, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Stage 4: Triple Bot Heuristics (Honeypot + Time Check + Link Injection -> Silent 200 Shadow Drop)
+  // --------------------------------------------------------------------------
+  // Heuristic A: Field Honeypot (website field must be blank for human users)
+  if (payload.website && payload.website.trim().length > 0) {
+    // Return fake success so bots do not retry with alternate vectors
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: 'Message delivered successfully.',
+        id: 'shadow-drop-honeypot'
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // Heuristic B: Time-based Honeypot (humans require at least 2.0s to fill form)
+  const renderedAt = Number(payload.renderedAt);
+  if (renderedAt && Number.isFinite(renderedAt)) {
+    const elapsedMs = Date.now() - renderedAt;
+    if (elapsedMs < 2000 && elapsedMs >= 0) {
+      // Rapid automated script detected -> shadow-drop
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: 'Message delivered successfully.',
+          id: 'shadow-drop-speed'
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+  }
+
+  // Heuristic C: Link / URL Injection (Common spam bot vector in inquiries)
+  const URL_REGEX = /(https?:\/\/|ftp:\/\/|www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9-]+\.(com|org|net|xyz|ru|top|biz|info|cn|cc|me|live|site|online|shop|club|store|vip|pro|icu|work|link|click|app|io|ai)(\/|\b)|\[url=|<a\s+href)/i;
+  const contentToCheck = `${payload.name || ''} ${payload.message || ''}`;
+  if (URL_REGEX.test(contentToCheck)) {
+    // URL spam bot detected -> silent 200 shadow-drop without email dispatch
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: 'Message delivered successfully.',
+        id: 'shadow-drop-url'
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // --------------------------------------------------------------------------
+  // Stage 5: Strict Field-Level Validation
+  // --------------------------------------------------------------------------
   const name = (payload.name || '').trim();
   const email = (payload.email || '').trim();
   const phone = (payload.phone || '').trim();
   const message = (payload.message || '').trim();
   const turnstileToken = (payload.turnstileToken || '').trim();
 
-  // Validate required fields
-  if (!name || !email || !phone) {
+  // Name: 2 to 100 characters
+  if (!name || name.length < 2 || name.length > 100) {
     return new Response(
       JSON.stringify({
         success: false,
-        error: 'MISSING_REQUIRED_FIELDS',
-        message: 'Name, email, and phone number are required.'
+        error: 'INVALID_NAME',
+        field: 'name',
+        message: 'Name must be between 2 and 100 characters.'
       }),
       { status: 400, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
-  // Validate email format
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  // Email: RFC 5322 regex compliant, max 254 characters
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+  if (!email || email.length > 254 || !emailRegex.test(email)) {
     return new Response(
       JSON.stringify({
         success: false,
         error: 'INVALID_EMAIL',
+        field: 'email',
         message: 'Please provide a valid email address.'
       }),
       { status: 400, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
-  // Validate Turnstile CAPTCHA token presence
-  if (!turnstileToken) {
+  // Phone: 8 to 20 characters, Japanese & International format
+  const phoneRegex = /^[0-9+\-()\s]{8,20}$/;
+  const digitsOnly = phone.replace(/[^0-9]/g, '');
+  if (!phone || !phoneRegex.test(phone) || digitsOnly.length < 8) {
     return new Response(
       JSON.stringify({
         success: false,
-        error: 'CAPTCHA_REQUIRED',
-        message: 'Cloudflare Turnstile verification is required.'
+        error: 'INVALID_PHONE',
+        field: 'phone',
+        message: 'Please provide a valid phone number with at least 8 digits.'
       }),
       { status: 400, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
-  // Retrieve secrets from environment
+  // Message: Required, 10 to 3000 characters
+  if (!message || message.length < 10 || message.length > 3000) {
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: 'INVALID_MESSAGE',
+        field: 'message',
+        message: 'Inquiry message must be between 10 and 3,000 characters.'
+      }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // Turnstile Token Presence & Length Guard (<= 2048 chars per Cloudflare standard)
+  if (!turnstileToken || turnstileToken.length > 2048) {
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: 'CAPTCHA_REQUIRED',
+        field: 'turnstile',
+        message: 'Cloudflare Turnstile verification token is required and must be valid.'
+      }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // --------------------------------------------------------------------------
+  // Stage 6: Duplicate Submission Guard (30-second window)
+  // --------------------------------------------------------------------------
+  const clientIp = request.headers.get('cf-connecting-ip')
+    || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    || 'unknown-ip';
+  
+  const duplicateKey = `${clientIp}:${email}:${message.slice(0, 50)}`;
+  const now = Date.now();
+  const lastSubmitted = recentSubmissions.get(duplicateKey);
+
+  if (lastSubmitted && now - lastSubmitted < 30_000) {
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: 'DUPLICATE_SUBMISSION',
+        message: 'Duplicate submission detected. Please wait 30 seconds before resubmitting.'
+      }),
+      { status: 429, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // --------------------------------------------------------------------------
+  // Stage 7: Canonical Cloudflare Turnstile Verification (spin/prompt.md standard)
+  // --------------------------------------------------------------------------
   const turnstileSecret = env.TURNSTILE_SECRET_KEY;
   const resendApiKey = env.RESEND_API_KEY;
   const fromEmail = env.CONTACT_FROM_EMAIL || env.RESEND_FROM_EMAIL || 'info@douitsu-co.com';
@@ -130,38 +321,46 @@ export async function handleContactSubmission(
     );
   }
 
-  // Step 1: Verify Turnstile Token with Cloudflare
-  const clientIp = request.headers.get('cf-connecting-ip')
-    || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-    || '';
-
+  const expectedAction = 'contact';
   const turnstileParams = new URLSearchParams();
   turnstileParams.append('secret', turnstileSecret);
   turnstileParams.append('response', turnstileToken);
-  if (clientIp) {
+  if (clientIp && clientIp !== 'unknown-ip') {
     turnstileParams.append('remoteip', clientIp);
   }
 
-  let turnstileVerificationSuccess = false;
   try {
     const turnstileRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      signal: AbortSignal.timeout(10_000),
       body: turnstileParams.toString()
     });
 
-    const turnstileJson = await turnstileRes.json() as { success?: boolean; 'error-codes'?: string[] };
-    turnstileVerificationSuccess = Boolean(turnstileJson.success);
+    if (!turnstileRes.ok) {
+      throw new Error(`siteverify returned HTTP ${turnstileRes.status}`);
+    }
 
-    if (!turnstileVerificationSuccess) {
+    const turnstileJson = await turnstileRes.json() as {
+      success?: boolean;
+      action?: string;
+      hostname?: string;
+      'error-codes'?: string[];
+    };
+
+    const isSuccess = Boolean(turnstileJson.success);
+    const actionMatch = !turnstileJson.action || turnstileJson.action === expectedAction;
+    const hostnameMatch = !turnstileJson.hostname || APPROVED_HOSTNAMES.has(turnstileJson.hostname);
+
+    if (!isSuccess || !actionMatch || !hostnameMatch) {
       return new Response(
         JSON.stringify({
           success: false,
           error: 'TURNSTILE_FAILED',
-          message: 'Security verification failed. Please try again.',
+          message: 'Security challenge verification failed. Please try again.',
           details: turnstileJson['error-codes'] || []
         }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 403, headers: { 'Content-Type': 'application/json' } }
       );
     }
   } catch (err: unknown) {
@@ -170,14 +369,16 @@ export async function handleContactSubmission(
       JSON.stringify({
         success: false,
         error: 'TURNSTILE_NETWORK_ERROR',
-        message: 'Failed to communicate with verification service.',
+        message: 'Failed to communicate with Turnstile verification service.',
         details: errMsg
       }),
       { status: 502, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
-  // Step 2: Build Branded HTML and Plain-Text Emails
+  // --------------------------------------------------------------------------
+  // Stage 8: Transactional Email Dispatch via Resend API
+  // --------------------------------------------------------------------------
   const jstFormatter = new Intl.DateTimeFormat('ja-JP', {
     dateStyle: 'full',
     timeStyle: 'medium',
@@ -188,7 +389,7 @@ export async function handleContactSubmission(
   const safeName = escapeHtml(name);
   const safeEmail = escapeHtml(email);
   const safePhone = escapeHtml(phone);
-  const safeMessage = message ? escapeHtml(message).replace(/\n/g, '<br/>') : '（お問い合わせ内容なし）';
+  const safeMessage = escapeHtml(message).replace(/\n/g, '<br/>');
 
   const htmlBody = `<!DOCTYPE html>
 <html lang="ja">
@@ -202,12 +403,8 @@ export async function handleContactSubmission(
     
     <!-- Header Banner -->
     <div style="background: linear-gradient(135deg, #105c8e 0%, #1a486c 100%); padding: 28px 32px; color: #ffffff;">
-      <div style="display: flex; align-items: center; justify-content: space-between;">
-        <div>
-          <p style="margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #7ba7cc; font-weight: 700;">DOUITSU LLC — 公式ウェブサイト通知</p>
-          <h1 style="margin: 6px 0 0 0; font-size: 20px; font-weight: 800; color: #ffffff;">新しいお問い合わせを受信しました</h1>
-        </div>
-      </div>
+      <p style="margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #7ba7cc; font-weight: 700;">DOUITSU LLC — 公式ウェブサイト通知</p>
+      <h1 style="margin: 6px 0 0 0; font-size: 20px; font-weight: 800; color: #ffffff;">新しいお問い合わせを受信しました</h1>
     </div>
     
     <!-- Body Content -->
@@ -272,7 +469,7 @@ export async function handleContactSubmission(
     `【送信日時】: ${formattedDate} (日本標準時)`,
     '',
     '【お問い合わせ内容】:',
-    message || '（お問い合わせ内容なし）',
+    message,
     '',
     '-----------------------------------------------------',
     '※ このメールに直接返信すると送信者宛に届きます。',
@@ -281,14 +478,13 @@ export async function handleContactSubmission(
     'TEL: 042-497-1537 | https://www.douitsu-co.com/'
   ].join('\n');
 
-  // Step 3: Dispatch via Resend API
   try {
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${resendApiKey}`,
         'Content-Type': 'application/json',
-        'User-Agent': 'Douitsu-Website/1.1.0'
+        'User-Agent': 'Douitsu-Website/1.2.0'
       },
       body: JSON.stringify({
         from: `DOUITSU LLC <${fromEmail}>`,
@@ -314,6 +510,9 @@ export async function handleContactSubmission(
       );
     }
 
+    // Record timestamp for duplicate submission prevention
+    recentSubmissions.set(duplicateKey, now);
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -337,7 +536,7 @@ export async function handleContactSubmission(
 }
 
 /**
- * Cloudflare Pages Function entrypoint
+ * Cloudflare Pages Function Entrypoint
  */
 export async function onRequestPost(context: {
   request: Request;

@@ -19,22 +19,45 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAA
     formSubmitted: false,
     isSubmitting: false,
     errorMessage: '',
+    renderedAt: Date.now(),
     formData: {
+      name: '',
+      email: '',
+      phone: '',
+      message: '',
+      website: '' // Field Honeypot
+    },
+    fieldErrors: {
       name: '',
       email: '',
       phone: '',
       message: ''
     },
-    errors: {
+    messages: {
       required: {
         ja: "${siteData.contact.form.requiredError.ja}",
         en: "${siteData.contact.form.requiredError.en}",
         my: "${siteData.contact.form.requiredError.my}"
       },
+      name: {
+        ja: "${siteData.contact.form.nameError.ja}",
+        en: "${siteData.contact.form.nameError.en}",
+        my: "${siteData.contact.form.nameError.my}"
+      },
       email: {
         ja: "${siteData.contact.form.emailError.ja}",
         en: "${siteData.contact.form.emailError.en}",
         my: "${siteData.contact.form.emailError.my}"
+      },
+      phone: {
+        ja: "${siteData.contact.form.phoneError.ja}",
+        en: "${siteData.contact.form.phoneError.en}",
+        my: "${siteData.contact.form.phoneError.my}"
+      },
+      message: {
+        ja: "${siteData.contact.form.messageError.ja}",
+        en: "${siteData.contact.form.messageError.en}",
+        my: "${siteData.contact.form.messageError.my}"
       },
       captcha: {
         ja: "${siteData.contact.form.captchaError.ja}",
@@ -47,11 +70,69 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAA
         my: "${siteData.contact.form.error.my}"
       }
     },
+    getMsg(type) {
+      const activeLang = typeof lang !== 'undefined' ? lang : 'ja';
+      return (this.messages[type] && this.messages[type][activeLang]) || (this.messages[type] && this.messages[type].ja) || '';
+    },
+    validateField(field) {
+      if (field === 'name') {
+        const val = (this.formData.name || '').trim();
+        if (!val) {
+          this.fieldErrors.name = this.getMsg('required');
+        } else if (val.length < 2 || val.length > 100) {
+          this.fieldErrors.name = this.getMsg('name');
+        } else {
+          this.fieldErrors.name = '';
+        }
+      }
+      if (field === 'email') {
+        const val = (this.formData.email || '').trim();
+        const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+        if (!val) {
+          this.fieldErrors.email = this.getMsg('required');
+        } else if (!emailRegex.test(val) || val.length > 254) {
+          this.fieldErrors.email = this.getMsg('email');
+        } else {
+          this.fieldErrors.email = '';
+        }
+      }
+      if (field === 'phone') {
+        const val = (this.formData.phone || '').trim();
+        const phoneRegex = /^[0-9+\\-()\\s]{8,20}$/;
+        const digits = val.replace(/[^0-9]/g, '');
+        if (!val) {
+          this.fieldErrors.phone = this.getMsg('required');
+        } else if (!phoneRegex.test(val) || digits.length < 8) {
+          this.fieldErrors.phone = this.getMsg('phone');
+        } else {
+          this.fieldErrors.phone = '';
+        }
+      }
+      if (field === 'message') {
+        const val = (this.formData.message || '').trim();
+        if (!val) {
+          this.fieldErrors.message = this.getMsg('required');
+        } else if (val.length < 10) {
+          this.fieldErrors.message = this.getMsg('message');
+        } else {
+          this.fieldErrors.message = '';
+        }
+      }
+    },
+    validateAll() {
+      this.validateField('name');
+      this.validateField('email');
+      this.validateField('phone');
+      this.validateField('message');
+      return !this.fieldErrors.name && !this.fieldErrors.email && !this.fieldErrors.phone && !this.fieldErrors.message;
+    },
     resetForm() {
       this.formSubmitted = false;
       this.isSubmitting = false;
       this.errorMessage = '';
-      this.formData = { name: '', email: '', phone: '', message: '' };
+      this.renderedAt = Date.now();
+      this.formData = { name: '', email: '', phone: '', message: '', website: '' };
+      this.fieldErrors = { name: '', email: '', phone: '', message: '' };
       if (typeof window !== 'undefined' && window.turnstile) {
         try { window.turnstile.reset(); } catch (e) { /* ignore */ }
       }
@@ -59,16 +140,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAA
     async submitForm() {
       this.errorMessage = '';
 
-      // Validate required text fields
-      if (!this.formData.name || !this.formData.email || !this.formData.phone) {
-        this.errorMessage = this.errors.required[lang] || this.errors.required.ja;
-        return;
-      }
-
-      // Validate email pattern
-      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
-      if (!emailRegex.test(this.formData.email)) {
-        this.errorMessage = this.errors.email[lang] || this.errors.email.ja;
+      if (!this.validateAll()) {
         return;
       }
 
@@ -82,7 +154,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAA
       }
 
       if (!turnstileToken) {
-        this.errorMessage = this.errors.captcha[lang] || this.errors.captcha.ja;
+        this.errorMessage = this.getMsg('captcha');
         return;
       }
 
@@ -99,6 +171,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAA
             email: this.formData.email,
             phone: this.formData.phone,
             message: this.formData.message,
+            website: this.formData.website,
+            renderedAt: this.renderedAt,
             turnstileToken: turnstileToken
           })
         });
@@ -107,18 +181,19 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAA
 
         if (response.ok && result.success) {
           this.formSubmitted = true;
-          this.formData = { name: '', email: '', phone: '', message: '' };
+          this.formData = { name: '', email: '', phone: '', message: '', website: '' };
+          this.fieldErrors = { name: '', email: '', phone: '', message: '' };
           if (typeof window !== 'undefined' && window.turnstile) {
             try { window.turnstile.reset(); } catch (e) { /* ignore */ }
           }
         } else {
-          this.errorMessage = result.message || (this.errors.general[lang] || this.errors.general.ja);
+          this.errorMessage = result.message || this.getMsg('general');
           if (typeof window !== 'undefined' && window.turnstile) {
             try { window.turnstile.reset(); } catch (e) { /* ignore */ }
           }
         }
       } catch (err) {
-        this.errorMessage = this.errors.general[lang] || this.errors.general.ja;
+        this.errorMessage = this.getMsg('general');
         if (typeof window !== 'undefined' && window.turnstile) {
           try { window.turnstile.reset(); } catch (e) { /* ignore */ }
         }
@@ -256,8 +331,22 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAA
             x-show="!formSubmitted"
             @submit.prevent="submitForm()"
             class="space-y-4"
+            novalidate
           >
-            <!-- Error Banner -->
+            <!-- Field Honeypot (Hidden from human visitors, traps spam bots) -->
+            <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;" aria-hidden="true">
+              <label for="form-hp-website">Website</label>
+              <input
+                id="form-hp-website"
+                type="text"
+                name="website"
+                x-model="formData.website"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+
+            <!-- Global Error Banner (Turnstile / Network / System errors) -->
             <div
               x-show="errorMessage"
               x-cloak
@@ -271,80 +360,102 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAA
 
             <!-- Name -->
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="contact-name" class="block text-xs font-bold text-slate-700 mb-1">
                 <span x-show="lang === 'ja'">{siteData.contact.form.name.label.ja}</span>
                 <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.name.label.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.name.label.my}</span>
                 <span class="text-red-500">*</span>
               </label>
               <input
+                id="contact-name"
                 type="text"
                 x-model="formData.name"
+                @blur="validateField('name')"
+                @input="if (fieldErrors.name) validateField('name')"
                 :disabled="isSubmitting"
                 required
                 :placeholder={`lang === 'ja' ? '${siteData.contact.form.name.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.name.placeholder.en}' : '${siteData.contact.form.name.placeholder.my}')`}
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all disabled:bg-slate-100 disabled:cursor-not-allowed"
+                class="w-full px-4 py-2.5 rounded-xl border bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all disabled:bg-slate-100 disabled:cursor-not-allowed"
+                :class="{ 'border-rose-400 ring-1 ring-rose-200': fieldErrors.name, 'border-slate-300': !fieldErrors.name }"
               />
+              <p x-show="fieldErrors.name" x-text="fieldErrors.name" class="mt-1 text-[11px] font-semibold text-rose-600" x-cloak></p>
             </div>
 
             <!-- Email & Phone Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">
+                <label for="contact-email" class="block text-xs font-bold text-slate-700 mb-1">
                   <span x-show="lang === 'ja'">{siteData.contact.form.email.label.ja}</span>
                   <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.email.label.en}</span>
                   <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.email.label.my}</span>
                   <span class="text-red-500">*</span>
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   x-model="formData.email"
+                  @blur="validateField('email')"
+                  @input="if (fieldErrors.email) validateField('email')"
                   :disabled="isSubmitting"
                   required
                   :placeholder={`lang === 'ja' ? '${siteData.contact.form.email.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.email.placeholder.en}' : '${siteData.contact.form.email.placeholder.my}')`}
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all disabled:bg-slate-100 disabled:cursor-not-allowed"
+                  class="w-full px-4 py-2.5 rounded-xl border bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all disabled:bg-slate-100 disabled:cursor-not-allowed"
+                  :class="{ 'border-rose-400 ring-1 ring-rose-200': fieldErrors.email, 'border-slate-300': !fieldErrors.email }"
                 />
+                <p x-show="fieldErrors.email" x-text="fieldErrors.email" class="mt-1 text-[11px] font-semibold text-rose-600" x-cloak></p>
               </div>
 
               <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">
+                <label for="contact-phone" class="block text-xs font-bold text-slate-700 mb-1">
                   <span x-show="lang === 'ja'">{siteData.contact.form.phone.label.ja}</span>
-                  <span x-show="lang === 'en'" style="display: none;">{siteData.contact.phone.label.en}</span>
-                  <span x-show="lang === 'my'" style="display: none;">{siteData.contact.phone.label.my}</span>
+                  <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.phone.label.en}</span>
+                  <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.phone.label.my}</span>
                   <span class="text-red-500">*</span>
                 </label>
                 <input
+                  id="contact-phone"
                   type="tel"
                   x-model="formData.phone"
+                  @blur="validateField('phone')"
+                  @input="if (fieldErrors.phone) validateField('phone')"
                   :disabled="isSubmitting"
                   required
                   :placeholder={`lang === 'ja' ? '${siteData.contact.form.phone.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.phone.placeholder.en}' : '${siteData.contact.form.phone.placeholder.my}')`}
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all disabled:bg-slate-100 disabled:cursor-not-allowed"
+                  class="w-full px-4 py-2.5 rounded-xl border bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all disabled:bg-slate-100 disabled:cursor-not-allowed"
+                  :class="{ 'border-rose-400 ring-1 ring-rose-200': fieldErrors.phone, 'border-slate-300': !fieldErrors.phone }"
                 />
+                <p x-show="fieldErrors.phone" x-text="fieldErrors.phone" class="mt-1 text-[11px] font-semibold text-rose-600" x-cloak></p>
               </div>
             </div>
 
             <!-- Message -->
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">
+              <label for="contact-message" class="block text-xs font-bold text-slate-700 mb-1">
                 <span x-show="lang === 'ja'">{siteData.contact.form.message.label.ja}</span>
                 <span x-show="lang === 'en'" style="display: none;">{siteData.contact.form.message.label.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.contact.form.message.label.my}</span>
+                <span class="text-red-500">*</span>
               </label>
               <textarea
+                id="contact-message"
                 x-model="formData.message"
+                @blur="validateField('message')"
+                @input="if (fieldErrors.message) validateField('message')"
                 :disabled="isSubmitting"
                 rows="4"
                 :placeholder={`lang === 'ja' ? '${siteData.contact.form.message.placeholder.ja}' : (lang === 'en' ? '${siteData.contact.form.message.placeholder.en}' : '${siteData.contact.form.message.placeholder.my}')`}
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all resize-y disabled:bg-slate-100 disabled:cursor-not-allowed"
+                class="w-full px-4 py-2.5 rounded-xl border bg-white text-slate-800 text-sm focus:ring-2 focus:ring-douitsu-primary focus:border-douitsu-primary outline-none transition-all resize-y disabled:bg-slate-100 disabled:cursor-not-allowed"
+                :class="{ 'border-rose-400 ring-1 ring-rose-200': fieldErrors.message, 'border-slate-300': !fieldErrors.message }"
               ></textarea>
+              <p x-show="fieldErrors.message" x-text="fieldErrors.message" class="mt-1 text-[11px] font-semibold text-rose-600" x-cloak></p>
             </div>
 
-            <!-- Cloudflare Turnstile CAPTCHA Widget -->
+            <!-- Cloudflare Turnstile CAPTCHA Widget (Canonical spin/prompt.md: action="contact") -->
             <div class="py-2 flex justify-center">
               <div
                 class="cf-turnstile"
                 data-sitekey={turnstileSiteKey}
+                data-action="contact"
                 data-theme="light"
               ></div>
             </div>

@@ -136,7 +136,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.2.0",
+    version: "1.2.1",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
@@ -718,10 +718,25 @@ export const siteData = {
         en: "Please fill in all required fields.",
         my: "လိုအပ်သော အချက်အလက်များ အားလုံး ဖြည့်သွင်းပေးပါ။",
       },
+      nameError: {
+        ja: "お名前を2文字以上で入力してください。",
+        en: "Please enter a valid name (at least 2 characters).",
+        my: "ကျေးဇူးပြု၍ အမည်ကို အနည်းဆုံး ၂ လုံးနှင့်အထက် မှန်ကန်စွာ ဖြည့်သွင်းပေးပါ။",
+      },
       emailError: {
         ja: "有効なメールアドレスを入力してください。",
         en: "Please enter a valid email address.",
         my: "မှန်ကန်သော အီးမေးလ်လိပ်စာ ရိုက်ထည့်ပေးပါ။",
+      },
+      phoneError: {
+        ja: "有効な電話番号を入力してください（8桁以上）。",
+        en: "Please enter a valid phone number (at least 8 digits).",
+        my: "မှန်ကန်သော ဖုန်းနံပါတ် ရိုက်ထည့်ပေးပါ (အနည်းဆုံး ၈ လုံး)။",
+      },
+      messageError: {
+        ja: "お問い合わせ内容を10文字以上で入力してください。",
+        en: "Please enter your inquiry details (at least 10 characters).",
+        my: "ကျေးဇူးပြု၍ မေးမြန်းလိုသော အကြောင်းအရာကို အနည်းဆုံး စာလုံးရေ ၁၀ လုံးနှင့်အထက် ရေးသားပေးပါ။",
       },
     },
   },
