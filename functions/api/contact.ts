@@ -296,7 +296,7 @@ export async function handleContactSubmission(
   // --------------------------------------------------------------------------
   const turnstileSecret = env.TURNSTILE_SECRET_KEY;
   const resendApiKey = env.RESEND_API_KEY;
-  const fromEmail = env.CONTACT_FROM_EMAIL || env.RESEND_FROM_EMAIL || 'info@douitsu-co.com';
+  const fromEmail = env.CONTACT_FROM_EMAIL || env.RESEND_FROM_EMAIL || 'contact@douitsu-co.com';
   const toEmail = env.CONTACT_TO_EMAIL || env.RESEND_TO_EMAIL || 'info@douitsu-co.com';
 
   if (!turnstileSecret) {
@@ -420,14 +420,14 @@ export async function handleContactSubmission(
         </tr>
         <tr style="border-bottom: 1px solid #e2e8f0;">
           <td style="padding: 12px 0; font-weight: 700; color: #64748b;">メールアドレス</td>
-          <td style="padding: 12px 0;">
-            <a href="mailto:${safeEmail}" style="color: #105c8e; font-weight: 600; text-decoration: underline;">${safeEmail}</a>
+          <td style="padding: 12px 0; color: #0f172a; font-weight: 600;">
+            ${safeEmail}
           </td>
         </tr>
         <tr style="border-bottom: 1px solid #e2e8f0;">
           <td style="padding: 12px 0; font-weight: 700; color: #64748b;">電話番号</td>
-          <td style="padding: 12px 0;">
-            <a href="tel:${safePhone}" style="color: #0f172a; font-weight: 600; text-decoration: none;">${safePhone}</a>
+          <td style="padding: 12px 0; color: #0f172a; font-weight: 600;">
+            ${safePhone}
           </td>
         </tr>
         <tr style="border-bottom: 1px solid #e2e8f0;">
@@ -443,7 +443,7 @@ export async function handleContactSubmission(
       </div>
 
       <div style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed #cbd5e1; font-size: 12px; color: #64748b;">
-        ※ このメールに直接返信すると、送信者（${safeEmail}）宛に返信されます。
+        ※ このメールに直接「返信 (Reply)」すると、送信者（${safeName} 様）宛に届きます。
       </div>
     </div>
 

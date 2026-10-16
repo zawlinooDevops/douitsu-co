@@ -58,8 +58,8 @@ The website is deployed to Cloudflare as a unified **Cloudflare Worker with Stat
       "not_found_handling": "404-page"
     },
     "vars": {
-      "CONTACT_FROM_EMAIL": "info@douitsu-co.com",
-      "CONTACT_TO_EMAIL": "zawlinoo.dev@gmail.com",
+      "CONTACT_FROM_EMAIL": "contact@douitsu-co.com",
+      "CONTACT_TO_EMAIL": "info@douitsu-co.com",
       "PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAAFYQzIK4TKPrb3od"
     }
   }
@@ -67,8 +67,8 @@ The website is deployed to Cloudflare as a unified **Cloudflare Worker with Stat
 
 - **Runtime Environment Variables & Secrets**:
   - **Public Variables (`vars` in `wrangler.jsonc`)**:
-    - `CONTACT_FROM_EMAIL`: Verified sender address (`info@douitsu-co.com`).
-    - `CONTACT_TO_EMAIL`: Recipient inbox address (`zawlinoo.dev@gmail.com`).
+    - `CONTACT_FROM_EMAIL`: Verified sender address (`contact@douitsu-co.com`).
+    - `CONTACT_TO_EMAIL`: Recipient inbox address (`info@douitsu-co.com`).
     - `PUBLIC_TURNSTILE_SITE_KEY`: Client-facing Turnstile widget key.
   - **Encrypted Secrets (Configured in Cloudflare Dashboard)**:
     - `TURNSTILE_SECRET_KEY`: Never committed to git. Stored as an Encrypted Secret in Cloudflare Dashboard -> Workers & Pages -> Settings -> Variables and Secrets.

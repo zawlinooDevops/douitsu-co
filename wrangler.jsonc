@@ -8,8 +8,8 @@
     "not_found_handling": "404-page"
   },
   "vars": {
-    "CONTACT_FROM_EMAIL": "info@douitsu-co.com",
-    "CONTACT_TO_EMAIL": "zawlinoo.dev@gmail.com",
+    "CONTACT_FROM_EMAIL": "contact@douitsu-co.com",
+    "CONTACT_TO_EMAIL": "info@douitsu-co.com",
     "PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAAFYQzIK4TKPrb3od"
   }
 }

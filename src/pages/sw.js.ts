@@ -14,6 +14,7 @@ const CACHE_NAME = 'douitsu-v${version}';
 
 const PRECACHE_ASSETS = [
   '/',
+  '/404.html',
   '/favicon.ico',
   '/site.webmanifest',
   '/images/landing/logo-mark.png',
@@ -56,12 +57,17 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
   const url = new URL(request.url);
 
-  // Only handle GET requests originating from our domain
+  // 1. Only handle GET requests originating from our domain
   if (request.method !== 'GET' || url.origin !== self.location.origin) {
     return;
   }
 
-  // 1. Navigation / Document requests: Network-First (Freshness Priority)
+  // 2. Bypass Service Worker entirely for dynamic API routes (/api/*)
+  if (url.pathname.startsWith('/api/')) {
+    return;
+  }
+
+  // 3. Navigation / Document requests: Network-First (Freshness Priority)
   if (request.mode === 'navigate' || request.destination === 'document') {
     event.respondWith(
       fetch(request)
@@ -79,7 +85,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 2. Static Assets (Astro bundled chunks, fonts, images): Stale-While-Revalidate
+  // 4. Static Assets (Astro bundled chunks, fonts, images): Stale-While-Revalidate
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       const fetchPromise = fetch(request).then((networkResponse) => {
