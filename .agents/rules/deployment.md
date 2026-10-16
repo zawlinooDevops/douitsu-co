@@ -33,18 +33,63 @@ npm run preview
 
 ## 2. Recommended Hosting Targets
 
-### Option A: Cloudflare Pages (Recommended)
-- **Framework Preset**: Astro
-- **Build Command**: `npm run build`
-- **Build Output Directory**: `dist`
-- **Node.js Version**: `>= 18.20.0` or `20.x`
-- **Global CDN Edge**: High-speed edge delivery across Tokyo, Osaka, and Yangon POPs with zero egress fees.
+### Option A: Cloudflare Workers with Static Assets (Primary Production Target)
 
-### Option B: GitHub Pages
+The website is deployed to Cloudflare as a unified **Cloudflare Worker with Static Assets** (Workers Assets architecture):
+
+- **Architecture Overview**:
+  1. **Static Assets (`dist/`)**: Compiled at build time by Astro (`npm run build`) containing HTML, CSS, client scripts, self-hosted TTF fonts, images, and `404.html`. Uploaded directly to Cloudflare edge assets store.
+  2. **Worker Script (`src/worker.ts`)**: Acts as the edge gateway. When a visitor requests `/api/contact` via `POST`, the Worker executes the anti-abuse pipeline and dispatches emails via Resend. For all other requests, it proxies seamlessly to `env.ASSETS.fetch(request)`.
+  3. **Custom 404 Handling**: Configured with `"not_found_handling": "404-page"` in `wrangler.jsonc`, automatically serving `dist/404.html` with status 404 whenever an asset route is not found.
+
+- **Cloudflare CI Build Commands**:
+  - **Build command**: `npm run build`
+  - **Deploy command**: `npx wrangler deploy`
+
+- **Authoritative Configuration (`wrangler.jsonc`)**:
+  ```jsonc
+  {
+    "name": "douitsu-co",
+    "main": "src/worker.ts",
+    "compatibility_date": "2024-11-01",
+    "assets": {
+      "directory": "./dist",
+      "binding": "ASSETS",
+      "not_found_handling": "404-page"
+    },
+    "vars": {
+      "CONTACT_FROM_EMAIL": "info@douitsu-co.com",
+      "CONTACT_TO_EMAIL": "zawlinoo.dev@gmail.com",
+      "PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAAFYQzIK4TKPrb3od"
+    }
+  }
+  ```
+
+- **Runtime Environment Variables & Secrets**:
+  - **Public Variables (`vars` in `wrangler.jsonc`)**:
+    - `CONTACT_FROM_EMAIL`: Verified sender address (`info@douitsu-co.com`).
+    - `CONTACT_TO_EMAIL`: Recipient inbox address (`zawlinoo.dev@gmail.com`).
+    - `PUBLIC_TURNSTILE_SITE_KEY`: Client-facing Turnstile widget key.
+  - **Encrypted Secrets (Configured in Cloudflare Dashboard)**:
+    - `TURNSTILE_SECRET_KEY`: Never committed to git. Stored as an Encrypted Secret in Cloudflare Dashboard -> Workers & Pages -> Settings -> Variables and Secrets.
+    - `RESEND_API_KEY`: Never committed to git. Stored as an Encrypted Secret in Cloudflare Dashboard.
+
+---
+
+### Option B: Cloudflare Pages (Pages Functions Fallback)
+If deployed via legacy Cloudflare Pages:
+- `public/_routes.json` routes `/api/*` to `functions/api/contact.ts` and `/*` to static files.
+- Build Output Directory: `dist`.
+
+---
+
+### Option C: GitHub Pages
 - Deployable via `.github/workflows/deploy.yml` using `actions/deploy-pages`.
 - Requires setting `site: 'https://<username>.github.io/<repo>'` in `astro.config.mjs` if not using a custom domain.
 
-### Option C: Linux Server (Nginx / Apache)
+---
+
+### Option D: Linux Server (Nginx / Apache)
 Place `dist/` contents in the webroot (e.g. `/var/www/douitsu-co/html`).
 
 #### Example Nginx VirtualHost Configuration:

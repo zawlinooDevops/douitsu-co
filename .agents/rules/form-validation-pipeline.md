@@ -54,7 +54,11 @@ flowchart TD
 
 ---
 
-### Tier 2: Edge Security & Bot Filtering (`functions/api/contact.ts`)
+### Tier 2: Edge Security & Bot Filtering (`src/worker.ts` & `functions/api/contact.ts`)
+
+The Cloudflare Worker gateway in `src/worker.ts` routes incoming requests:
+- `POST /api/contact` -> Processed by `handleContactSubmission` in `functions/api/contact.ts`.
+- All other requests -> Forwarded to `env.ASSETS.fetch(request)` to serve static assets from `dist/`.
 
 #### 1. Method & Header Verification (CSRF Protection)
 - HTTP Method must be `POST`. Any other method returns `405 Method Not Allowed`.

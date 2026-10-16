@@ -29,7 +29,8 @@ The legacy web presence has been overhauled and modernized into a high-performan
 
 ## 2. Planned Features & Enhancements (Phase 2)
 
-- [x] **Transactional Form API Integration (Cloudflare Pages + Turnstile + Resend)**: Connected contact form to serverless Cloudflare Pages Functions (`functions/api/contact.ts`) with local Vite dev proxy, Cloudflare Turnstile bot protection, and automated transactional email dispatch via Resend API.
+- [x] **Transactional Form API & Cloudflare Workers with Static Assets (Workers Assets + Turnstile + Resend)**: Modernized deployment to Cloudflare Workers with Static Assets (`src/worker.ts` + `dist/`), Cloudflare Turnstile bot verification (`spin/prompt.md` canonical contract), triple bot heuristics (field honeypot, time heuristic, and URL link spam shadow-drop), and automated transactional email dispatch via Resend API.
+- [x] **Branded Trilingual 404 Custom Error Handling**: Built dedicated 404 page (`src/pages/404.astro` -> `dist/404.html`) with full brand navigation, language switcher, glassmorphic card, quick helpline, and automated asset not-found handling via `wrangler.jsonc`.
 
 ### 2. Job Openings Dynamic Filtering
 - **Current State**: Static 7-flyer grid on `/job.html`.

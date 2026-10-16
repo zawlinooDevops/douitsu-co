@@ -157,15 +157,38 @@ All font faces are configured with `font-display: swap` in `src/styles/fonts.css
 ## 6. Development & Build Lifecycle
 
 ```bash
-# 1. Start local development server (with hot module reload)
+# 1. Start local development server (with hot module reload & local /api/contact proxy)
 npm run dev
 # Accessible at http://localhost:4321
 
 # 2. Production Static Build
 npm run build
-# Compiles static HTML and bundled assets to dist/ in ~1.3 seconds
+# Compiles static HTML, 404.html, and bundled assets to dist/ in ~1.3 seconds
 
 # 3. Preview Static Build locally
 npm run preview
 # Serves dist/ at http://localhost:4321
 ```
+
+---
+
+## 7. Cloudflare Workers with Static Assets & Serverless Edge Architecture
+
+The production website runs on **Cloudflare Workers with Static Assets** (Workers Assets):
+
+1. **Worker Gateway (`src/worker.ts`)**:
+   - Acts as the primary HTTP edge dispatcher for `demo.douitsu-co.com` and `douitsu-co.com`.
+   - Routes `POST /api/contact` to `functions/api/contact.ts` for Honeypot, Turnstile bot verification, and Resend email delivery.
+   - Routes all other traffic to `env.ASSETS.fetch(request)` to serve static assets from `dist/` with edge caching.
+2. **Workers Assets Configuration (`wrangler.jsonc`)**:
+   - `main`: Points to `src/worker.ts`.
+   - `assets.directory`: Points to `./dist`.
+   - `assets.binding`: Binds the static assets dispatcher to `env.ASSETS`.
+   - `assets.not_found_handling`: Set to `"404-page"`, automatically serving `dist/404.html` with HTTP 404 status when an asset is not found.
+   - `vars`: Stores non-secret public runtime configuration (`CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`, `PUBLIC_TURNSTILE_SITE_KEY`).
+3. **Environment Security Architecture**:
+   - Secret API keys (`TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`) are never stored in git. They are managed as Encrypted Secrets in Cloudflare Dashboard and injected into the Worker's `env` parameter at runtime.
+   - Local development uses `.env` (strictly gitignored) and a Vite middleware proxy in `astro.config.mjs`.
+4. **Branded 404 Custom Page (`src/pages/404.astro`)**:
+   - Renders a dedicated trilingual (`ja`, `en`, `my`) error screen compiled to `dist/404.html`.
+   - Maintains full Header (`Navbar.astro`), language switcher, Glassmorphic 404 card, Call-to-Action buttons (Home `/#home`, Contact `/#contact`), and direct helpline details (`042-497-1537`).
