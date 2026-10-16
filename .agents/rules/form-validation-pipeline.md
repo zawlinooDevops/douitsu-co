@@ -5,9 +5,9 @@
 This document defines the authoritative, multi-tier **Form Validation Pipeline** for **DOUITSU LLC (DOUITSU合同会社)**.
 
 The contact form serves as the primary corporate gateway for Japanese host enterprises (受入れ機関) and foreign candidates. The pipeline guarantees:
-1. **Zero Spam & Bot Elimination**: Combined Cloudflare Turnstile, dual honeypots (field + time heuristic), and origin verification.
+1. **Zero Spam & Bot Elimination**: Combined Cloudflare Turnstile, triple bot heuristics (field honeypot, time heuristic, and URL link injection traps), and origin verification.
 2. **Strict Data Integrity**: Rigorous field-level type, length, and format validation matching Japanese B2B standards.
-3. **Flawless User Experience**: Instant, trilingual (`ja`, `en`, `my`) inline validation feedback on field blur.
+3. **Flawless User Experience**: Instant, trilingual (`ja`, `en`, `my`) inline validation feedback on field blur (`@blur`) and live correction (`@input`).
 4. **Canonical Cloudflare Architecture**: Strictly adheres to the Cloudflare Turnstile `spin/prompt.md` canonical siteverify contract (`expectedAction="contact"`, hostname allowlisting, single-use token lifecycle).
 
 ```mermaid
@@ -22,7 +22,7 @@ flowchart TD
     MethodCheck -->|Allowed| PayloadCheck["Stage 3: Max Payload Guard (10KB)"]
 
     PayloadCheck -->|Exceeded| Err413["413 Payload Too Large"]
-    PayloadCheck -->|OK| HoneypotCheck{"Stage 4: Bot Heuristics Check<br/>(website filled OR elapsed < 2s?)"}
+    PayloadCheck -->|OK| HoneypotCheck{"Stage 4: Triple Bot Heuristics Check<br/>(website filled OR elapsed < 2s<br/>OR URL/Link detected?)"}
 
     HoneypotCheck -->|Bot Detected| FakeSuccess["Silent 200 OK (Shadow-Drop: No Email Sent)"]
     HoneypotCheck -->|Human Verified| TurnstileVerify["Stage 5: Canonical Turnstile siteverify"]
@@ -44,11 +44,11 @@ flowchart TD
 
 | Target Field | Rules & Constraints | Validation Trigger | Inline Error Key (Trilingual) |
 |---|---|---|---|
-| **Name (`name`)** | • Required<br>• Trimmed whitespace<br>• Min 2 chars, Max 100 chars | `@blur` / `@input` | `siteData.contact.form.nameError` |
+| **Name (`name`)** | • Required<br>• Trimmed whitespace<br>• Min 2 chars, Max 100 chars<br>• Must not contain URLs | `@blur` / `@input` | `siteData.contact.form.nameError` |
 | **Email (`email`)** | • Required<br>• RFC 5322 regex compliant<br>• Max 254 chars | `@blur` / `@input` | `siteData.contact.form.emailError` |
 | **Phone (`phone`)** | • Required<br>• Japanese & International regex (`^[0-9+\-()\s]{8,20}$`)<br>• Min 8 digits | `@blur` / `@input` | `siteData.contact.form.phoneError` |
-| **Message (`message`)** | • Required<br>• Min 10 chars, Max 3000 chars<br>• Prevents empty/spam single-word inquiries | `@blur` / `@input` | `siteData.contact.form.messageError` |
-| **Honeypot (`website`)** | • Must remain empty<br>• Visually hidden off-screen (`tabindex="-1"`, `autocomplete="off"`, `aria-hidden="true"`) | Submission gate | Silently flagged; no user alert |
+| **Message (`message`)** | • Required<br>• Min 10 chars, Max 3,000 chars<br>• Plain text inquiry only (URLs trigger shadow-drop) | `@blur` / `@input` | `siteData.contact.form.messageError` |
+| **Field Honeypot (`website`)** | • Must remain empty<br>• Visually hidden off-screen (`tabindex="-1"`, `autocomplete="off"`, `aria-hidden="true"`) | Submission gate | Silently flagged; no user alert |
 | **Time Heuristic (`renderedAt`)** | • Timestamp when component mounts (`Date.now()`)<br>• Human submissions take > 2 seconds | Submission gate | Silently flagged; no user alert |
 | **Turnstile Widget** | • `data-action="contact"`<br>• `data-theme="light"`<br>• Single-use token | Submission gate | `siteData.contact.form.captchaError` |
 
@@ -66,16 +66,27 @@ flowchart TD
   - *(Development/Preview only: `http://localhost:*`, `http://127.0.0.1:*`)*
 
 #### 2. Payload Guard
-- Payload size must not exceed **10 KB** (`10,240 bytes`). Requests exceeding this limit return `413 Payload Too Large` to prevent memory exhaustion and buffer flooding.
+- Payload size must not exceed **10 KB** (`10,240 bytes`). Requests exceeding this limit return `413 Payload Too Large` to prevent memory exhaustion, payload inflation, and buffer flooding.
 
 #### 3. Triple Bot Heuristics (Silent Shadow-Drop)
-When a bot is trapped by any of the following anti-abuse heuristics:
-- **Condition A (Field Honeypot)**: `website` honeypot string is non-empty.
-- **Condition B (Time-based Heuristic)**: Submission elapsed time (`Date.now() - renderedAt`) is less than 2,000 milliseconds.
-- **Condition C (URL / Link Injection)**: `name` or `message` contains promotional links, web URLs (`http://`, `https://`, `www.`, `.xyz`, `.ru`, `.online`, etc.), or BBCode/HTML link tags.
-- **Action**: Return **HTTP 200 OK** (`{ success: true, message: "Message delivered successfully.", id: "shadow-drop-*" }`) without dispatching to Resend API. The bot believes the spam succeeded and moves on without mutating payload parameters or retrying, completely preserving inbox cleanliness.
+When an automated bot is identified, the backend returns **HTTP 200 OK** (`{ success: true, message: "Message delivered successfully.", id: "shadow-drop-*" }`) without dispatching an email to Resend. The bot believes its spam was successfully submitted and moves on without mutating vectors:
 
-#### 4. Canonical Cloudflare Turnstile siteverify Contract
+* **Heuristic A (Field Honeypot)**:
+  `website` honeypot string is non-empty (`id: "shadow-drop-honeypot"`).
+* **Heuristic B (Time-based Heuristic)**:
+  Submission elapsed time (`Date.now() - renderedAt`) is less than 2,000 milliseconds (`id: "shadow-drop-speed"`).
+* **Heuristic C (URL / Promotional Link Injection)**:
+  `name` or `message` contains promotional links, web URLs, or domain extensions (`id: "shadow-drop-url"`).
+  Regex Pattern:
+  ```regex
+  /(https?:\/\/|ftp:\/\/|www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9-]+\.(com|org|net|xyz|ru|top|biz|info|cn|cc|me|live|site|online|shop|club|store|vip|pro|icu|work|link|click|app|io|ai)(\/|\b)|\[url=|<a\s+href)/i
+  ```
+
+#### 4. Duplicate Submission Guard (30-second window)
+- Keyed by `${clientIp}:${email}:${message.slice(0, 50)}`.
+- Prevents double-clicking or rapid resubmissions within 30 seconds with `429 Too Many Requests`.
+
+#### 5. Canonical Cloudflare Turnstile siteverify Contract
 Following Cloudflare's canonical `spin/prompt.md` standard:
 1. Token format check: `typeof token === "string" && token.length > 0 && token.length <= 2048`.
 2. POST to `https://challenges.cloudflare.com/turnstile/v0/siteverify` with `10,000ms` AbortSignal timeout.
@@ -93,7 +104,7 @@ Following Cloudflare's canonical `spin/prompt.md` standard:
 - **Headers**:
   - `Authorization: Bearer ${RESEND_API_KEY}`
   - `Content-Type: application/json`
-  - `User-Agent: Douitsu-Website/1.2.0`
+  - `User-Agent: Douitsu-Website/1.2.1`
 - **Email Payload**:
   - `from`: `DOUITSU LLC <info@douitsu-co.com>` (or `CONTACT_FROM_EMAIL`)
   - `to`: `[CONTACT_TO_EMAIL]` (`zawlinoo.dev@gmail.com` in staging/testing)
@@ -133,10 +144,42 @@ All user-visible feedback is localized across **Japanese (`ja`)**, **English (`e
 
 ---
 
-## 5. Security & Maintenance Checklist
+## 5. Anti-Abuse Test Scenarios (Verification Commands)
 
-- [ ] `.env` is never committed to Git (monitored by `.gitignore`).
+Developers can verify all pipeline defenses locally via `curl`:
+
+```bash
+# 1. Field Honeypot Trap (Returns Silent 200 OK shadow-drop)
+curl -s -X POST http://localhost:4321/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Bot","email":"bot@spam.com","phone":"09012345678","message":"Hello","website":"http://spam.com"}'
+# Response: {"success":true,"message":"Message delivered successfully.","id":"shadow-drop-honeypot"}
+
+# 2. Time Heuristic Trap (< 2s automated script)
+curl -s -X POST http://localhost:4321/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Fast Bot","email":"bot@spam.com","phone":"09012345678","message":"Fast submission","renderedAt":9999999999999}'
+# Response: {"success":true,"message":"Message delivered successfully.","id":"shadow-drop-speed"}
+
+# 3. URL Spam Injection Trap
+curl -s -X POST http://localhost:4321/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Spam","email":"bot@spam.com","phone":"09012345678","message":"Visit https://casino.xyz for deals"}'
+# Response: {"success":true,"message":"Message delivered successfully.","id":"shadow-drop-url"}
+
+# 4. Message Under-length (< 10 chars)
+curl -s -X POST http://localhost:4321/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"User","email":"user@test.com","phone":"09012345678","message":"Short"}'
+# Response: {"success":false,"error":"INVALID_MESSAGE","field":"message","message":"Inquiry message must be between 10 and 3,000 characters."}
+```
+
+---
+
+## 6. Security & Maintenance Checklist
+
+- [ ] `.env` is never committed to Git (strictly monitored by `.gitignore`).
 - [ ] Turnstile secret is only handled server-side in `functions/api/contact.ts` and dev middleware; NEVER exposed to client JS.
-- [ ] `turnstile.reset(widgetId)` is invoked on failed submissions so user can retry with a fresh token.
+- [ ] `turnstile.reset(widgetId)` is invoked on failed submissions and form resets so users can retry with a fresh token.
 - [ ] HTML special characters in user inputs are strictly escaped (`escapeHtml`) before email template generation to eliminate HTML injection.
 - [ ] Honeypot silent drops are logged for security observability without leaking logic to client callers.
