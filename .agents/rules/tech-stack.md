@@ -145,6 +145,12 @@ All font faces are configured with `font-display: swap` in `src/styles/fonts.css
 4. **Touch & Favicon Icons**:
    - Multi-size Apple touch icons (`180x180` and standard `apple-touch-icon.png`).
    - Favicon (`/favicon.ico`).
+5. **Production PWA & Version-Synced Service Worker**:
+   - Auto-generated `dist/sw.js` compiled from `src/pages/sw.js.ts` at build time, deriving `CACHE_NAME = 'douitsu-v{version}'` directly from `siteData.meta.version`.
+   - **Smart Caching**: Network-First for HTML/document navigation (preventing old version cache trapping); Stale-While-Revalidate for static assets, fonts, and images.
+   - **Automatic Legacy Cache Purge**: Automatically cleans up all prior version caches on `activate`.
+   - **Offline Shell**: Pre-caches critical assets for instant offline browsing.
+   - **Real-Time Network Monitoring**: Trilingual Alpine.js toast (`src/components/NetworkStatus.astro`) monitoring `online` / `offline` events with smooth auto-dismissing feedback.
 
 ---
 

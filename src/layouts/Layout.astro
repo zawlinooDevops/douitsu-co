@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { siteData } from '../data/content';
 import Preloader from '../components/Preloader.astro';
+import NetworkStatus from '../components/NetworkStatus.astro';
 
 interface Props {
   title?: string;
@@ -172,6 +173,20 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
       // @ts-ignore
       window.Alpine = Alpine;
       Alpine.start();
+    </script>
+
+    <!-- Real-time Network Connection Toast -->
+    <NetworkStatus />
+
+    <!-- PWA Service Worker Registration -->
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch((err) => {
+            console.warn('[PWA] Service Worker registration failed:', err);
+          });
+        });
+      }
     </script>
   </body>
 </html>

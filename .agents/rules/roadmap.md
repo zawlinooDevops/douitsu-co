@@ -23,6 +23,7 @@ The legacy web presence has been overhauled and modernized into a high-performan
 - [x] **Audited Contact Section & B2B Form (`#contact`)**: Solid Ice-Blue background (`bg-douitsu-ice`), fully audited trilingual address (`Flores Motomachi`, `Kiyose City`, `Room 205`), polite Japanese B2B form labels, and actionable dynamic placeholders.
 - [x] **Canonical Japanese Default Language**: Defaulting strictly to Japanese (`ja`) on fresh load/refresh without browser `localStorage` retention.
 - [x] **Hero Section Sakura Petals Falling Canvas & Mt. Fuji Cinematic Breathing Motion**: Ultra-lightweight native Canvas 2D simulation with 3D tumbling petals, interactive mouse breeze, viewport intersection observer auto-pause, and smooth 22s Ken Burns background breathing effect.
+- [x] **Production PWA & Version-Synced Service Worker**: Automated cache versioning (`douitsu-v{version}`) compiling `src/pages/sw.js.ts` to `dist/sw.js`, Network-First freshness routing, offline app shell pre-caching, and trilingual real-time connection monitor toast (`NetworkStatus.astro`).
 
 ---
 

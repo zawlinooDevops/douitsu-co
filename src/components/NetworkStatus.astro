@@ -1,0 +1,99 @@
+---
+import { siteData } from '../data/content';
+---
+
+<!-- ============================================================ -->
+<!-- REAL-TIME NETWORK STATUS MONITOR (TOAST)                     -->
+<!-- Reactive connection awareness with offline & restore toasts  -->
+<!-- ============================================================ -->
+<div
+  x-data="{
+    isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
+    showToast: false,
+    toastType: 'offline',
+    timer: null,
+    init() {
+      window.addEventListener('offline', () => {
+        this.isOnline = false;
+        this.toastType = 'offline';
+        this.showToast = true;
+        if (this.timer) clearTimeout(this.timer);
+      });
+      window.addEventListener('online', () => {
+        this.isOnline = true;
+        this.toastType = 'online';
+        this.showToast = true;
+        if (this.timer) clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          this.showToast = false;
+        }, 3500);
+      });
+    }
+  }"
+  x-show="showToast"
+  x-cloak
+  x-transition:enter="transition ease-out duration-300"
+  x-transition:enter-start="opacity-0 translate-y-6 scale-95"
+  x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+  x-transition:leave="transition ease-in duration-200"
+  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+  x-transition:leave-end="opacity-0 translate-y-6 scale-95"
+  class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[90vw] sm:max-w-md pointer-events-auto"
+  style="display: none;"
+  role="status"
+  aria-live="polite"
+>
+  <!-- OFFLINE TOAST -->
+  <div
+    x-show="toastType === 'offline'"
+    class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-amber-500/50 shadow-2xl backdrop-blur-md text-amber-200 text-xs sm:text-sm font-medium"
+  >
+    <div class="w-7 h-7 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.828m2.829 2.828L3 3m15.364 2.636A9 9 0 005.636 5.636m0 0l2.828 2.828M3 3l18 18M10.5 10.5a3 3 0 000 4.243m0 0l2.121 2.121M12 20h.01" />
+      </svg>
+    </div>
+    <div class="flex-1 pr-1">
+      <span x-show="lang === 'ja'">{siteData.networkToast.offline.ja}</span>
+      <span x-show="lang === 'en'" style="display: none;">{siteData.networkToast.offline.en}</span>
+      <span x-show="lang === 'my'" style="display: none;">{siteData.networkToast.offline.my}</span>
+    </div>
+    <button
+      type="button"
+      @click="showToast = false"
+      class="text-amber-400 hover:text-white p-1 rounded-lg transition-colors cursor-pointer"
+      aria-label="Close notification"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- ONLINE RESTORED TOAST -->
+  <div
+    x-show="toastType === 'online'"
+    class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-emerald-500/50 shadow-2xl backdrop-blur-md text-emerald-200 text-xs sm:text-sm font-medium"
+  >
+    <div class="w-7 h-7 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+      </svg>
+    </div>
+    <div class="flex-1 pr-1">
+      <span x-show="lang === 'ja'">{siteData.networkToast.online.ja}</span>
+      <span x-show="lang === 'en'" style="display: none;">{siteData.networkToast.online.en}</span>
+      <span x-show="lang === 'my'" style="display: none;">{siteData.networkToast.online.my}</span>
+    </div>
+    <button
+      type="button"
+      @click="showToast = false"
+      class="text-emerald-400 hover:text-white p-1 rounded-lg transition-colors cursor-pointer"
+      aria-label="Close notification"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>

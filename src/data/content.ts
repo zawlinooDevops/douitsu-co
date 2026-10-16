@@ -136,7 +136,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.0.1",
+    version: "1.1.0",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
@@ -711,7 +711,20 @@ export const siteData = {
     { id: "2", image: "/images/jobs/job-yamaguchi.jpg", alt: "求人票 (山口・機械加工・工場製造)" },
   ] as JobFlyer[],
 
+  networkToast: {
+    offline: {
+      ja: "オフラインモードです（保存されたキャッシュを表示中）",
+      en: "Offline Mode — Browsing cached content",
+      my: "အင်တာနက် ချိတ်ဆက်မှု မရှိပါ (Offline စနစ်ဖြင့် ကြည့်ရှုနေပါသည်)",
+    },
+    online: {
+      ja: "オンラインに復帰しました",
+      en: "Online connection restored",
+      my: "အင်တာနက် ပြန်လည်ချိတ်ဆက်မိပါပြီ",
+    },
+  },
+
   footer: {
-    copyright: "Copyright © 2025 Douitsu. All rights reserved.",
+    copyright: "Copyright © 2025 DOUITSU LLC. All rights reserved.",
   },
 };
