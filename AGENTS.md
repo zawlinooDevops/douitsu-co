@@ -19,6 +19,7 @@ All future AI agents working on this codebase must read and adhere to the specia
 | [**`assets-and-images.md`**](./.agents/rules/assets-and-images.md) | Complete directory inventory of images (`public/images/`), 7 job recruitment flyers (`public/images/jobs/`), Kaigo exam PDF textbooks (38.8MB & 14.1MB), and local font files. |
 | [**`deployment.md`**](./.agents/rules/deployment.md) | Build commands (`npm run build`), static output directory (`dist/index.html`), Cloudflare Pages / Nginx configuration, caching headers, and pre-deployment verification checklist. |
 | [**`validation-pipeline.md`**](./.agents/rules/validation-pipeline.md) | 5-stage pre-flight quality gate: ESLint, Stylelint CSS check, Astro check, static SSG build, and HTML5 validator on `dist/`. Mandatory before git commits and pushes. |
+| [**`versioning-and-releases.md`**](./.agents/rules/versioning-and-releases.md) | Semantic versioning (`major.minor.patch`), pre-push confirmation protocol (asking user with recommendation), and footer version badge sync. |
 | [**`roadmap.md`**](./.agents/rules/roadmap.md) | Completed Phase 1 modernization milestones, and Phase 2 backlog (API form submission, dynamic job filters, sitemap generation). |
 
 ---

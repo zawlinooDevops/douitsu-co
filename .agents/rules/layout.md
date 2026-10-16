@@ -190,5 +190,5 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
   - Left: DOUITSU logo mark with white background pad + Company Name & Registration number.
   - Right: Horizontal navigation link menu.
 - **Bottom Row**:
-  - Left: Copyright string (`Copyright © 2025 Douitsu. All rights reserved.`).
-  - Right: Smooth scroll anchor linking to `#home` ("▲ ページ上部へ / Back to top / စာမျက်နှာ ထိပ်ဆုံးသို့").
+  - Left: Copyright string (`Copyright © 2025 DOUITSU LLC. All rights reserved.`).
+  - Right: Smooth scroll anchor linking to `#home` ("▲ ページ上部へ / Back to top / စာမျက်နှာ ထိပ်ဆုံးသို့") and Version Badge pill (`v{siteData.meta.version}` in `font-mono text-slate-400 bg-slate-800/80 border border-slate-700/60`).

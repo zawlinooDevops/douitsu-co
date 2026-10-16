@@ -96,3 +96,4 @@ Before pushing changes to production, agents must verify:
 - [ ] Download links for both Kaigo PDF textbooks trigger file downloads.
 - [ ] Form submission validation works when required fields are blank.
 - [ ] No broken links or external CDN dependencies are introduced.
+- [ ] **Pre-Push Version Protocol**: Consult user on SemVer bump (`patch`, `minor`, `major`) with recommendation, update `package.json` & `siteData.meta.version`, and verify footer version badge prior to git push.

@@ -187,7 +187,7 @@ def generate_og_twitter_banner(logo: Image.Image):
 
     # 5. Clean Domain Pill
     ry += 48
-    domain_text = "demo.douitsu-co.com"
+    domain_text = "douitsu-co.com"
     d_bbox = f_en_url.getbbox(domain_text)
     dw = d_bbox[2] - d_bbox[0] + 32
     dh = 30

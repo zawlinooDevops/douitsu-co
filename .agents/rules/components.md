@@ -242,9 +242,10 @@ x-data="{
 ### Responsibilities:
 1. **Brand Lockup**: White-backed DOUITSU logo mark with company name and registration code.
 2. **Nav Links**: Horizontal list of site links with hover color transitions.
-3. **Copyright & Back-to-Top**:
-   - `Copyright © 2025 Douitsu. All rights reserved.`
-   - Smooth scroll anchor linking to `#home` ("▲ ページ上部へ").
+3. **Copyright, Back-to-Top & Version Badge**:
+   - `Copyright © 2025 DOUITSU LLC. All rights reserved.`
+   - Smooth scroll anchor linking to `#home` ("▲ ページ上部へ / Back to top / စာမျက်နှာ ထိပ်ဆုံးသို့").
+   - Site Version Pill in bottom right corner: `v{siteData.meta.version}` in `font-mono text-slate-400 bg-slate-800/80 border border-slate-700/60`.
 
 ---
 

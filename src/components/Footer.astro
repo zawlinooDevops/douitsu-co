@@ -42,14 +42,20 @@ import { siteData } from '../data/content';
 
     </div>
 
-    <!-- Bottom Copyright -->
+    <!-- Bottom Copyright & Version -->
     <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
       <p>Copyright © 2025 DOUITSU LLC. All rights reserved.</p>
-      <a href="#home" class="text-slate-400 hover:text-white transition-colors">
-        <span x-show="lang === 'ja'">▲ ページ上部へ</span>
-        <span x-show="lang === 'en'" style="display: none;">▲ Back to top</span>
-        <span x-show="lang === 'my'" style="display: none;">▲ စာမျက်နှာ ထိပ်ဆုံးသို့</span>
-      </a>
+      <div class="flex items-center gap-3">
+        <a href="#home" class="text-slate-400 hover:text-white transition-colors">
+          <span x-show="lang === 'ja'">▲ ページ上部へ</span>
+          <span x-show="lang === 'en'" style="display: none;">▲ Back to top</span>
+          <span x-show="lang === 'my'" style="display: none;">▲ စာမျက်နှာ ထိပ်ဆုံးသို့</span>
+        </a>
+        <span class="text-slate-700 select-none" aria-hidden="true">•</span>
+        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-mono text-slate-400 bg-slate-800/80 border border-slate-700/60" title="Site Version">
+          v{siteData.meta.version}
+        </span>
+      </div>
     </div>
   </div>
 </footer>
