@@ -87,7 +87,11 @@ const description = siteData.notFound.description.ja;
         <div class="pt-6 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
           <div class="flex items-center gap-2">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span class="font-medium">{siteData.meta.registrationNo}</span>
+            <span class="font-medium">
+              <span x-show="lang === 'ja'">登録支援機関: {siteData.meta.registrationNo}</span>
+              <span x-show="lang === 'en'" style="display: none;">Registered Support Org: {siteData.meta.registrationNo}</span>
+              <span x-show="lang === 'my'" style="display: none;">မှတ်ပုံတင်အမှတ်: {siteData.meta.registrationNo}</span>
+            </span>
           </div>
           <div class="flex items-center gap-4">
             <a href={`tel:${siteData.contact.phone.tel || siteData.contact.phone.value}`} class="font-bold text-douitsu-primary hover:underline flex items-center gap-1">

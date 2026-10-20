@@ -1,6 +1,6 @@
 # DOUITSU 合同会社 — Modernized Website
 
-> **出入国在留管理庁 登録支援機関 (REG:0A32ES43)**  
+> **出入国在留管理庁 登録支援機関 (登録番号: 25登－012206)**  
 > Official Registered Support Organization for Specified Skilled Workers (特定技能 1号) in Japan.
 
 [![Built with Astro](https://img.shields.io/badge/Built%20with-Astro%205-FF5D01?style=flat&logo=astro&logoColor=white)](https://astro.build/)
@@ -117,7 +117,7 @@ douitsu-co/
 ## 🏢 Company Information (会社概要)
 
 - **会社名**: DOUITSU合同会社 (DOUITSU LLC)
-- **登録番号**: 出入国在留管理庁 登録支援機関 REG:0A32ES43
+- **登録番号**: 出入国在留管理庁 登録支援機関 25登－012206
 - **所在地**: 〒204-0021 東京都清瀬市元町1-11-21 フローレス元町205号
 - **TEL**: 042-497-1537 / 080-2213-8194
 - **送り出し機関 (ミャンマー)**: FOR UNITY/SMZ CO.,LTD

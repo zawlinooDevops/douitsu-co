@@ -25,7 +25,11 @@ import { siteData } from '../data/content';
             <span x-show="lang === 'ja'">{siteData.meta.companyName}</span>
             <span x-show="lang !== 'ja'" style="display: none;">{siteData.meta.companyNameEn}</span>
           </h4>
-          <p class="text-xs text-slate-400">{siteData.meta.registrationNo}</p>
+          <p class="text-xs text-slate-400">
+            <span x-show="lang === 'ja'">登録支援機関: {siteData.meta.registrationNo}</span>
+            <span x-show="lang === 'en'" style="display: none;">Registered Support Org: {siteData.meta.registrationNo}</span>
+            <span x-show="lang === 'my'" style="display: none;">မှတ်ပုံတင်အမှတ်: {siteData.meta.registrationNo}</span>
+          </p>
         </div>
       </div>
 

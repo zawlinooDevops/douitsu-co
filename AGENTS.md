@@ -1,6 +1,6 @@
 # DOUITSU LLC (DOUITSU合同会社) — Agent Guidelines & System Architecture
 
-This repository contains the official modernized website for **DOUITSU LLC (DOUITSU合同会社)**, an officially registered **Touroku Shien Kikan (出入国在留管理庁 登録支援機関 REG:0A32ES43)** in Japan.
+This repository contains the official modernized website for **DOUITSU LLC (DOUITSU合同会社)**, an officially registered **Touroku Shien Kikan (出入国在留管理庁 登録支援機関 25登－012206)** in Japan.
 
 All future AI agents working on this codebase must read and adhere to the specialized rule files located in [`.agents/rules/`](./.agents/rules/):
 
@@ -10,7 +10,7 @@ All future AI agents working on this codebase must read and adhere to the specia
 
 | Rule Document | Scope & Purpose |
 |---|---|
-| [**`about-this-business.md`**](./.agents/rules/about-this-business.md) | Company background, legal status (REG:0A32ES43), office address in Kiyose-shi Tokyo, phone numbers, sending agency in Myanmar, and in-depth operational breakdown of all **10 Statutory Support Duties (法定支援10項目)**. |
+| [**`about-this-business.md`**](./.agents/rules/about-this-business.md) | Company background, legal status (25登－012206), office address in Kiyose-shi Tokyo, phone numbers, sending agency in Myanmar, and in-depth operational breakdown of all **10 Statutory Support Duties (法定支援10項目)**. |
 | [**`tech-stack.md`**](./.agents/rules/tech-stack.md) | Technical architecture: Astro 5 SSG, Tailwind CSS 3 with custom `douitsu` palette tokens, Cloudflare Workers with Static Assets runtime, local Alpine.js reactivity, 100% self-hosted TTF typography (Zero CDN), and build configs. |
 | [**`layout.md`**](./.agents/rules/layout.md) | Visual design, unified single-page route structure (`/`), two-tier header (`Navbar.astro`), section mapping (`#home`, `#about`, `#services`, `#support`, `#flow`, `#faq`, `#contact`), and footer layout. |
 | [**`section-backgrounds-and-patterns.md`**](./.agents/rules/section-backgrounds-and-patterns.md) | Background colors, inline SVG patterns (Dot-Grid, Shippo, Seigaiha, Coordinates Matrix), ambient glow orbs, and visual rhythm. |

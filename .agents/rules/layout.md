@@ -42,7 +42,7 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
 - **Brand Lockup (Left)**:
   - Brand Logo (`/images/landing/logo-mark.png`, `h-9 sm:h-11 lg:h-12`).
   - Company Typography: `DOUITSU合同会社` in bold navy (`text-douitsu-navy`).
-  - Official Badge Subtitle: `登録支援機関 (REG:0A32ES43)` in multilingual format.
+  - Official Badge Subtitle: `登録支援機関 (25登－012206)` in multilingual format.
 - **Desktop Navigation Links (`lg:flex`) with Real-time Scrollspy Active State**:
   - `/#home` (ホーム / Home / ပင်မစာမျက်နှာ)
   - `/#about` (会社概要 / About Us / ကုမ္ပဏီအကြောင်း)
@@ -71,7 +71,7 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
 - **Backdrop Gradient**: `bg-gradient-to-r from-slate-950/60 via-slate-900/30 to-transparent` to ensure high contrast for typography while keeping natural scenery visible.
 - **Content Container**: Frosted Glassmorphism card (`p-6 sm:p-10 md:p-12 rounded-3xl bg-white/92 backdrop-blur-md border border-white/90 shadow-2xl`).
 - **Elements**:
-  1. **Government Trust Badge**: Pulsing green dot with `出入国在留管理庁 登録支援機関 (登録番号: 0A32ES43)`.
+  1. **Government Trust Badge**: Pulsing green dot with `出入国在留管理庁 登録支援機関 (登録番号: 25登－012206)`.
   2. **Main Headline**: Multilingual typography in `text-douitsu-navy font-extrabold`.
   3. **Description Paragraph**: Highlighting one-stop statutory support for host companies and foreign personnel.
   4. **Dual CTAs**:
@@ -98,7 +98,7 @@ The global header is fixed to the top viewport (`fixed top-0 left-0 right-0 z-50
       - 会社名: DOUITSU合同会社
       - 設立年: 2025.3.31
       - スタッフ数: 6
-      - 登録: REG:0A32ES43
+      - 登録番号: 25登－012206
   - **Right Card (`lg:col-span-6`) — Download PDF (介護テキスト)**:
     - Card 1: Japanese Nursing Care Exam Textbook (38.8 MB) with direct download button.
     - Card 2: Myanmar Nursing Care Exam Textbook (14.1 MB) with direct download button.

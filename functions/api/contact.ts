@@ -449,7 +449,7 @@ export async function handleContactSubmission(
 
     <!-- Footer -->
     <div style="background: #f8fafc; padding: 20px 32px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #64748b; line-height: 1.6; text-align: center;">
-      <p style="margin: 0; font-weight: 700; color: #0d1b2a;">DOUITSU合同会社 (登録支援機関: REG:0A32ES43)</p>
+      <p style="margin: 0; font-weight: 700; color: #0d1b2a;">DOUITSU合同会社 (登録支援機関: 25登－012206)</p>
       <p style="margin: 2px 0 0 0;">〒204-0021 東京都清瀬市元町1-11-21 フローレス元町205号</p>
       <p style="margin: 2px 0 0 0;">TEL: 042-497-1537 / E-mail: info@douitsu-co.com</p>
     </div>
@@ -473,7 +473,7 @@ export async function handleContactSubmission(
     '',
     '-----------------------------------------------------',
     '※ このメールに直接返信すると送信者宛に届きます。',
-    'DOUITSU合同会社 (出入国在留管理庁 登録支援機関 REG:0A32ES43)',
+    'DOUITSU合同会社 (出入国在留管理庁 登録支援機関: 25登－012206)',
     '〒204-0021 東京都清瀬市元町1-11-21 フローレス元町205号',
     'TEL: 042-497-1537 | https://www.douitsu-co.com/'
   ].join('\n');

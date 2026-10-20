@@ -11,7 +11,7 @@ description: Comprehensive Business Profile, Legal Registrations, Statutory Duti
 - **Company Name (English)**: DOUITSU LLC
 - **Legal Form**: 合同会社 (Limited Liability Company under Japanese Corporate Law)
 - **Official Status**: 出入国在留管理庁 登録支援機関 (Immigration Services Agency of Japan — Registered Support Organization)
-- **Registration Number**: `REG:0A32ES43` (Registered: July 2025 / 2025.7)
+- **Registration Number**: `25登－012206` (Registered: July 2025 / 2025.7)
 - **Date of Establishment**: March 31, 2025 (2025.3.31)
 - **Staff Count**: 6 dedicated bilingual and professional staff members
 - **Corporate Website**: `https://www.douitsu-co.com/`

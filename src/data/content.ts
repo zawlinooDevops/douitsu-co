@@ -122,7 +122,7 @@ export const siteData = {
     },
     siteUrl: "https://demo.douitsu-co.com",
     ogImage: "/images/landing/banner.jpg",
-    registrationNo: "REG:0A32ES43",
+    registrationNo: "25登－012206",
     companyName: "DOUITSU合同会社",
     companyNameEn: "DOUITSU LLC",
     phone: "042-497-1537",
@@ -136,7 +136,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.2.3",
+    version: "1.2.4",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
@@ -153,9 +153,9 @@ export const siteData = {
 
   hero: {
     badge: {
-      ja: "出入国在留管理庁 登録支援機関 (登録番号: 0A32ES43)",
-      en: "Immigration Services Agency Registered Support Organization (REG: 0A32ES43)",
-      my: "တရားဝင် မှတ်ပုံတင်ထောက်ပံ့ရေးအဖွဲ့အစည်း (REG: 0A32ES43)",
+      ja: "出入国在留管理庁 登録支援機関 (登録番号: 25登－012206)",
+      en: "Immigration Services Agency Registered Support Organization (Registration No. 25登－012206)",
+      my: "တရားဝင် မှတ်ပုံတင်ထောက်ပံ့ရေးအဖွဲ့အစည်း (မှတ်ပုံတင်အမှတ်: 25登－012206)",
     },
     title: {
       ja: "登録支援機関とは",
@@ -318,7 +318,7 @@ export const siteData = {
         },
         { label: { ja: "設立年", en: "Established", my: "တည်ထောင်သည့်ရက်စွဲ" }, value: "2025.3.31" },
         { label: { ja: "スタッフ数", en: "Staff Members", my: "ဝန်ထမ်းအင်အား" }, value: "6" },
-        { label: { ja: "登録", en: "Registration", my: "မှတ်ပုံတင်အမှတ်" }, value: "REG:0A32ES43" },
+        { label: { ja: "登録番号", en: "Registration No.", my: "မှတ်ပုံတင်အမှတ်" }, value: "25登－012206" },
       ],
     },
     downloads: {

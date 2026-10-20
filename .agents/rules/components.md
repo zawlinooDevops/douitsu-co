@@ -123,7 +123,7 @@ interface Props {
      - 会社名: DOUITSU合同会社
      - 設立年: 2025.3.31
      - スタッフ数: 6
-     - 登録: REG:0A32ES43
+     - 登録番号: 25登－012206
 2. **PDF Study Materials Card (`lg:col-span-6`)**:
    - Download cards for official Nursing Care (Kaigo) exams:
      - Japanese Edition: `kaigo-tokuteiginou-japanese.pdf` (38.8 MB)
