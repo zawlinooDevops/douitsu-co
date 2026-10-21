@@ -17,9 +17,8 @@ public/
 ├── favicon-48x48.png                   # Standard 48x48 PNG favicon
 ├── apple-touch-icon.png                # Standard iOS touch icon (180x180)
 ├── site.webmanifest                    # Web App manifest with icons & brand colors
-├── files/                              # Official PDF study textbooks
-│   ├── kaigo-tokuteiginou-japanese.pdf # 38.8 MB (Japanese edition)
-│   └── kaigo-tokuteiginou-myanmar.pdf  # 14.1 MB (Myanmar edition)
+├── robots.txt                          # Search engine exclusion protocol & sitemap indexes
+├── sitemap.xml                         # Root XML sitemap for crawlers
 ├── fonts/                              # 100% Local TTF font files
 │   ├── local-font-1.ttf                # Plus Jakarta Sans Regular (400)
 │   ├── local-font-2.ttf                # Noto Sans Myanmar Regular (400)
@@ -105,17 +104,19 @@ Recruitment flyer images utilized in the `#career` interactive table detail popu
 
 ---
 
-## 4. Downloadable Study Guides (`public/files/`)
+## 4. Downloadable Study Guides (Cloudflare R2 Bucket: `https://files.douitsu-co.com/`)
 
-Official exam preparation textbooks for candidates taking the Kaigo (Nursing Care) Tokutei Ginou skill evaluation test:
+Official exam preparation textbooks for candidates taking the Kaigo (Nursing Care) Tokutei Ginou skill evaluation test, hosted externally on Cloudflare R2 custom domain (`files.douitsu-co.com`) to keep repository and bundle size optimal:
 
 1. **`kaigo-tokuteiginou-japanese.pdf`**:
    - File Size: `38.8 MB`
    - Target Language: Japanese (`日本語版`)
+   - URL: `https://files.douitsu-co.com/kaigo-tokuteiginou-japanese.pdf`
    - Content: Complete curriculum for Nursing Care technical terms, hygiene, and caregiving fundamentals.
 2. **`kaigo-tokuteiginou-myanmar.pdf`**:
    - File Size: `14.1 MB`
    - Target Language: Myanmar (`ミャンマー語版`)
+   - URL: `https://files.douitsu-co.com/kaigo-tokuteiginou-myanmar.pdf`
    - Content: Full translated textbook enabling Myanmar candidates to master caregiving concepts in their native language before sitting for the Japanese exam.
 
 ---

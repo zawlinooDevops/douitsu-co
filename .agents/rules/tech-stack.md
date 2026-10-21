@@ -16,12 +16,18 @@ description: Comprehensive Tech Stack Architecture, Runtime, Styling, Typography
   ```javascript
   import { defineConfig } from 'astro/config';
   import tailwind from '@astrojs/tailwind';
+  import sitemap from '@astrojs/sitemap';
 
   export default defineConfig({
-    integrations: [tailwind()],
-    site: 'https://www.douitsu-co.com',
+    integrations: [
+      tailwind(),
+      sitemap({
+        filter: (page) => !page.includes('/404')
+      })
+    ],
+    site: 'https://douitsu-co.com',
     build: {
-      format: 'file' // Outputs /index.html and /job.html directly
+      format: 'file'
     }
   });
   ```
@@ -29,6 +35,7 @@ description: Comprehensive Tech Stack Architecture, Runtime, Styling, Typography
 - **Core Dependencies**:
   - `astro`: `^5.4.2`
   - `@astrojs/tailwind`: `^5.1.5`
+  - `@astrojs/sitemap`: `^3.7.4`
   - `tailwindcss`: `^3.4.17`
   - `alpinejs`: `^3.14.8`
 
@@ -151,6 +158,9 @@ All font faces are configured with `font-display: swap` in `src/styles/fonts.css
    - **Automatic Legacy Cache Purge**: Automatically cleans up all prior version caches on `activate`.
    - **Offline Shell**: Pre-caches critical assets for instant offline browsing.
    - **Real-Time Network Monitoring**: Trilingual Alpine.js toast (`src/components/NetworkStatus.astro`) monitoring `online` / `offline` events with smooth auto-dismissing feedback.
+6. **SEO Sitemap & Robots Exclusion Protocol**:
+   - Automated sitemap index and URL sets (`dist/sitemap-index.xml`, `dist/sitemap-0.xml`, `dist/sitemap.xml`) generated via `@astrojs/sitemap` (with 404 exclusion).
+   - Standard `public/robots.txt` allowing full indexing, disallowing internal `/api/` paths, and referencing sitemap endpoints.
 
 ---
 
@@ -163,7 +173,7 @@ npm run dev
 
 # 2. Production Static Build
 npm run build
-# Compiles static HTML, 404.html, and bundled assets to dist/ in ~1.3 seconds
+# Compiles static HTML, 404.html, sitemaps, robots.txt, and bundled assets to dist/ in ~1.3 seconds
 
 # 3. Preview Static Build locally
 npm run preview
@@ -177,17 +187,19 @@ npm run preview
 The production website runs on **Cloudflare Workers with Static Assets** (Workers Assets):
 
 1. **Worker Gateway (`src/worker.ts`)**:
-   - Acts as the primary HTTP edge dispatcher for `demo.douitsu-co.com` and `douitsu-co.com`.
+   - Acts as the primary HTTP edge dispatcher for `douitsu-co.com` and `www.douitsu-co.com`.
    - Routes `POST /api/contact` to `functions/api/contact.ts` for Honeypot, Turnstile bot verification, and Resend email delivery.
    - Routes all other traffic to `env.ASSETS.fetch(request)` to serve static assets from `dist/` with edge caching.
 2. **Workers Assets Configuration (`wrangler.jsonc`)**:
    - `main`: Points to `src/worker.ts`.
+   - `workers_dev`: Set to `false`, disabling default worker subdomains.
+   - `observability`: Enabled with `"head_sampling_rate": 1` for real-time Cloudflare Logs, Traces, and Issues monitoring.
    - `assets.directory`: Points to `./dist`.
    - `assets.binding`: Binds the static assets dispatcher to `env.ASSETS`.
    - `assets.not_found_handling`: Set to `"404-page"`, automatically serving `dist/404.html` with HTTP 404 status when an asset is not found.
    - `vars`: Stores non-secret public runtime configuration (`CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`, `PUBLIC_TURNSTILE_SITE_KEY`).
 3. **Environment Security Architecture**:
-   - Secret API keys (`TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`) are never stored in git. They are managed as Encrypted Secrets in Cloudflare Dashboard and injected into the Worker's `env` parameter at runtime.
+   - Secret API keys (`TURNSTILE_SECRET`, `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`) are never stored in git. They are managed as Encrypted Secrets in Cloudflare Dashboard and injected into the Worker's `env` parameter at runtime.
    - Local development uses `.env` (strictly gitignored) and a Vite middleware proxy in `astro.config.mjs`.
 4. **Branded 404 Custom Page (`src/pages/404.astro`)**:
    - Renders a dedicated trilingual (`ja`, `en`, `my`) error screen compiled to `dist/404.html`.

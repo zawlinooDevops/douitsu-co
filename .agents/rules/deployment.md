@@ -23,11 +23,15 @@ npm run preview
 
 ### Build Artifacts (`dist/`):
 - `dist/index.html` (Main Landing Page with all active sections)
+- `dist/404.html` (Branded trilingual 404 error page)
+- `dist/robots.txt` (Search engine crawler instructions and sitemap references)
+- `dist/sitemap.xml` (Root sitemap for search engines)
+- `dist/sitemap-index.xml` & `dist/sitemap-0.xml` (Auto-generated sitemaps via `@astrojs/sitemap`)
+- `dist/sw.js` (Production PWA service worker)
 - `dist/_astro/*.js` (Bundled Alpine.js and scripts, ~19.7 kB gzipped)
 - `dist/_astro/*.css` (Tailwind CSS stylesheet)
 - `dist/images/` (Optimized logos, hero background, certificates, flyers)
 - `dist/fonts/` (Self-hosted TTF font files)
-- `dist/files/` (Kaigo exam PDF textbooks)
 
 ---
 
@@ -38,9 +42,11 @@ npm run preview
 The website is deployed to Cloudflare as a unified **Cloudflare Worker with Static Assets** (Workers Assets architecture):
 
 - **Architecture Overview**:
-  1. **Static Assets (`dist/`)**: Compiled at build time by Astro (`npm run build`) containing HTML, CSS, client scripts, self-hosted TTF fonts, images, and `404.html`. Uploaded directly to Cloudflare edge assets store.
+  1. **Static Assets (`dist/`)**: Compiled at build time by Astro (`npm run build`) containing HTML, CSS, client scripts, self-hosted TTF fonts, images, sitemaps, robots.txt, and `404.html`. Uploaded directly to Cloudflare edge assets store.
   2. **Worker Script (`src/worker.ts`)**: Acts as the edge gateway. When a visitor requests `/api/contact` via `POST`, the Worker executes the anti-abuse pipeline and dispatches emails via Resend. For all other requests, it proxies seamlessly to `env.ASSETS.fetch(request)`.
   3. **Custom 404 Handling**: Configured with `"not_found_handling": "404-page"` in `wrangler.jsonc`, automatically serving `dist/404.html` with status 404 whenever an asset route is not found.
+  4. **Custom Production Domains**: Attached to `douitsu-co.com` and `www.douitsu-co.com`. The default `workers.dev` subdomain is disabled (`"workers_dev": false`).
+  5. **Observability**: Built-in Logs, Traces, and Issues monitoring enabled via `"observability": { "enabled": true, "head_sampling_rate": 1 }`.
 
 - **Cloudflare CI Build Commands**:
   - **Build command**: `npm run build`
@@ -52,6 +58,11 @@ The website is deployed to Cloudflare as a unified **Cloudflare Worker with Stat
     "name": "douitsu-co",
     "main": "src/worker.ts",
     "compatibility_date": "2024-11-01",
+    "workers_dev": false,
+    "observability": {
+      "enabled": true,
+      "head_sampling_rate": 1
+    },
     "assets": {
       "directory": "./dist",
       "binding": "ASSETS",
@@ -71,7 +82,7 @@ The website is deployed to Cloudflare as a unified **Cloudflare Worker with Stat
     - `CONTACT_TO_EMAIL`: Recipient inbox address (`info@douitsu-co.com`).
     - `PUBLIC_TURNSTILE_SITE_KEY`: Client-facing Turnstile widget key.
   - **Encrypted Secrets (Configured in Cloudflare Dashboard)**:
-    - `TURNSTILE_SECRET_KEY`: Never committed to git. Stored as an Encrypted Secret in Cloudflare Dashboard -> Workers & Pages -> Settings -> Variables and Secrets.
+    - `TURNSTILE_SECRET` / `TURNSTILE_SECRET_KEY`: Never committed to git. Stored as an Encrypted Secret in Cloudflare Dashboard -> Workers & Pages -> Settings -> Variables and Secrets.
     - `RESEND_API_KEY`: Never committed to git. Stored as an Encrypted Secret in Cloudflare Dashboard.
 
 ---

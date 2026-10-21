@@ -31,6 +31,9 @@ The legacy web presence has been overhauled and modernized into a high-performan
 
 - [x] **Transactional Form API & Cloudflare Workers with Static Assets (Workers Assets + Turnstile + Resend)**: Modernized deployment to Cloudflare Workers with Static Assets (`src/worker.ts` + `dist/`), Cloudflare Turnstile bot verification (`spin/prompt.md` canonical contract), triple bot heuristics (field honeypot, time heuristic, and URL link spam shadow-drop), and automated transactional email dispatch via Resend API.
 - [x] **Branded Trilingual 404 Custom Error Handling**: Built dedicated 404 page (`src/pages/404.astro` -> `dist/404.html`) with full brand navigation, language switcher, glassmorphic card, quick helpline, and automated asset not-found handling via `wrangler.jsonc`.
+- [x] **Production Custom Domain & Observability Integration**: Attached custom domains (`douitsu-co.com` and `www.douitsu-co.com`), disabled `workers_dev: false`, grounded all canonical URLs, social share banners, and Schema.org metadata in `https://douitsu-co.com`, and configured native Cloudflare Observability (`Logs`, `Traces`, `Issues`) in `wrangler.jsonc`.
+- [x] **Strict Turnstile Hostname Security Gate**: Enforced strict canonical hostnames (`douitsu-co.com` & `www.douitsu-co.com`) across both frontend (`Contact.astro`) and backend (`functions/api/contact.ts`), strictly adhering to Cloudflare's `spin/prompt.md` verification standard.
+- [x] **SEO Sitemap & Robots Exclusion Protocol**: Integrated `@astrojs/sitemap` auto-generating `sitemap-index.xml` and `sitemap-0.xml` with 404 exclusion, created direct `public/sitemap.xml`, and created `public/robots.txt` specifying search engine crawl directives.
 
 ### 2. Job Openings Dynamic Filtering
 - **Current State**: Static 7-flyer grid on `/job.html`.
@@ -39,9 +42,5 @@ The legacy web presence has been overhauled and modernized into a high-performan
   - Alpine.js category filter pills (All, Nursing Care, Food Processing, Restaurant, Regional).
   - Search bar to filter flyers by job title or location.
 
-### 3. SEO Sitemap & Robots Configuration
-- Add `@astrojs/sitemap` integration to automatically generate `sitemap-index.xml` upon build.
-- Create `public/robots.txt` specifying crawl rules and sitemap location.
-
-### 4. Media & Testimonials Section
+### 3. Media & Testimonials Section
 - Add video embed or worker interview testimonials showcasing successful workplace adaptations in Japan.
