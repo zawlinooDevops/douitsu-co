@@ -1,0 +1,14 @@
+# ==============================================================================
+# DOUITSU LLC (DOUITSU合同会社) — Robots Exclusion Protocol
+# Production Domain: https://douitsu-co.com
+# ==============================================================================
+
+User-agent: *
+Allow: /
+
+# Disallow internal backend API endpoints
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://douitsu-co.com/sitemap-index.xml
+Sitemap: https://douitsu-co.com/sitemap.xml

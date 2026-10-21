@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 import { handleContactSubmission } from './functions/api/contact';
 
 // Dev and Preview middleware plugin for /api/contact via npm run dev and npm run preview
@@ -77,11 +78,16 @@ function contactApiPlugin() {
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind()],
+  integrations: [
+    tailwind(),
+    sitemap({
+      filter: (page) => !page.includes('/404')
+    })
+  ],
   vite: {
     plugins: [contactApiPlugin()]
   },
-  site: 'https://demo.douitsu-co.com',
+  site: 'https://douitsu-co.com',
   build: {
     format: 'file'
   }
