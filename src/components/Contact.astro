@@ -140,6 +140,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAA
     async submitForm() {
       this.errorMessage = '';
 
+      // Frontend Hostname Security Gate (Strictly douitsu-co.com & www.douitsu-co.com)
+      const allowedHosts = ['douitsu-co.com', 'www.douitsu-co.com'];
+      if (typeof window !== 'undefined' && !allowedHosts.includes(window.location.hostname)) {
+        this.errorMessage = this.getMsg('general');
+        return;
+      }
+
       if (!this.validateAll()) {
         return;
       }

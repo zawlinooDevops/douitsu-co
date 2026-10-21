@@ -36,13 +36,10 @@ interface ContactPayload {
   turnstileToken?: string; // Cloudflare Turnstile single-use token
 }
 
-// Canonical Hostname Allowlist for DOUITSU LLC
+// Canonical Hostname Allowlist for DOUITSU LLC (Strict Production)
 const APPROVED_HOSTNAMES = new Set([
   'douitsu-co.com',
-  'www.douitsu-co.com',
-  'demo.douitsu-co.com',
-  'localhost',
-  '127.0.0.1'
+  'www.douitsu-co.com'
 ]);
 
 // In-memory cache for 30s duplicate submission guard

@@ -66,8 +66,6 @@ The Cloudflare Worker gateway in `src/worker.ts` routes incoming requests:
 - Origin / Referer validation against the verified domain whitelist:
   - `https://douitsu-co.com`
   - `https://www.douitsu-co.com`
-  - `https://demo.douitsu-co.com`
-  - *(Development/Preview only: `http://localhost:*`, `http://127.0.0.1:*`)*
 
 #### 2. Payload Guard
 - Payload size must not exceed **10 KB** (`10,240 bytes`). Requests exceeding this limit return `413 Payload Too Large` to prevent memory exhaustion, payload inflation, and buffer flooding.
