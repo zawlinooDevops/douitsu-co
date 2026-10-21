@@ -17,6 +17,7 @@
 
 interface Env {
   PUBLIC_TURNSTILE_SITE_KEY?: string;
+  TURNSTILE_SECRET?: string;
   TURNSTILE_SECRET_KEY?: string;
   RESEND_API_KEY?: string;
   CONTACT_FROM_EMAIL?: string;
@@ -262,7 +263,7 @@ export async function handleContactSubmission(
         field: 'turnstile',
         message: 'Cloudflare Turnstile verification token is required and must be valid.'
       }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
+      { status: 403, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
@@ -291,7 +292,7 @@ export async function handleContactSubmission(
   // --------------------------------------------------------------------------
   // Stage 7: Canonical Cloudflare Turnstile Verification (spin/prompt.md standard)
   // --------------------------------------------------------------------------
-  const turnstileSecret = env.TURNSTILE_SECRET_KEY;
+  const turnstileSecret = env.TURNSTILE_SECRET || env.TURNSTILE_SECRET_KEY;
   const resendApiKey = env.RESEND_API_KEY;
   const fromEmail = env.CONTACT_FROM_EMAIL || env.RESEND_FROM_EMAIL || 'contact@douitsu-co.com';
   const toEmail = env.CONTACT_TO_EMAIL || env.RESEND_TO_EMAIL || 'info@douitsu-co.com';
@@ -301,7 +302,7 @@ export async function handleContactSubmission(
       JSON.stringify({
         success: false,
         error: 'CONFIG_ERROR',
-        message: 'Server configuration error: TURNSTILE_SECRET_KEY is not set.'
+        message: 'Server configuration error: TURNSTILE_SECRET or TURNSTILE_SECRET_KEY is not set.'
       }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
@@ -345,9 +346,9 @@ export async function handleContactSubmission(
       'error-codes'?: string[];
     };
 
-    const isSuccess = Boolean(turnstileJson.success);
-    const actionMatch = !turnstileJson.action || turnstileJson.action === expectedAction;
-    const hostnameMatch = !turnstileJson.hostname || APPROVED_HOSTNAMES.has(turnstileJson.hostname);
+    const isSuccess = turnstileJson.success === true;
+    const actionMatch = turnstileJson.action === expectedAction;
+    const hostnameMatch = Boolean(turnstileJson.hostname && APPROVED_HOSTNAMES.has(turnstileJson.hostname));
 
     if (!isSuccess || !actionMatch || !hostnameMatch) {
       return new Response(

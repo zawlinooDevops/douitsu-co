@@ -7,6 +7,7 @@ export interface WorkerEnv {
   CONTACT_FROM_EMAIL?: string;
   CONTACT_TO_EMAIL?: string;
   PUBLIC_TURNSTILE_SITE_KEY?: string;
+  TURNSTILE_SECRET?: string;
   TURNSTILE_SECRET_KEY?: string;
   RESEND_API_KEY?: string;
   [key: string]: unknown;
