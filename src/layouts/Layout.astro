@@ -8,15 +8,20 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  noindex?: boolean;
 }
 
 const {
   title = siteData.meta.title.ja,
   description = siteData.meta.description.ja,
   ogImage = siteData.meta.ogImage,
+  noindex = false,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString();
+// Enforce trailingSlash: 'always' policy across all canonical and social URLs
+const rawPathname = Astro.url.pathname;
+const cleanPathname = rawPathname.endsWith('/') ? rawPathname : `${rawPathname}/`;
+const canonicalURL = new URL(cleanPathname, siteData.meta.siteUrl).toString();
 ---
 
 <!doctype html>
@@ -39,7 +44,11 @@ const canonicalURL = new URL(Astro.url.pathname, siteData.meta.siteUrl).toString
     <meta name="description" content={description} />
     <meta name="author" content="DOUITSU LLC / DOUITSU合同会社" />
     <meta name="keywords" content="DOUITSU LLC, DOUITSU合同会社, 登録支援機関, 特定技能, 1号特定技能, ミャンマー特定技能, 外国人採用, 介護特定技能, 外食業特定技能, 清瀬市, 支援計画" />
-    <link rel="canonical" href={canonicalURL} />
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <link rel="canonical" href={canonicalURL} />
+    )}
     <link rel="preload" as="image" href="/images/landing/hero-bg.webp" type="image/webp" fetchpriority="high" />
 
     <!-- Favicon & Standard Icons -->

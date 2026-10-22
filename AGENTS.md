@@ -25,6 +25,14 @@ All future AI agents working on this codebase must read and adhere to the specia
 
 ---
 
+## 🧰 Reusable Workspace Skills (`.agents/skills/`)
+
+| Skill | Scope & Automation |
+|---|---|
+| [**`production-live-testing`**](./.agents/skills/production-live-testing/SKILL.md) | End-to-end live testing runbook: Automated static asset audit ([`scripts/verify-assets.mjs`](./.agents/skills/production-live-testing/scripts/verify-assets.mjs)), Contact API & security gate audit ([`scripts/test-contact-api.sh`](./.agents/skills/production-live-testing/scripts/test-contact-api.sh)), trilingual reactivity, anchor links, and custom 404 error handling. |
+
+---
+
 ## 🛠️ Quick Development Commands
 
 ```bash

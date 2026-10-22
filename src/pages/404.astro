@@ -8,7 +8,7 @@ const title = `404: ページが見つかりません | ${siteData.meta.companyN
 const description = siteData.notFound.description.ja;
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} noindex={true}>
   <div class="min-h-screen flex flex-col justify-between bg-douitsu-ice/60 relative">
     <!-- HEADER & NAVIGATION -->
     <Navbar />

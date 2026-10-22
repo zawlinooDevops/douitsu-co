@@ -78,6 +78,7 @@ function contactApiPlugin() {
 
 // https://astro.build/config
 export default defineConfig({
+  trailingSlash: 'always',
   integrations: [
     tailwind(),
     sitemap({
@@ -89,6 +90,6 @@ export default defineConfig({
   },
   site: 'https://douitsu-co.com',
   build: {
-    format: 'file'
+    format: 'directory'
   }
 });

@@ -66,7 +66,8 @@ The website is deployed to Cloudflare as a unified **Cloudflare Worker with Stat
     "assets": {
       "directory": "./dist",
       "binding": "ASSETS",
-      "not_found_handling": "404-page"
+      "not_found_handling": "404-page",
+      "html_handling": "force-trailing-slash"
     },
     "vars": {
       "CONTACT_FROM_EMAIL": "contact@douitsu-co.com",

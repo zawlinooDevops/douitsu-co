@@ -19,6 +19,7 @@ description: Comprehensive Tech Stack Architecture, Runtime, Styling, Typography
   import sitemap from '@astrojs/sitemap';
 
   export default defineConfig({
+    trailingSlash: 'always',
     integrations: [
       tailwind(),
       sitemap({
@@ -27,7 +28,7 @@ description: Comprehensive Tech Stack Architecture, Runtime, Styling, Typography
     ],
     site: 'https://douitsu-co.com',
     build: {
-      format: 'file'
+      format: 'directory'
     }
   });
   ```
@@ -197,6 +198,7 @@ The production website runs on **Cloudflare Workers with Static Assets** (Worker
    - `assets.directory`: Points to `./dist`.
    - `assets.binding`: Binds the static assets dispatcher to `env.ASSETS`.
    - `assets.not_found_handling`: Set to `"404-page"`, automatically serving `dist/404.html` with HTTP 404 status when an asset is not found.
+   - `assets.html_handling`: Set to `"force-trailing-slash"` to align Cloudflare edge routing with Astro's `trailingSlash: 'always'` and `format: 'directory'`.
    - `vars`: Stores non-secret public runtime configuration (`CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`, `PUBLIC_TURNSTILE_SITE_KEY`).
 3. **Environment Security Architecture**:
    - Secret API keys (`TURNSTILE_SECRET`, `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`) are never stored in git. They are managed as Encrypted Secrets in Cloudflare Dashboard and injected into the Worker's `env` parameter at runtime.
