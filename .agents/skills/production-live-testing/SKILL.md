@@ -120,17 +120,21 @@ Alpine.$data(document.documentElement).lang = 'my';
 
 ### Stage 5: Contact Form & Backend Security API Pipeline
 
-Execute the automated backend API test script:
+Execute the automated backend API security audit script:
 
 ```bash
 .agents/skills/production-live-testing/scripts/test-contact-api.sh
 ```
 
-The script verifies 4 security boundaries:
+The script verifies 8 automated security boundaries:
 1. **HTTP Method Gate**: `GET /api/contact` -> Returns `405 Method Not Allowed`.
-2. **CSRF / Origin Gate**: `POST` from untrusted origin -> Returns `403 Forbidden` (`CSRF_FORBIDDEN`).
-3. **Turnstile Enforcement**: `POST` without captcha token -> Returns `403 Forbidden` (`CAPTCHA_REQUIRED`).
-4. **Honeypot Bot Trap**: `POST` with `website` field filled -> Returns `200 OK` (`shadow-drop-honeypot`) without sending email.
+2. **Content-Type Restriction**: `POST` with non-JSON media type -> Returns `415 Unsupported Media Type`.
+3. **Payload Size Guard**: `POST` with body exceeding 10KB -> Returns `413 Payload Too Large`.
+4. **CSRF / Origin Gate**: `POST` from untrusted origin -> Returns `403 Forbidden` (`CSRF_FORBIDDEN`).
+5. **Turnstile Enforcement**: `POST` without captcha token -> Returns `403 Forbidden` (`CAPTCHA_REQUIRED`).
+6. **Field Honeypot Bot Trap**: `POST` with `website` field filled -> Returns `200 OK` (`shadow-drop-honeypot`) without dispatch.
+7. **Speed-submission Time Heuristic**: Rapid submissions under 2.5s -> Returns `200 OK` (`shadow-drop-speed`) without dispatch.
+8. **Link Spam Threshold**: Payloads with excessive URLs (> 2) -> Returns `200 OK` (`shadow-drop-url`) without dispatch.
 
 #### Client-side Field Validation:
 * Submit empty form: All 4 fields display required warnings in active language (`ja`, `en`, `my`).

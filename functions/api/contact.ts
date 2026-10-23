@@ -193,9 +193,12 @@ export async function handleContactSubmission(
   // --------------------------------------------------------------------------
   // Stage 5: Strict Field-Level Validation
   // --------------------------------------------------------------------------
-  const name = (payload.name || '').trim();
-  const email = (payload.email || '').trim();
-  const phone = (payload.phone || '').trim();
+  // Stage 5: Input Sanitization & Field-Level Strict Validation
+  // --------------------------------------------------------------------------
+  // Strip control characters & newlines from header-sensitive fields (Header Injection Prevention)
+  const name = (payload.name || '').trim().replace(/[\r\n\t]/g, ' ');
+  const email = (payload.email || '').trim().replace(/[\r\n\t]/g, '');
+  const phone = (payload.phone || '').trim().replace(/[\r\n\t]/g, '');
   const message = (payload.message || '').trim();
   const turnstileToken = (payload.turnstileToken || '').trim();
 

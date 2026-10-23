@@ -156,7 +156,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.3.0",
+    version: "1.3.1",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
