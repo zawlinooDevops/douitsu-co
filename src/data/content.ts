@@ -46,6 +46,26 @@ export interface JobFlyer {
   alt: string;
 }
 
+export interface SupportedSector {
+  id: string;
+  image?: string;
+  alt: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  title: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+  description: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+}
+
 export interface SupportPhoto {
   id: string;
   image: string;
@@ -111,14 +131,14 @@ export interface WorkerProgram {
 export const siteData = {
   meta: {
     title: {
-      ja: "DOUITSU合同会社｜特定技能の登録支援機関｜ミャンマー人材・介護（東京都清瀬市）",
-      en: "DOUITSU合同会社｜特定技能の登録支援機関｜ミャンマー人材・介護（東京都清瀬市）",
-      my: "DOUITSU合同会社｜特定技能の登録支援機関｜ミャンマー人材・介護（東京都清瀬市）",
+      ja: "DOUITSU合同会社｜特定技能の登録支援機関｜ミャンマー人材｜介護・ビルクリーニング・外食・製造（東京都清瀬市）",
+      en: "DOUITSU合同会社｜特定技能の登録支援機関｜ミャンマー人材｜介護・ビルクリーニング・外食・製造（東京都清瀬市）",
+      my: "DOUITSU合同会社｜特定技能の登録支援機関｜ミャンマー人材｜介護・ビルクリーニング・外食・製造（東京都清瀬市）",
     },
     description: {
-      ja: "東京都清瀬市の登録支援機関。特定技能外国人（ミャンマー人材・介護分野など）の受入れ支援計画の作成・実施、法定10項目の支援をトータルでサポートします。",
-      en: "東京都清瀬市の登録支援機関。特定技能外国人（ミャンマー人材・介護分野など）の受入れ支援計画の作成・実施、法定10項目の支援をトータルでサポートします。",
-      my: "東京都清瀬市の登録支援機関。特定技能外国人（ミャンマー人材・介護分野など）の受入れ支援計画の作成・実施、法定10項目の支援をトータルでサポートします。",
+      ja: "東京都清瀬市の登録支援機関。特定技能外国人（ミャンマー人材）の支援を、介護・ビルクリーニング・外食・製造業の分野でサポート。受入れ支援計画の作成から実施まで、法定10項目の支援に対応します。",
+      en: "東京都清瀬市の登録支援機関。特定技能外国人（ミャンマー人材）の支援を、介護・ビルクリーニング・外食・製造業の分野でサポート。受入れ支援計画の作成から実施まで、法定10項目の支援に対応します。",
+      my: "東京都清瀬市の登録支援機関。特定技能外国人（ミャンマー人材）の支援を、介護・ビルクリーニング・外食・製造業の分野でサポート。受入れ支援計画の作成から実施まで、法定10項目の支援に対応します。",
     },
     siteUrl: "https://douitsu-co.com",
     ogImage: "/images/landing/banner.jpg",
@@ -136,7 +156,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.2.8",
+    version: "1.3.0",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
@@ -209,7 +229,7 @@ export const siteData = {
     },
     lead: {
       ja: "私たちが全力で支援します。１号特定技能外国人が「特定技能」の在留資格に基づく活動を安定的かつ円滑に行うことができるようにするための職業生活上，日常生活上又は社会生活上の支援を行う機関です。",
-      en: "We Support You with Complete Dedication. We are an accredited agency dedicated to providing seamless living, working, and social integration support for Specified Skilled Workers (i) throughout their stay in Japan.",
+      en: "We Support You with Complete Dedication. We are an accredited agency dedicated to providing seamless living, working, and social integration support for Specified Skilled Workers throughout their stay in Japan.",
       my: "ကျွန်ုပ်တို့မှ အစွမ်းကုန် ကူညီထောက်ပံ့ပေးပါမည်။ အမှတ် (၁) သတ်မှတ်ကျွမ်းကျင်လုပ်သား (Tokutei Ginou 1) ဗီဇာဖြင့် နေထိုင်ခွင့်ရရှိထားသော နိုင်ငံခြားသားများ အနေဖြင့် မိမိတို့၏ အလုပ်အကိုင်၊ နေ့စဉ်လူနေမှုဘဝနှင့် လူမှုဆက်ဆံရေးနယ်ပယ်တို့တွင် တည်ငြိမ်ချောမွေ့စွာ နေထိုင်လုပ်ကိုင်နိုင်ရန်အတွက် ဥပဒေအရ သတ်မှတ်ထားသော ပံ့ပိုးကူညီမှုများကို ပေးအပ်ဆောင်ရွက်ပေးပါသည်။",
     },
     pillars: [
@@ -514,6 +534,94 @@ export const siteData = {
     },
   },
 
+  sectors: {
+    eyebrow: "SECTORS",
+    title: {
+      ja: "対応分野",
+      en: "Supported Sectors",
+      my: "ပံ့ပိုးဆောင်ရွက်ပေးနိုင်တဲ့ကဏ္ဍများ",
+    },
+    imageLabel: {
+      ja: "イメージ",
+      en: "Image",
+      my: "နမူနာပုံ",
+    },
+    items: [
+      {
+        id: "sector-kaigo",
+        title: {
+          ja: "介護",
+          en: "Nursing Care",
+          my: "ဘိုးဘွားစောင့်ရှောက်ရေး",
+        },
+        description: {
+          ja: "介護施設での特定技能外国人の受入れを支援します。",
+          en: "Support for hiring Specified Skilled Workers at nursing care facilities.",
+          my: "介護 ဘိုးဘွားဂေဟာတွေမှာ လုပ်သားခေါ်ယူမှုကို ကူညီပေးပါတယ်။",
+        },
+        alt: {
+          ja: "介護分野のイメージ",
+          en: "Nursing Care Sector Illustration",
+          my: "ဘိုးဘွားစောင့်ရှောက်ရေးကဏ္ဍ နမူနာပုံ",
+        },
+      },
+      {
+        id: "sector-building-cleaning",
+        title: {
+          ja: "ビルクリーニング",
+          en: "Building Cleaning",
+          my: "အဆောက်အဦ သန့်ရှင်းရေး",
+        },
+        description: {
+          ja: "建物の清掃分野での受入れを支援します。",
+          en: "Support for hiring in the building cleaning sector.",
+          my: "အဆောက်အဦးသန့်ရှင်းရေးကဏ္ဍမှာ လုပ်သားခေါ်ယူမှုကို ကူညီပေးပါတယ်။",
+        },
+        alt: {
+          ja: "ビルクリーニング分野のイメージ",
+          en: "Building Cleaning Sector Illustration",
+          my: "အဆောက်အဦ သန့်ရှင်းရေးကဏ္ဍ နမူနာပုံ",
+        },
+      },
+      {
+        id: "sector-food-service",
+        title: {
+          ja: "外食",
+          en: "Food Service",
+          my: "စားသောက်ဆိုင်လုပ်ငန်း",
+        },
+        description: {
+          ja: "飲食店での受入れを支援します。",
+          en: "Support for hiring at restaurants and food service businesses.",
+          my: "စားသောက်ဆိုင်တွေမှာ လုပ်သားခေါ်ယူမှုကို ကူညီပေးပါတယ်။",
+        },
+        alt: {
+          ja: "外食分野のイメージ",
+          en: "Food Service Sector Illustration",
+          my: "စားသောက်ဆိုင်လုပ်ငန်းကဏ္ဍ နမူနာပုံ",
+        },
+      },
+      {
+        id: "sector-manufacturing",
+        title: {
+          ja: "製造業",
+          en: "Manufacturing",
+          my: "ထုတ်လုပ်ရေးလုပ်ငန်း",
+        },
+        description: {
+          ja: "製造現場での受入れを支援します。",
+          en: "Support for hiring at manufacturing sites.",
+          my: "ထုတ်လုပ်ရေးလုပ်ငန်းခွင်တွေမှာ လုပ်သားခေါ်ယူမှုကို ကူညီပေးပါတယ်။",
+        },
+        alt: {
+          ja: "製造業分野のイメージ",
+          en: "Manufacturing Sector Illustration",
+          my: "ထုတ်လုပ်ရေးလုပ်ငန်းကဏ္ဍ နမူနာပုံ",
+        },
+      },
+    ] as SupportedSector[],
+  },
+
   flow: {
     title: {
       ja: "ご利用の流れ",
@@ -605,14 +713,14 @@ export const siteData = {
       {
         id: "faq-2",
         question: {
-          ja: "介護分野でも対応できますか？",
-          en: "Can you support the nursing care sector?",
-          my: "ဘိုးဘွားစောင့်ရှောက်ရေး (介護) ကဏ္ဍမှာလည်း ကူညီနိုင်လား။",
+          ja: "対応している分野を教えてください。",
+          en: "Which sectors do you support?",
+          my: "ဘယ်ကဏ္ဍတွေမှာ ကူညီနိုင်လဲ။",
         },
         answer: {
-          ja: "はい。介護分野を中心に、特定技能外国人の支援に対応しています。",
-          en: "Yes. We support Specified Skilled Workers with a focus on the nursing care sector.",
-          my: "ရပါတယ်။ 介護 ကို အဓိကထား ဆောင်ရွက်ပါတယ်။",
+          ja: "介護を中心に、ビルクリーニング、外食、製造業の特定技能外国人の支援に対応しています。",
+          en: "We support Specified Skilled Workers mainly in nursing care, as well as in building cleaning, food service, and manufacturing.",
+          my: "介護 ကို အဓိကထားပြီး၊ အဆောက်အဦ သန့်ရှင်းရေး (ビルクリーニング)၊ စားသောက်ဆိုင်လုပ်ငန်း (外食)၊ ထုတ်လုပ်ရေးလုပ်ငန်း (製造業) တို့မှာလည်း ကူညီပေးပါတယ်။",
         },
       },
       {
