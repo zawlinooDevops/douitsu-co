@@ -31,29 +31,25 @@ function getFiles(dir, fileList = []) {
   return fileList;
 }
 
-function checkUrl(url, timeoutMs = 8000) {
-  return new Promise((resolve) => {
-    const req = https.request(url, { method: 'HEAD', headers: { 'User-Agent': 'DouitsuVerifier/1.0' } }, (res) => {
-      resolve({
-        url,
-        status: res.statusCode,
-        ok: res.statusCode === 200,
-        contentLength: res.headers['content-length'] || null,
-        contentType: res.headers['content-type'] || null
-      });
+async function checkUrl(url, timeoutMs = 10000) {
+  try {
+    const res = await fetch(url, {
+      method: 'HEAD',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      },
+      signal: AbortSignal.timeout(timeoutMs)
     });
-
-    req.on('error', (err) => {
-      resolve({ url, status: err.message, ok: false });
-    });
-
-    req.setTimeout(timeoutMs, () => {
-      req.destroy();
-      resolve({ url, status: 'TIMEOUT', ok: false });
-    });
-
-    req.end();
-  });
+    return {
+      url,
+      status: res.status,
+      ok: res.ok,
+      contentLength: res.headers.get('content-length'),
+      contentType: res.headers.get('content-type')
+    };
+  } catch (err) {
+    return { url, status: err.name === 'TimeoutError' ? 'TIMEOUT' : err.message, ok: false };
+  }
 }
 
 async function run() {
@@ -63,26 +59,17 @@ async function run() {
 
   console.log(`🚀 Checking assets against production (${TARGET_HOST})...\n`);
 
-  const checks = [];
-
-  // Check all public assets
-  for (const rel of allPublicPaths) {
-    const fullUrl = `${TARGET_HOST}/${rel}`;
-    checks.push(checkUrl(fullUrl));
-  }
-
-  // Check R2 hosted PDFs
-  for (const pdf of R2_PDFS) {
-    const fullUrl = `${R2_HOST}/${pdf}`;
-    checks.push(checkUrl(fullUrl));
-  }
-
-  // Run in concurrent batches of 10 to avoid socket starvation
-  const BATCH_SIZE = 10;
+  // Run in concurrent batches of 8 to avoid socket starvation
+  const BATCH_SIZE = 8;
   const results = [];
-  for (let i = 0; i < checks.length; i += BATCH_SIZE) {
-    const batch = checks.slice(i, i + BATCH_SIZE);
-    const batchResults = await Promise.all(batch);
+  const urlsToCheck = [
+    ...allPublicPaths.map(rel => `${TARGET_HOST}/${rel}`),
+    ...R2_PDFS.map(pdf => `${R2_HOST}/${pdf}`)
+  ];
+
+  for (let i = 0; i < urlsToCheck.length; i += BATCH_SIZE) {
+    const batch = urlsToCheck.slice(i, i + BATCH_SIZE);
+    const batchResults = await Promise.all(batch.map(url => checkUrl(url, 10000)));
     results.push(...batchResults);
   }
 

@@ -162,8 +162,8 @@ export async function handleContactSubmission(
   const renderedAt = Number(payload.renderedAt);
   if (renderedAt && Number.isFinite(renderedAt)) {
     const elapsedMs = Date.now() - renderedAt;
-    if (elapsedMs < 2000 && elapsedMs >= 0) {
-      // Rapid automated script detected -> shadow-drop
+    if (elapsedMs < 2000) {
+      // Rapid automated script or future-skewed timestamp detected -> shadow-drop
       return new Response(
         JSON.stringify({
           success: true,
