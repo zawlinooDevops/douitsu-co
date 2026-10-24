@@ -31,7 +31,7 @@ const sectors = siteData.sectors.items;
           <!-- Top Card Media & Content -->
           <div class="flex-1 flex flex-col">
             <!-- Image / Placeholder Area -->
-            <div class="relative w-full aspect-[16/10] bg-slate-50 border-b border-slate-100 flex flex-col items-center justify-center p-4 overflow-hidden group-hover:bg-douitsu-ice/40 transition-colors">
+            <div class="relative w-full aspect-[16/10] bg-slate-50 border-b border-slate-100 flex flex-col items-center justify-center overflow-hidden group-hover:bg-douitsu-ice/40 transition-colors">
               {sector.image ? (
                 <img
                   src={sector.image}
@@ -40,7 +40,7 @@ const sectors = siteData.sectors.items;
                   loading="lazy"
                 />
               ) : (
-                <div class="flex flex-col items-center justify-center text-center select-none py-2">
+                <div class="p-4 flex flex-col items-center justify-center text-center select-none py-2">
                   <div class="w-12 h-12 rounded-xl bg-white border border-slate-200/90 shadow-2xs flex items-center justify-center text-douitsu-primary group-hover:scale-110 group-hover:border-douitsu-primary/40 transition-all duration-300 mb-2">
                     {sector.id === 'sector-kaigo' && (
                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
