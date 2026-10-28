@@ -20,6 +20,7 @@ All future AI agents working on this codebase must read and adhere to the specia
 | [**`deployment.md`**](./.agents/rules/deployment.md) | Build commands (`npm run build`), Cloudflare Workers with Static Assets (`src/worker.ts` + `dist/`), `wrangler.jsonc`, Pages/Nginx fallback, caching headers, and pre-deployment verification checklist. |
 | [**`validation-pipeline.md`**](./.agents/rules/validation-pipeline.md) | 5-stage pre-flight quality gate: ESLint, Stylelint CSS check, Astro check, static SSG build, and HTML5 validator on `dist/`. Mandatory before git commits and pushes. |
 | [**`versioning-and-releases.md`**](./.agents/rules/versioning-and-releases.md) | Semantic versioning (`major.minor.patch`), pre-push confirmation protocol (asking user with recommendation), and footer version badge sync. |
+| [**`content-integrity-rules.md`**](./.agents/rules/content-integrity-rules.md) | Strict protection policy for business facts, legal identifiers (25登－012206), office contact channels, 10 Statutory Support Duties, services scope, and trilingual copywriting. Zero tolerance for unauthorized copy edits. |
 | [**`form-validation-pipeline.md`**](./.agents/rules/form-validation-pipeline.md) | Multi-tier validation pipeline: Frontend field rules, dual honeypots (field + time heuristic), Cloudflare Turnstile canonical siteverify, CSRF/Origin checks, and Resend delivery. |
 | [**`roadmap.md`**](./.agents/rules/roadmap.md) | Completed Phase 1 modernization milestones, and Phase 2 backlog (API form submission, dynamic job filters, sitemap generation). |
 
@@ -30,6 +31,7 @@ All future AI agents working on this codebase must read and adhere to the specia
 | Skill | Scope & Automation |
 |---|---|
 | [**`production-live-testing`**](./.agents/skills/production-live-testing/SKILL.md) | End-to-end live testing runbook: Automated static asset audit ([`scripts/verify-assets.mjs`](./.agents/skills/production-live-testing/scripts/verify-assets.mjs)), Contact API & security gate audit ([`scripts/test-contact-api.sh`](./.agents/skills/production-live-testing/scripts/test-contact-api.sh)), trilingual reactivity, anchor links, and custom 404 error handling. |
+| [**`cloudflare-cache-audit`**](./.agents/skills/cloudflare-cache-audit/SKILL.md) | Automated Cloudflare Edge Cache audit ([`scripts/audit-cloudflare-cache.mjs`](./.agents/skills/cloudflare-cache-audit/scripts/audit-cloudflare-cache.mjs)): Verifies 100% `cf-cache-status: HIT` across HTML, CSS, JS, WebP, JPG/PNG images, thumbnails, icons, self-hosted fonts, and R2 PDF revalidation. |
 
 ---
 
@@ -57,3 +59,4 @@ npm run preview
 2. **Synchronous Trilingual Parity**: Whenever updating copy or adding UI elements, always provide parallel text in all three supported languages (`ja`, `en`, `my`) in `src/data/content.ts`.
 3. **No Heavy Framework Runtimes**: Do not inject React, Vue, or Svelte libraries unless explicitly instructed. Keep client interactivity lightweight with Alpine.js.
 4. **Preserve Static Generation**: Do not convert the project to SSR (`output: 'server'`) unless server-side dynamic features are explicitly requested. Keep the build output static (`dist/index.html`).
+5. **Strict Content & Business Data Integrity**: AI agents are strictly forbidden from modifying, rephrasing, optimizing, or fabricating Business Data, Contact Details, 10 Statutory Support Duties, or Copywriting without explicit user authorization (see [`content-integrity-rules.md`](./.agents/rules/content-integrity-rules.md)).

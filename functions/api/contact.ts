@@ -57,11 +57,13 @@ function cleanRecentSubmissions(): void {
 
 function escapeHtml(str: string): string {
   return str
+    .replace(/\0/g, '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/'/g, '&#39;')
+    .replace(/`/g, '&#96;');
 }
 
 export async function handleContactSubmission(
@@ -195,12 +197,12 @@ export async function handleContactSubmission(
   // --------------------------------------------------------------------------
   // Stage 5: Input Sanitization & Field-Level Strict Validation
   // --------------------------------------------------------------------------
-  // Strip control characters & newlines from header-sensitive fields (Header Injection Prevention)
-  const name = (payload.name || '').trim().replace(/[\r\n\t]/g, ' ');
-  const email = (payload.email || '').trim().replace(/[\r\n\t]/g, '');
-  const phone = (payload.phone || '').trim().replace(/[\r\n\t]/g, '');
-  const message = (payload.message || '').trim();
-  const turnstileToken = (payload.turnstileToken || '').trim();
+  // Strip null bytes, control characters & newlines from header-sensitive fields (Header & Injection Prevention)
+  const name = (payload.name || '').replace(/\0/g, '').trim().replace(/[\r\n\t]/g, ' ');
+  const email = (payload.email || '').replace(/\0/g, '').trim().replace(/[\r\n\t]/g, '');
+  const phone = (payload.phone || '').replace(/\0/g, '').trim().replace(/[\r\n\t]/g, '');
+  const message = (payload.message || '').replace(/\0/g, '').trim();
+  const turnstileToken = (payload.turnstileToken || '').replace(/\0/g, '').trim();
 
   // Name: 2 to 100 characters
   if (!name || name.length < 2 || name.length > 100) {
@@ -387,6 +389,12 @@ export async function handleContactSubmission(
   });
   const formattedDate = jstFormatter.format(new Date());
 
+  // Sanitize display name for RFC 5322 header and subject safety
+  // (Strip quotes, angle brackets, commas, semicolons, colons, and slashes to prevent header injection/spoofing)
+  const cleanDisplayName = name.replace(/[\r\n\t"<>,;:\\/]/g, ' ').replace(/\s+/g, ' ').trim();
+  const replyToHeader = cleanDisplayName ? `"${cleanDisplayName}" <${email}>` : email;
+  const cleanSubjectName = cleanDisplayName || 'お客様';
+
   const safeName = escapeHtml(name);
   const safeEmail = escapeHtml(email);
   const safePhone = escapeHtml(phone);
@@ -440,7 +448,7 @@ export async function handleContactSubmission(
       <!-- Message Box -->
       <div style="margin-top: 16px;">
         <div style="font-weight: 700; color: #334155; font-size: 13px; margin-bottom: 8px;">お問い合わせ内容:</div>
-        <div style="background-color: #eff6fa; border: 1px solid #dbeaf3; border-radius: 12px; padding: 16px; color: #1e293b; font-size: 14px; line-height: 1.7; white-space: pre-wrap;">${safeMessage}</div>
+        <div style="background-color: #eff6fa; border: 1px solid #dbeaf3; border-radius: 12px; padding: 16px; color: #1e293b; font-size: 14px; line-height: 1.7; word-break: break-word;">${safeMessage}</div>
       </div>
 
       <div style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed #cbd5e1; font-size: 12px; color: #64748b;">
@@ -490,8 +498,8 @@ export async function handleContactSubmission(
       body: JSON.stringify({
         from: `DOUITSU LLC <${fromEmail}>`,
         to: [toEmail],
-        reply_to: `${name} <${email}>`,
-        subject: `【お問い合わせ】${name} 様よりWebサイトからのお問い合わせ`,
+        reply_to: replyToHeader,
+        subject: `【お問い合わせ】${cleanSubjectName} 様よりWebサイトからのお問い合わせ`,
         html: htmlBody,
         text: textBody
       })

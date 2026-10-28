@@ -13,7 +13,9 @@
     "check:astro": "astro check",
     "validate:html": "html-validate dist/",
     "check": "npm run lint:eslint && npm run lint:css && npm run check:astro",
-    "validate": "./scripts/validate.sh"
+    "validate": "./scripts/validate.sh",
+    "audit:cache": "node .agents/skills/cloudflare-cache-audit/scripts/audit-cloudflare-cache.mjs",
+    "audit:assets": "node .agents/skills/production-live-testing/scripts/verify-assets.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
