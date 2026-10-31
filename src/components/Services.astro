@@ -82,12 +82,12 @@ import SectionHeader from './SectionHeader.astro';
               </div>
 
               <div>
-                <h3 class="text-lg sm:text-xl font-extrabold text-douitsu-navy tracking-tight leading-snug group-hover:text-douitsu-primary transition-colors">
+                <h3 class="text-lg sm:text-xl font-extrabold text-douitsu-navy tracking-tight leading-normal sm:leading-snug group-hover:text-douitsu-primary transition-colors">
                   <span x-show="lang === 'ja'">{program.title.ja}</span>
                   <span x-show="lang === 'en'" style="display: none;">{program.title.en}</span>
                   <span x-show="lang === 'my'" style="display: none;">{program.title.my}</span>
                 </h3>
-                <p class="text-xs font-semibold text-slate-500 mt-0.5 leading-tight">
+                <p class="text-xs font-semibold text-slate-500 mt-0.5 leading-normal">
                   <span x-show="lang === 'ja'">{program.subtitle.ja}</span>
                   <span x-show="lang === 'en'" style="display: none;">{program.subtitle.en}</span>
                   <span x-show="lang === 'my'" style="display: none;">{program.subtitle.my}</span>
@@ -99,7 +99,7 @@ import SectionHeader from './SectionHeader.astro';
             <div class="h-[1px] w-full bg-slate-100 my-3"></div>
 
             <!-- Description -->
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 min-h-[4.5rem]">
+            <p class="text-sm text-slate-600 leading-relaxed mb-4 min-h-[4.5rem]">
               <span x-show="lang === 'ja'">{program.description.ja}</span>
               <span x-show="lang === 'en'" style="display: none;">{program.description.en}</span>
               <span x-show="lang === 'my'" style="display: none;">{program.description.my}</span>
@@ -149,18 +149,20 @@ import SectionHeader from './SectionHeader.astro';
           </div>
 
           <!-- Bottom Trust Badge & Action -->
-          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
-            <div class="flex items-center gap-1.5 text-douitsu-primary font-bold">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-1.5 text-douitsu-primary font-bold min-w-0">
+              <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
               </svg>
-              <span x-show="lang === 'ja'">{program.supportBadge.ja}</span>
-              <span x-show="lang === 'en'" style="display: none;">{program.supportBadge.en}</span>
-              <span x-show="lang === 'my'" style="display: none;">{program.supportBadge.my}</span>
+              <span class="block truncate sm:text-clip">
+                <span x-show="lang === 'ja'">{program.supportBadge.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{program.supportBadge.en}</span>
+                <span x-show="lang === 'my'" style="display: none;">{program.supportBadge.my}</span>
+              </span>
             </div>
             <a
               href="#contact"
-              class="inline-flex items-center gap-1 font-bold text-slate-500 hover:text-douitsu-primary transition-colors"
+              class="shrink-0 whitespace-nowrap inline-flex items-center gap-1 font-bold text-slate-500 hover:text-douitsu-primary transition-colors"
             >
               <span x-show="lang === 'ja'">相談する</span>
               <span x-show="lang === 'en'" style="display: none;">Consult</span>
@@ -184,12 +186,12 @@ import SectionHeader from './SectionHeader.astro';
           <span x-show="lang === 'en'" style="display: none;">Individual Consultation Open for Companies & Candidates</span>
           <span x-show="lang === 'my'" style="display: none;">လုပ်ငန်းရှင်များနှင့် အလုပ်ရှာဖွေသူများအတွက် အခမဲ့တိုင်ပင်ဆွေးနွေးနိုင်ပါသည်</span>
         </div>
-        <h4 class="text-lg sm:text-xl font-bold tracking-tight">
+        <h4 class="text-lg sm:text-xl font-bold tracking-tight leading-normal sm:leading-snug">
           <span x-show="lang === 'ja'">貴社の業種や人材要件に最適な在留資格プランをご提案いたします</span>
           <span x-show="lang === 'en'" style="display: none;">We propose the optimal visa and support strategy tailored to your industry</span>
           <span x-show="lang === 'my'" style="display: none;">သင့်လုပ်ငန်းခွင်နှင့် အကိုက်ညီဆုံးဖြစ်မည့် ဗီဇာအစီအစဉ်များကို ဆွေးနွေးအကြံပြုပေးပါသည်</span>
         </h4>
-        <p class="text-xs sm:text-sm text-slate-300">
+        <p class="text-sm text-slate-300">
           <span x-show="lang === 'ja'">制度改正への対応、受入れ人数枠、必要書類の作成など、まずはお気軽にご相談ください。</span>
           <span x-show="lang === 'en'" style="display: none;">Feel free to inquire about legal reforms, quota regulations, or required documentation.</span>
           <span x-show="lang === 'my'" style="display: none;">ဥပဒေစနစ်သစ် ပြောင်းလဲမှုများ၊ ခေါ်ယူနိုင်သော ဝန်ထမ်းဦးရေနှင့် လိုအပ်သော စာရွက်စာတမ်းများကို ဆွေးနွေးနိုင်ပါသည်။</span>

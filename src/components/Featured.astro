@@ -90,7 +90,7 @@ import SectionHeader from './SectionHeader.astro';
         <div class="h-full rounded-2xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm flex flex-col justify-between">
           <div>
             <div class="pb-5 mb-5 border-b border-slate-100">
-              <h3 class="text-xl font-bold text-douitsu-navy">
+              <h3 class="text-xl font-bold text-douitsu-navy leading-normal sm:leading-snug">
                 <span x-show="lang === 'ja'">基本情報</span>
                 <span x-show="lang === 'en'" style="display: none;">Corporate Info</span>
                 <span x-show="lang === 'my'" style="display: none;">အခြေခံအချက်အလက်</span>
@@ -128,7 +128,7 @@ import SectionHeader from './SectionHeader.astro';
         <div class="h-full rounded-2xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm flex flex-col justify-between">
           <div>
             <div class="pb-5 mb-5 border-b border-slate-100">
-              <h3 class="text-2xl font-extrabold text-douitsu-navy">
+              <h3 class="text-2xl font-extrabold text-douitsu-navy leading-normal sm:leading-snug">
                 <span x-show="lang === 'ja'">{siteData.featured.downloads.title.ja}</span>
                 <span x-show="lang === 'en'" style="display: none;">{siteData.featured.downloads.title.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{siteData.featured.downloads.title.my}</span>
@@ -144,7 +144,7 @@ import SectionHeader from './SectionHeader.astro';
                       PDF
                     </div>
                     <div>
-                      <h4 class="text-sm font-bold text-douitsu-navy leading-snug">
+                      <h4 class="text-sm font-bold text-douitsu-navy leading-normal sm:leading-snug">
                         <span x-show="lang === 'ja'">{file.title.ja}</span>
                         <span x-show="lang === 'en'" style="display: none;">{file.title.en}</span>
                         <span x-show="lang === 'my'" style="display: none;">{file.title.my}</span>
@@ -160,12 +160,14 @@ import SectionHeader from './SectionHeader.astro';
                   <a
                     href={file.href}
                     download
-                    class="w-full sm:w-auto flex-shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-douitsu-primary hover:bg-douitsu-blue text-white text-xs font-bold shadow-xs transition-colors"
+                    class="w-full sm:w-auto flex-shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-douitsu-primary hover:bg-douitsu-blue text-white text-xs sm:text-sm font-bold shadow-xs transition-colors"
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                     </svg>
-                    <span>Download</span>
+                    <span x-show="lang === 'ja'">ダウンロード</span>
+                    <span x-show="lang === 'en'" style="display: none;">Download</span>
+                    <span x-show="lang === 'my'" style="display: none;">ဒေါင်းလုဒ်ရယူရန်</span>
                   </a>
                 </div>
               ))}

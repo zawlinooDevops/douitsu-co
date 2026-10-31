@@ -1,7 +1,7 @@
 {
   "name": "douitsu-co",
   "type": "module",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -15,7 +15,10 @@
     "check": "npm run lint:eslint && npm run lint:css && npm run check:astro",
     "validate": "./scripts/validate.sh",
     "audit:cache": "node .agents/skills/cloudflare-cache-audit/scripts/audit-cloudflare-cache.mjs",
-    "audit:assets": "node .agents/skills/production-live-testing/scripts/verify-assets.mjs"
+    "audit:assets": "node .agents/skills/production-live-testing/scripts/verify-assets.mjs",
+    "audit:mobile": "node .agents/skills/mobile-ui-ux-audit/scripts/audit-mobile-uiux.mjs",
+    "server:start": "bash .agents/skills/local-dev-server/scripts/start-dev-server.sh",
+    "server:stop": "bash .agents/skills/local-dev-server/scripts/stop-dev-server.sh"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

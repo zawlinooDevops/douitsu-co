@@ -83,7 +83,7 @@ import SectionHeader from './SectionHeader.astro';
               >
                 Q{index + 1}
               </span>
-              <span class="font-bold text-sm sm:text-base text-douitsu-navy leading-snug">
+              <span class="font-bold text-sm sm:text-base text-douitsu-navy leading-normal sm:leading-snug">
                 <span x-show="lang === 'ja'">{item.question.ja}</span>
                 <span x-show="lang === 'en'" style="display: none;">{item.question.en}</span>
                 <span x-show="lang === 'my'" style="display: none;">{item.question.my}</span>

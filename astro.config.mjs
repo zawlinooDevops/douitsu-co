@@ -9,7 +9,7 @@ function contactApiPlugin() {
   const handler = async (req, res, next) => {
     const rawUrl = req.originalUrl || req.url || '';
     const protocol = req.headers['x-forwarded-proto'] || (req.connection && req.connection.encrypted ? 'https' : 'http');
-    const host = req.headers.host || 'localhost:4321';
+    const host = req.headers.host || 'localhost:4002';
     const origin = `${protocol}://${host}`;
     const url = new URL(rawUrl, origin);
     const pathname = url.pathname.replace(/\/+$/, '');
@@ -78,6 +78,10 @@ function contactApiPlugin() {
 
 // https://astro.build/config
 export default defineConfig({
+  server: {
+    port: 4002,
+    strictPort: true
+  },
   trailingSlash: 'always',
   integrations: [
     tailwind(),

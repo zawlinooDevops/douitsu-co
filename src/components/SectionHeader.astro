@@ -26,7 +26,7 @@ const {
 
 <div class={`text-left ${className}`}>
   <!-- 1. Top Eyebrow Badge (Soft Tinted Pill with Dot) -->
-  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-douitsu-primary/10 border border-douitsu-primary/20 text-douitsu-primary text-[11px] sm:text-xs font-bold tracking-wider uppercase mb-3 sm:mb-3.5 shadow-2xs">
+  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-douitsu-primary/10 border border-douitsu-primary/20 text-douitsu-primary text-xs font-bold tracking-wider uppercase mb-3 sm:mb-3.5 shadow-2xs">
     <span class="w-1.5 h-1.5 rounded-full bg-douitsu-primary shrink-0"></span>
     <span>{eyebrow}</span>
   </div>
@@ -37,13 +37,13 @@ const {
     <div class="w-1.5 sm:w-2 rounded-full bg-gradient-to-b from-douitsu-primary via-douitsu-accent to-douitsu-sky shrink-0 self-stretch"></div>
 
     {isH1 ? (
-      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-douitsu-navy tracking-tight leading-tight">
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-douitsu-navy tracking-tight leading-normal sm:leading-snug">
         <span x-show="lang === 'ja'">{title.ja}</span>
         <span x-show="lang === 'en'" style="display: none;">{title.en}</span>
         <span x-show="lang === 'my'" style="display: none;">{title.my}</span>
       </h1>
     ) : (
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-douitsu-navy tracking-tight leading-tight">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-douitsu-navy tracking-tight leading-normal sm:leading-snug">
         <span x-show="lang === 'ja'">{title.ja}</span>
         <span x-show="lang === 'en'" style="display: none;">{title.en}</span>
         <span x-show="lang === 'my'" style="display: none;">{title.my}</span>

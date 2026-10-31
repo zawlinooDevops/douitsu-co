@@ -50,7 +50,7 @@ The website is deployed to Cloudflare as a unified **Cloudflare Worker with Stat
 
 - **Cloudflare CI Build Commands**:
   - **Build command**: `npm run build`
-  - **Deploy command**: `npx wrangler deploy`
+  - **Deploy command**: `npx wrangler deploy` *(⚠️ **STRICT RESTRICTION**: Prior user permission and Cloudflare account name verification required per [`cloudflare-deployment-rules.md`](./cloudflare-deployment-rules.md))*
 
 - **Authoritative Configuration (`wrangler.jsonc`)**:
   ```jsonc
@@ -153,4 +153,5 @@ Before pushing changes to production, agents must verify:
 - [ ] Download links for both Kaigo PDF textbooks trigger file downloads.
 - [ ] Form submission validation works when required fields are blank.
 - [ ] No broken links or external CDN dependencies are introduced.
+- [ ] **Cloudflare Operations Protocol**: Obey [`cloudflare-deployment-rules.md`](./cloudflare-deployment-rules.md) — Never deploy or modify settings via Wrangler without explicit user permission and target Cloudflare Account Name confirmation.
 - [ ] **Pre-Push Version Protocol**: Consult user on SemVer bump (`patch`, `minor`, `major`) with recommendation, update `package.json` & `siteData.meta.version`, and verify footer version badge prior to git push.

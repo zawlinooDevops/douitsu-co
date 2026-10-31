@@ -139,6 +139,12 @@ font-family: "Plus Jakarta Sans", "Noto Sans Myanmar", "Noto Sans JP", "Hiragino
 ```
 All font faces are configured with `font-display: swap` in `src/styles/fonts.css` for optimal Core Web Vitals (zero layout shifts / FOUT).
 
+### Typography Size & Line-Height Standards:
+- **Readable Body Text**: Minimum `text-sm` (14px / `0.875rem`), recommended `text-base` (16px / `1rem`).
+- **Badges, Buttons, & Labels Floor**: Absolute minimum floor is `text-xs` (12px / `0.75rem`). Font sizes must **NEVER drop below 12px** (`text-[9px]`, `text-[10px]`, `text-[11px]` are strictly forbidden).
+- **Line-Height for Myanmar Script**: Minimum `leading-normal` (ratio 1.5) for single-line labels, and `leading-relaxed` (ratio 1.625) for multi-line paragraphs to prevent diacritic/stacked consonant collision.
+- For complete specification, see [**`typography-and-font-standards.md`**](./typography-and-font-standards.md).
+
 ---
 
 ## 5. Performance, SEO & Structured Data

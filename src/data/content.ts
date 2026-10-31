@@ -156,7 +156,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.3.3",
+    version: "1.3.4",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
@@ -342,7 +342,7 @@ export const siteData = {
       ],
     },
     downloads: {
-      title: { ja: "Download PDF", en: "Study Textbook Downloads", my: "စာအုပ်ဖတ်စာ ဖိုင်များ ဒေါင်းလုဒ်" },
+      title: { ja: "学習テキストダウンロード", en: "Study Textbook Downloads", my: "စာအုပ်ဖတ်စာ ဖိုင်များ ဒေါင်းလုဒ်" },
       files: [
         {
           title: { ja: "介護特定技能評価試験 (日本語) 学習テキスト", en: "Nursing Care SSW Exam Study Guide (Japanese Edition)", my: "Kaigo သတ်မှတ်ကျွမ်းကျင်စာမေးပွဲ ဖတ်စာအုပ် (ဂျပန်ဘာသာ)" },

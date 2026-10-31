@@ -168,4 +168,6 @@ When updating or modifying translations, agents must adhere to the standardized 
 
 1. **Synchronous Trilingual Updates**: Never add a new content key in only one language. Always provide `ja`, `en`, and `my` keys in `siteData`.
 2. **Myanmar Font Standard**: Always use standard Unicode encoding for Myanmar text (no legacy Zawgyi encoding).
-3. **Typography Spacing**: Myanmar script requires slightly taller line-height (`leading-relaxed` or `leading-normal`) to avoid clipping diacritics and stacked consonants.
+3. **Typography Spacing**: Myanmar script requires slightly taller line-height (`leading-relaxed` or `leading-normal`, min ratio 1.4-1.625) to avoid clipping diacritics and stacked consonants.
+4. **Readable Body Minimum Size**: All descriptive paragraphs and readable content must be at least `text-sm` (14px). Never reduce body text below 14px.
+5. **Absolute Minimum Floor for Badges / Buttons / Labels**: All badges, tags, buttons, form errors, and metadata labels must maintain a strict minimum floor of `text-xs` (12px), and must **NEVER drop below 12px** (`text-[9px]`, `text-[10px]`, `text-[11px]` are strictly prohibited). See [`typography-and-font-standards.md`](./typography-and-font-standards.md).

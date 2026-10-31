@@ -27,10 +27,10 @@ import SectionHeader from './SectionHeader.astro';
             {step.number}
           </span>
           <div class="flex-1 min-w-0">
-            <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-douitsu-primary/80 block mb-0.5 font-mono">
+            <span class="text-xs font-bold uppercase tracking-wider text-douitsu-primary/80 block mb-0.5 font-mono">
               STEP {String(step.number).padStart(2, '0')}
             </span>
-            <h3 class="font-bold text-sm sm:text-base text-douitsu-navy group-hover:text-douitsu-primary transition-colors leading-snug">
+            <h3 class="font-bold text-sm sm:text-base text-douitsu-navy group-hover:text-douitsu-primary transition-colors leading-normal sm:leading-snug">
               <span x-show="lang === 'ja'">{step.title.ja}</span>
               <span x-show="lang === 'en'" style="display: none;">{step.title.en}</span>
               <span x-show="lang === 'my'" style="display: none;">{step.title.my}</span>
@@ -43,12 +43,12 @@ import SectionHeader from './SectionHeader.astro';
     <!-- Bottom Consultation Callout Banner -->
     <div class="mt-10 sm:mt-12 p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-6">
       <div class="text-center sm:text-left">
-        <h4 class="text-sm sm:text-base font-bold text-douitsu-navy mb-1">
+        <h4 class="text-sm sm:text-base font-bold text-douitsu-navy mb-1 leading-normal sm:leading-snug">
           <span x-show="lang === 'ja'">特定技能外国人の受入れに関するご相談は随時承っております</span>
           <span x-show="lang === 'en'" style="display: none;">Inquiries & Consultations for SSW Recruitment are Always Welcome</span>
           <span x-show="lang === 'my'" style="display: none;">သတ်မှတ်ကျွမ်းကျင်လုပ်သား ခေါ်ယူခန့်ထားခြင်းဆိုင်ရာ မေးမြန်းဆွေးနွေးမှုများကို အချိန်မရွေး ကြိုဆိုပါသည်</span>
         </h4>
-        <p class="text-xs text-slate-500">
+        <p class="text-sm text-slate-600">
           <span x-show="lang === 'ja'">受入れ企業の体制確認から支援計画の策定、ビザ申請までワンストップでサポートいたします。</span>
           <span x-show="lang === 'en'" style="display: none;">We provide one-stop companion support from preliminary setup review to visa application and onboarding.</span>
           <span x-show="lang === 'my'" style="display: none;">လုပ်ငန်းရှင်များ၏ လုပ်ငန်းခွင်အခြေအနေ စစ်ဆေးခြင်းမှသည် ထောက်ပံ့ရေးအစီအစဉ် ရေးဆွဲခြင်း၊ ဗီဇာလျှောက်ထားခြင်းအထိ အစအဆုံး ကူညီဆောင်ရွက်ပေးပါသည်။</span>
@@ -56,7 +56,7 @@ import SectionHeader from './SectionHeader.astro';
       </div>
       <a
         href="#contact"
-        class="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white text-xs font-bold shadow-md hover:shadow-lg transition-all"
+        class="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white text-sm font-bold shadow-md hover:shadow-lg transition-all"
       >
         <span>
           <span x-show="lang === 'ja'">お問い合わせ・事前相談</span>
