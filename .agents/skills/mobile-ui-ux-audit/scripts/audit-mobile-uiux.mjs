@@ -376,6 +376,10 @@ function printConsoleReport(results) {
   for (const [vpName, langs] of Object.entries(results)) {
     console.log(`🔹 Device: ${vpName}`);
     for (const [lang, data] of Object.entries(langs)) {
+      if (!data) {
+        console.log(`  [${lang.toUpperCase()}] ⚠️ No data collected`);
+        continue;
+      }
       const scrollStatus = data.hasHorizontalScroll ? '❌ HORIZONTAL OVERFLOW' : '✅ NO OVERFLOW';
       console.log(`  [${lang.toUpperCase()}] Total Height: ${data.totalHeight}px (${data.totalScreens}x screens) | ${scrollStatus}`);
       if (data.overflowElements.length > 0) {
@@ -416,6 +420,7 @@ function printMarkdownReport(results) {
 
   for (const [vpName, langs] of Object.entries(results)) {
     for (const [lang, data] of Object.entries(langs)) {
+      if (!data) continue;
       const hScroll = data.hasHorizontalScroll ? '❌ **OVERFLOW**' : '✅ Clean';
       const longCount = data.sections.filter(s => s.isLongScroll).length;
       console.log(`| ${vpName} | \`${lang}\` | ${data.totalHeight}px | **${data.totalScreens}x** | ${hScroll} | ${longCount} sections |`);

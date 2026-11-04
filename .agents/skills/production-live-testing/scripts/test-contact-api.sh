@@ -10,7 +10,7 @@ echo "Target Endpoint: ${ENDPOINT}"
 echo "============================================================"
 echo ""
 
-TOTAL_TESTS=8
+TOTAL_TESTS=9
 PASSED_TESTS=0
 
 # Test 1: GET Request should be rejected with 405 Method Not Allowed
@@ -112,6 +112,25 @@ if echo "${RESPONSE_BODY}" | grep -q "shadow-drop-url"; then
   PASSED_TESTS=$((PASSED_TESTS + 1))
 else
   echo "  ❌ FAIL: Expected shadow-drop-url response, got: ${RESPONSE_BODY}"
+fi
+
+# Test 9: Verify Global Edge Security Headers on production endpoint
+echo "▶ Test 9: Verifying Global Edge Security Headers on response..."
+HEADERS_OUTPUT=$(curl -sI -X POST "${ENDPOINT}")
+SEC_PASSED=true
+
+for HEADER in "x-frame-options: SAMEORIGIN" "x-content-type-options: nosniff" "referrer-policy: strict-origin-when-cross-origin"; do
+  if ! echo "${HEADERS_OUTPUT}" | grep -qi "${HEADER}"; then
+    echo "  ⚠️ Missing header: ${HEADER}"
+    SEC_PASSED=false
+  fi
+done
+
+if [ "${SEC_PASSED}" = true ]; then
+  echo "  ✅ PASS: All Global Edge Security Headers verified (X-Frame-Options, X-Content-Type-Options, Referrer-Policy)"
+  PASSED_TESTS=$((PASSED_TESTS + 1))
+else
+  echo "  ❌ FAIL: One or more security headers missing"
 fi
 
 echo ""

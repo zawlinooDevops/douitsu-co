@@ -17,6 +17,8 @@
     "audit:cache": "node .agents/skills/cloudflare-cache-audit/scripts/audit-cloudflare-cache.mjs",
     "audit:assets": "node .agents/skills/production-live-testing/scripts/verify-assets.mjs",
     "audit:mobile": "node .agents/skills/mobile-ui-ux-audit/scripts/audit-mobile-uiux.mjs",
+    "audit:security": "bash .agents/skills/production-live-testing/scripts/test-contact-api.sh",
+    "audit:live": "bash .agents/skills/production-live-testing/scripts/run-all-live-tests.sh",
     "server:start": "bash .agents/skills/local-dev-server/scripts/start-dev-server.sh",
     "server:stop": "bash .agents/skills/local-dev-server/scripts/stop-dev-server.sh"
   },

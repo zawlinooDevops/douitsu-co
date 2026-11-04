@@ -2,17 +2,19 @@
 name: production-live-testing
 description: >-
   Run end-to-end live testing on the DOUITSU LLC production website (https://douitsu-co.com).
-  Verifies HTTP/2 status, SSL, canonical www redirect, all 62+ public assets & images,
-  PDF textbooks on Cloudflare R2, in-page navigation anchors, Alpine.js trilingual switching,
-  FAQ accordion, photo stack lightbox modal, mobile drawer, contact form validation,
-  Cloudflare Turnstile CAPTCHA, bot honeypots, and CSRF security API endpoints.
+  Verifies HTTP/2 status, SSL, canonical www redirect, 5 Global Edge Security Headers,
+  all 66+ public assets & images, 4 sector visuals, Cloudflare Edge Cache (cf-cache-status: HIT),
+  PDF textbooks on Cloudflare R2, in-page navigation anchors (including #sectors and scroll-margin),
+  Alpine.js trilingual switching, FAQ accordion, photo stack lightbox modal, automated mobile
+  viewports (320px-412px) & zero-overflow standards, contact form validation, Cloudflare Turnstile
+  CAPTCHA, bot honeypots, and 9 CSRF/Edge API security gates.
 ---
 
 # DOUITSU LLC — Production Live Testing Runbook & Quality Assurance Skill
 
-This skill provides a standardized, automated procedure to perform end-to-end live testing on the production deployment of **DOUITSU LLC (DOUITSU合同会社)** at [https://douitsu-co.com](https://douitsu-co.com).
+This skill provides a standardized, automated procedure to perform comprehensive end-to-end live testing on the production deployment of **DOUITSU LLC (DOUITSU合同会社)** at [https://douitsu-co.com](https://douitsu-co.com).
 
-Whenever asked to test, audit, or verify the live site, links, images, or contact forms, follow the multi-stage quality gates below.
+Whenever asked to test, audit, or verify the live site, links, images, contact forms, edge caching, or mobile responsiveness, follow the multi-stage quality gates below.
 
 ---
 
@@ -26,53 +28,80 @@ Whenever asked to test, audit, or verify the live site, links, images, or contac
 | **Kaigo PDF Storage (Cloudflare R2)** | `https://files.douitsu-co.com/` |
 | **Turnstile Site Key** | `0x4AAAAAAFYQzIK4TKPrb3od` |
 | **Official Phone / Email** | `042-497-1537` / `info@douitsu-co.com` |
+| **Official Legal Registration** | 登録支援機関 `25登－012206` |
 
 ---
 
-## 🚀 Testing Stages & Execution Order
+## 🚀 Master Automated Live Test Command
 
-### Stage 1: Domain, HTTPS & Canonical Redirect Gate
-
-Verify DNS, SSL certificates, HSTS, and canonical redirection:
+Run the entire end-to-end test suite in a single command:
 
 ```bash
-# 1. Verify root canonical domain returns HTTP/2 200 with Cloudflare Edge Cache
-curl -I https://douitsu-co.com
+# Execute master production test suite (Stages 1 through 5)
+npm run audit:live
+
+# Or directly execute shell runner
+bash .agents/skills/production-live-testing/scripts/run-all-live-tests.sh
+```
+
+---
+
+## 🔬 Testing Stages & Execution Order
+
+### Stage 1: Domain, HTTPS, Canonical Redirect & Global Security Headers Gate
+
+Verify DNS, SSL certificates, HSTS, canonical redirection, and Worker edge security middleware headers:
+
+```bash
+# 1. Verify root canonical domain returns HTTP/2 200 with Cloudflare Edge Cache & Security Headers
+curl -sI https://douitsu-co.com
 
 # 2. Verify www subdomain permanently redirects (301) to canonical root
-curl -I https://www.douitsu-co.com
+curl -sI https://www.douitsu-co.com
 ```
 
 * **Pass Criteria**:
   * `https://douitsu-co.com` returns `HTTP/2 200`.
   * `https://www.douitsu-co.com` returns `HTTP/2 301` with `location: https://douitsu-co.com/`.
+  * **5 Global Edge Security Headers** are present on all responses:
+    1. `X-Frame-Options: SAMEORIGIN` (Clickjacking defense)
+    2. `X-Content-Type-Options: nosniff` (MIME sniffing defense)
+    3. `Referrer-Policy: strict-origin-when-cross-origin`
+    4. `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()`
+    5. `Cross-Origin-Opener-Policy: same-origin-allow-popups`
 
 ---
 
-### Stage 2: Automated Assets & Images Pipeline Audit
+### Stage 2: Automated Assets & Cloudflare Edge Cache Pipeline Audit
 
-Run the automated Node.js test script to verify all static files in `public/` and textbooks on Cloudflare R2:
+Run the automated Node.js test script to verify all static files in `public/` (excluding config files like `_headers`) and textbooks on Cloudflare R2:
 
 ```bash
-node .agents/skills/production-live-testing/scripts/verify-assets.mjs
+# 1. Verify all 66+ static assets and R2 PDFs return HTTP 200
+npm run audit:assets
+
+# 2. Verify Cloudflare Edge Cache (HIT / REVALIDATED) across all asset categories
+npm run audit:cache
 ```
 
 * **Pass Criteria**:
-  * 100% of files in `public/` (logos, icons, self-hosted fonts, hero background, certificates) return `HTTP 200`.
+  * 100% of files in `public/` (logos, icons, self-hosted fonts, hero background, certificates, 4 sector photos) return `HTTP 200`.
   * Cloudflare R2 textbooks (`kaigo-tokuteiginou-japanese.pdf` 39.7MB and `kaigo-tokuteiginou-myanmar.pdf` 14.4MB) return `HTTP 200`.
   * Failed URLs count must be `0`.
+  * Assets monitored by `audit:cache` return `cf-cache-status: HIT` from Cloudflare Edge PoPs (SIN, NRT, HKG).
 
 ---
 
-### Stage 3: Links, Navigation & PDF Downloads
+### Stage 3: Links, Navigation, Supported Sectors & Scroll-Margin Alignment
 
-Check all unique anchor links and external schemes:
+Check all unique anchor links, section scroll-margins, and external schemes:
 
 1. **In-Page Anchor Targets**:
-   Verify that all `#hash` links target existing `<section>` tags in the DOM:
-   * `#home` -> Hero section
-   * `#about` -> Company profile & registration info
-   * `#services` -> Tokutei Ginou support features
+   Verify that all `#hash` links target existing `<section>` tags in the DOM with active scroll margin offset (`scroll-mt-[72px] lg:scroll-mt-[96px]`):
+   * `#home` -> Hero section (breathing Mt. Fuji & falling sakura petals)
+   * `#about` -> Company profile & registration info (25登－012206)
+   * `#services` -> Tokutei Ginou support features & 3 core pillar cards
+   * `#sectors` -> 4 Approved Shortage Sectors (Nursing Care, Food Service, Manufacturing, Building Cleaning)
    * `#support` -> 10 Statutory support duties & photo stack
    * `#flow` -> 6-step onboarding process
    * `#faq` -> 5 FAQ accordion items
@@ -84,12 +113,10 @@ Check all unique anchor links and external schemes:
 
 ---
 
-### Stage 4: Interactive UI & Alpine.js Client Reactivity
-
-Using Chrome DevTools MCP or a browser context, verify the client-side behaviors:
+### Stage 4: Interactive UI, Alpine.js Client Reactivity & Mobile Viewport Standards
 
 #### 1. Instant Trilingual Switcher (Zero Page Reload)
-Evaluate in browser console:
+Evaluate in browser console or Alpine.js state:
 ```javascript
 // Test switching between ja, en, and my
 Alpine.$data(document.documentElement).lang = 'ja';
@@ -102,44 +129,42 @@ Alpine.$data(document.documentElement).lang = 'my';
 // Heading shows Myanmar: "မှတ်ပုံတင်ထောက်ပံ့ရေးအဖွဲ့အစည်း ဆိုသည်မှာ"
 ```
 
-#### 2. FAQ Accordion
-* Click each of the 5 question buttons.
-* Verify `aria-expanded="true"` and answer container smoothly reveals.
+#### 2. FAQ Accordion & Modal Reactivity
+* Click each of the 5 question buttons; verify `aria-expanded="true"` and answer container smoothly reveals.
+* In `#support`, click active photo card; verify fullscreen lightbox modal opens (`display: flex`, opacity: 1).
+* Press `Escape` key or click close button; verify modal returns to `display: none;`.
 
-#### 3. Photo Stack Lightbox Modal
-* In `#support`, click the active photo card (or trigger `window.dispatchEvent(new CustomEvent('open-lightbox', { detail: { img: '/images/landing/support-activity-1.jpg' } }))`).
-* Verify modal opens (`display: flex`, opacity: 1, full-res image loaded).
-* Click the close button or press `Escape` key; verify modal returns to `display: none;`.
-
-#### 4. Responsive Mobile Navigation Drawer
-* Resize viewport to mobile width (`< 1024px`, e.g. 390x844).
-* Click hamburger button (`aria-label="Toggle navigation menu"`).
-* Verify drawer opens (`display: block`). Click again to close (`display: none`).
+#### 3. Automated Mobile Viewport & UI/UX Audit
+Run the automated mobile viewport audit across all 4 device screen tiers:
+```bash
+npm run audit:mobile
+```
+* **Pass Criteria**:
+  * **Zero Horizontal Overflow**: `scrollWidth <= clientWidth` across 320px, 360px, 390px, and 412px viewports.
+  * **Myanmar Line-Height**: Headings maintain `line-height >= 1.4` (`leading-normal` or `leading-relaxed`) with zero diacritic/tone clipping.
+  * **Touch Target Accessibility**: Interactive buttons, inputs, and links maintain minimum size of `44x44px` (or `48x48px`).
 
 ---
 
-### Stage 5: Contact Form & Backend Security API Pipeline
+### Stage 5: Contact Form & Backend Security API Pipeline (9 Gates)
 
 Execute the automated backend API security audit script:
 
 ```bash
-.agents/skills/production-live-testing/scripts/test-contact-api.sh
+npm run audit:security
+# or: bash .agents/skills/production-live-testing/scripts/test-contact-api.sh
 ```
 
-The script verifies 8 automated security boundaries:
+The script verifies **9 automated edge security boundaries**:
 1. **HTTP Method Gate**: `GET /api/contact` -> Returns `405 Method Not Allowed`.
 2. **Content-Type Restriction**: `POST` with non-JSON media type -> Returns `415 Unsupported Media Type`.
 3. **Payload Size Guard**: `POST` with body exceeding 10KB -> Returns `413 Payload Too Large`.
 4. **CSRF / Origin Gate**: `POST` from untrusted origin -> Returns `403 Forbidden` (`CSRF_FORBIDDEN`).
 5. **Turnstile Enforcement**: `POST` without captcha token -> Returns `403 Forbidden` (`CAPTCHA_REQUIRED`).
 6. **Field Honeypot Bot Trap**: `POST` with `website` field filled -> Returns `200 OK` (`shadow-drop-honeypot`) without dispatch.
-7. **Speed-submission Time Heuristic**: Rapid submissions under 2.5s -> Returns `200 OK` (`shadow-drop-speed`) without dispatch.
+7. **Speed-submission Time Heuristic**: Rapid submissions under 2.0s -> Returns `200 OK` (`shadow-drop-speed`) without dispatch.
 8. **Link Spam Threshold**: Payloads with excessive URLs (> 2) -> Returns `200 OK` (`shadow-drop-url`) without dispatch.
-
-#### Client-side Field Validation:
-* Submit empty form: All 4 fields display required warnings in active language (`ja`, `en`, `my`).
-* Invalid values (e.g. 1-character name, malformed email, phone under 8 digits, message under 10 chars) show specific validation errors.
-* Form without completing Turnstile displays `CAPTCHA_REQUIRED` toast.
+9. **Global Edge Response Security Headers**: Verifies `X-Frame-Options: SAMEORIGIN`, `X-Content-Type-Options: nosniff`, and `Referrer-Policy: strict-origin-when-cross-origin` on responses.
 
 ---
 
@@ -149,12 +174,12 @@ Verify edge assets and crawler configurations:
 
 ```bash
 # 1. Sitemaps & Crawler rules
-curl -I https://douitsu-co.com/sitemap.xml
-curl -I https://douitsu-co.com/robots.txt
+curl -sI https://douitsu-co.com/sitemap.xml
+curl -sI https://douitsu-co.com/robots.txt
 
 # 2. PWA Manifest & Service Worker
-curl -I https://douitsu-co.com/site.webmanifest
-curl -I https://douitsu-co.com/sw.js
+curl -sI https://douitsu-co.com/site.webmanifest
+curl -sI https://douitsu-co.com/sw.js
 
 # 3. Custom Branded 404 Handling
 curl -sI https://douitsu-co.com/non-existent-page/
@@ -173,32 +198,36 @@ When delivering live test results to the user, format the summary using this str
 ```markdown
 ### 📊 Production Live Testing Summary (https://douitsu-co.com)
 
-1. **Domain & HTTPS**:
-   - Canonical Domain: 200 OK (Cloudflare HIT, HSTS)
+1. **Domain & Edge Security**:
+   - Canonical Domain: 200 OK (Cloudflare Edge, HSTS enabled)
    - WWW Redirection: 301 Moved Permanently -> https://douitsu-co.com/
+   - Global Security Headers: X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, COOP (100% verified)
 
-2. **Assets & Media**:
-   - 62 Public Assets: 100% HTTP 200 OK (0 Failed)
+2. **Assets, Sectors & Edge Cache**:
+   - 66 Public Assets: 100% HTTP 200 OK (0 Failed)
+   - 4 Sector Visual Cards: Verified live (Kaigo, Food Service, Manufacturing, Cleaning)
    - Kaigo PDFs on R2: 2/2 HTTP 200 OK (39.7MB & 14.4MB)
+   - Cloudflare Edge Cache: Verified cf-cache-status HIT / REVALIDATED
 
 3. **Links & Navigation**:
-   - 28 Section Hash Anchors: Verified active targets
+   - Section Anchors: #home, #about, #services, #sectors, #support, #flow, #faq, #contact verified
+   - Header Offset: scroll-mt-[72px] lg:scroll-mt-[96px] verified
    - Direct Call & Email: tel: and mailto: verified
 
-4. **Client UI & Alpine.js Reactivity**:
+4. **Client UI & Mobile Viewports**:
    - Trilingual Switcher: ja / en / my instant toggle
-   - FAQ Accordion: 5 Q&As expanding & ARIA compliant
-   - Lightbox Modal: Fullscreen zoom & smooth escape dismiss
-   - Mobile Drawer: Responsive hamburger toggle
+   - Mobile Viewports (320px, 360px, 390px, 412px): Zero horizontal overflow
+   - Myanmar Typography: line-height >= 1.4, no diacritic collision
+   - Accordion & Lightbox: Smooth expand & fullscreen modal
 
-5. **Form & Security Gate**:
-   - Client Validation: Trilingual field errors operational
-   - Turnstile CAPTCHA: Widget rendered & required
-   - Honeypot Trap: Silent shadow-drop 200 OK
+5. **Form & Security Gate (9/9 Passed)**:
+   - Method (405), Media (415), Buffer Guard (413) verified
    - Origin / CSRF: 403 Forbidden on untrusted origins
-   - HTTP Method: 405 Method Not Allowed on GET
+   - Turnstile CAPTCHA: Token required & enforced
+   - Honeypot, Time Heuristic & Link Spam Traps: Silent 200 shadow-drop
+   - Response Security Headers: Verified active
 
 6. **SEO, PWA & 404 Error Handling**:
-   - sitemap.xml, robots.txt, sw.js: 200 OK
+   - sitemap.xml, robots.txt, site.webmanifest, sw.js: 200 OK
    - Custom 404: 404 status with trilingual brand page
 ```

@@ -17,10 +17,13 @@ const R2_PDFS = [
   'kaigo-tokuteiginou-myanmar.pdf'
 ];
 
+const IGNORED_FILES = new Set(['_headers', '_redirects', '.DS_Store', 'robots.txt.bak']);
+
 function getFiles(dir, fileList = []) {
   if (!fs.existsSync(dir)) return fileList;
   const files = fs.readdirSync(dir);
   for (const file of files) {
+    if (IGNORED_FILES.has(file)) continue;
     const filePath = path.join(dir, file);
     if (fs.statSync(filePath).isDirectory()) {
       getFiles(filePath, fileList);
@@ -31,36 +34,42 @@ function getFiles(dir, fileList = []) {
   return fileList;
 }
 
-async function checkUrl(url, timeoutMs = 10000) {
-  try {
-    const res = await fetch(url, {
-      method: 'HEAD',
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-      },
-      signal: AbortSignal.timeout(timeoutMs)
-    });
-    return {
-      url,
-      status: res.status,
-      ok: res.ok,
-      contentLength: res.headers.get('content-length'),
-      contentType: res.headers.get('content-type')
-    };
-  } catch (err) {
-    return { url, status: err.name === 'TimeoutError' ? 'TIMEOUT' : err.message, ok: false };
+async function checkUrl(url, timeoutMs = 15000, retries = 1) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(url, {
+        method: 'HEAD',
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        },
+        signal: AbortSignal.timeout(timeoutMs)
+      });
+      return {
+        url,
+        status: res.status,
+        ok: res.ok,
+        cfCache: res.headers.get('cf-cache-status') || 'NONE',
+        contentLength: res.headers.get('content-length'),
+        contentType: res.headers.get('content-type')
+      };
+    } catch (err) {
+      if (attempt === retries) {
+        return { url, status: err.name === 'TimeoutError' ? 'TIMEOUT' : err.message, ok: false };
+      }
+      await new Promise(r => setTimeout(r, 250));
+    }
   }
 }
 
 async function run() {
   console.log(`\n🔍 Scanning public directory: ${publicDir}`);
   const allPublicPaths = getFiles(publicDir).map(p => path.relative(publicDir, p));
-  console.log(`📦 Found ${allPublicPaths.length} static assets in public/`);
+  console.log(`📦 Found ${allPublicPaths.length} static assets in public/ (excluding config files)`);
 
   console.log(`🚀 Checking assets against production (${TARGET_HOST})...\n`);
 
-  // Run in concurrent batches of 8 to avoid socket starvation
-  const BATCH_SIZE = 8;
+  // Run in concurrent batches of 4 to prevent socket starvation
+  const BATCH_SIZE = 4;
   const results = [];
   const urlsToCheck = [
     ...allPublicPaths.map(rel => `${TARGET_HOST}/${rel}`),
@@ -69,7 +78,7 @@ async function run() {
 
   for (let i = 0; i < urlsToCheck.length; i += BATCH_SIZE) {
     const batch = urlsToCheck.slice(i, i + BATCH_SIZE);
-    const batchResults = await Promise.all(batch.map(url => checkUrl(url, 10000)));
+    const batchResults = await Promise.all(batch.map(url => checkUrl(url, 15000, 1)));
     results.push(...batchResults);
   }
 
