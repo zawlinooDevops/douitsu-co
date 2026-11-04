@@ -3,6 +3,16 @@
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
+# 0. Global Security Headers (Applied to All Routes)
+# ------------------------------------------------------------------------------
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+
+# ------------------------------------------------------------------------------
 # 1. Self-Hosted TTF Fonts (1 Year Immutable Browser Disk Cache + CORS)
 # ------------------------------------------------------------------------------
 /fonts/*

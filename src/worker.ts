@@ -13,6 +13,28 @@ export interface WorkerEnv {
   [key: string]: unknown;
 }
 
+const SECURITY_HEADERS: Record<string, string> = {
+  'X-Frame-Options': 'SAMEORIGIN',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+  'Cross-Origin-Opener-Policy': 'same-origin-allow-popups'
+};
+
+function withSecurityHeaders(response: Response): Response {
+  const newHeaders = new Headers(response.headers);
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    if (!newHeaders.has(key)) {
+      newHeaders.set(key, value);
+    }
+  }
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: newHeaders
+  });
+}
+
 export default {
   async fetch(request: Request, env: WorkerEnv): Promise<Response> {
     const url = new URL(request.url);
@@ -20,10 +42,12 @@ export default {
 
     // Intercept Contact API route
     if (pathname === '/api/contact') {
-      return handleContactSubmission(request, env as Record<string, string | undefined>);
+      const apiResponse = await handleContactSubmission(request, env as Record<string, string | undefined>);
+      return withSecurityHeaders(apiResponse);
     }
 
     // Fall back to Cloudflare Static Assets (dist/) for HTML, CSS, fonts, images, and 404.html
-    return env.ASSETS.fetch(request);
+    const assetResponse = await env.ASSETS.fetch(request);
+    return withSecurityHeaders(assetResponse);
   }
 };
