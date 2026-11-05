@@ -8,6 +8,16 @@ export interface NavItem {
   };
 }
 
+export interface FooterSpecialLink {
+  id: string;
+  href: string;
+  label: {
+    ja: string;
+    en: string;
+    my: string;
+  };
+}
+
 export interface SupportPillar {
   number: number;
   title: {
@@ -156,7 +166,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.3.6",
+    version: "1.4.0",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)
@@ -170,6 +180,55 @@ export const siteData = {
     { id: "contact", href: "/#contact", label: { ja: "お問い合わせ", en: "Contact Us", my: "ဆက်သွယ်ရန်" } },
     { id: "phone", href: "tel:+81424971537", label: { ja: "042-497-1537", en: "042-497-1537", my: "042-497-1537" } },
   ] as NavItem[],
+
+  // Footer Special Links (Replacing main menu on right side)
+  footerCommunity: {
+    label: {
+      ja: "ミャンマーの方へ：",
+      en: "For Myanmar residents: ",
+      my: "မြန်မာလူမျိုးများအတွက်：",
+    },
+    links: [
+      {
+        id: "license",
+        href: "/license/",
+        label: {
+          ja: "運転免許切り替え",
+          en: "Driver's License Conversion",
+          my: "လိုင်စင်ပြောင်း",
+        },
+      },
+      {
+        id: "housing",
+        href: "/housing/",
+        label: {
+          ja: "賃貸物件紹介",
+          en: "Housing",
+          my: "အိမ်ငှားရန်",
+        },
+      },
+    ] as FooterSpecialLink[],
+  },
+  footerLinks: [
+    {
+      id: "license",
+      href: "/license/",
+      label: {
+        ja: "運転免許切り替え",
+        en: "Driver's License Conversion",
+        my: "လိုင်စင်ပြောင်း",
+      },
+    },
+    {
+      id: "housing",
+      href: "/housing/",
+      label: {
+        ja: "賃貸物件紹介",
+        en: "Housing",
+        my: "အိမ်ငှားရန်",
+      },
+    },
+  ] as FooterSpecialLink[],
 
   hero: {
     badge: {
@@ -912,5 +971,460 @@ export const siteData = {
 
   footer: {
     copyright: "Copyright © 2025 DOUITSU LLC. All rights reserved.",
+  },
+
+  licensePage: {
+    eyebrow: {
+      ja: "外免切替サポート",
+      en: "DRIVING LICENSE CONVERSION",
+      my: "外免切替 အကူအညီ",
+    },
+    metaTitle: {
+      ja: "ミャンマーの運転免許を日本の免許に切り替え｜外免切替サポート｜DOUITSU合同会社（東京・清瀬）",
+      en: "Convert Myanmar Driver's License to Japanese License (Gaimen Kirikae) Support | DOUITSU LLC",
+      my: "မြန်မာမော်တော်ယာဉ်မောင်းလိုင်စင်ကို ဂျပန်လိုင်စင်သို့ ပြောင်းလဲရန် (外免切替) အကူအညီ｜DOUITSU合同会社",
+    },
+    metaDescription: {
+      ja: "ミャンマーの運転免許証を日本の免許に切り替える「外免切替」を、日本語・ミャンマー語でサポート。書類の準備から手続きの流れまで、東京都清瀬市のDOUITSU合同会社にご相談ください。",
+      en: "Support for converting Myanmar driver's licenses to Japanese licenses (Gaimen Kirikae) in Japanese and Myanmar. From document preparation to procedures and driving test practice, consult DOUITSU LLC in Kiyose, Tokyo.",
+      my: "ဂျပန်မှာ နေထိုင်တဲ့ မြန်မာများအတွက် မြန်မာလိုင်စင်ကို ဂျပန်လိုင်စင်သို့ ပြောင်းလဲခြင်း (外免切替) ကို ဂျပန်ဘာသာ၊ မြန်မာဘာသာနဲ့ ကူညီပေးပါတယ်။ အမောင်းလေ့ကျင့်ပေးခြင်းကိုလဲယဥ်မောင်းကွင်းတွင်စနစ်တကျလေ့ကျင့်ပေးသည်။စာရွက်စာတမ်း ပြင်ဆင်ခြင်းကနေ လုပ်ငန်းစဉ်အထိ ကျွန်တော်တို့ကို တိုင်ပင်ပါ။",
+    },
+    h1: {
+      ja: "ミャンマーの運転免許を日本の免許に切り替えたい方へ",
+      en: "For Those Seeking to Convert a Myanmar Driver's License to a Japanese License",
+      my: "မြန်မာလိုင်စင်ကို ဂျပန်လိုင်စင် ပြောင်းချင်သူများအတွက်",
+    },
+    h1Lead: {
+      ja: "ミャンマー語で、書類の準備から手続きの流れまでサポートします。",
+      en: "To drive in Japan, there is a procedure (Gaimen Kirikae) to convert your Myanmar driver's license to a Japanese license. Required documents and procedures can be complex, especially without Japanese proficiency. DOUITSU assists your preparation in both Japanese and Myanmar languages.",
+      my: "ဂျပန်မှာ ကားမောင်းဖို့အတွက် မြန်မာလိုင်စင်ကို ဂျပန်လိုင်စင်သို့ ပြောင်းလဲရတဲ့ လုပ်ငန်းစဉ် (外免切替) ရှိပါတယ်။ လိုအပ်တဲ့ စာရွက်စာတမ်းတွေနဲ့ လုပ်ငန်းစဉ်က နားလည်ရခက်ပြီး၊ ဂျပန်စာ မကျွမ်းကျင်ရင် ပိုခက်ပါတယ်။ DOUITSU က ဂျပန်ဘာသာနဲ့ မြန်မာဘာသာ နှစ်မျိုးလုံးနဲ့ ပြင်ဆင်ရာမှာ ကူညီပေးပါတယ်။",
+    },
+    highlights: [
+      {
+        ja: "必要書類の確認と準備のお手伝い",
+        en: "Assistance with checking and preparing required documents",
+        my: "လိုအပ်တဲ့ စာရွက်စာတမ်း စစ်ဆေးခြင်းနဲ့ ပြင်ဆင်ရာမှာ ကူညီခြင်း",
+      },
+      {
+        ja: "手続きの流れをミャンマー語でご説明",
+        en: "Explaining the procedure workflow in Myanmar language",
+        my: "လုပ်ငန်းစဉ်ကို မြန်မာဘာသာနဲ့ နားလည်လွယ်အောင် ရှင်းပြခြင်း",
+      },
+      {
+        ja: "日本語・ミャンマー語・英語でご相談OK",
+        en: "Consultations available in Japanese, Myanmar, and English",
+        my: "ဂျပန်၊ မြန်မာ၊ အင်္ဂလိပ်ဘာသာနဲ့ တိုင်ပင်နိုင်ခြင်း",
+      },
+      {
+        ja: "技能試験（実技）合格に向けた練習サポート",
+        en: "Driving practice and training at the course to pass the test",
+        my: "အမောင်းဖြေအောင်ဖို့အတွက်သင်ကြားပေးခြင်း",
+      },
+    ],
+    concerns: {
+      title: {
+        ja: "このようなお悩みはありませんか？",
+        en: "Are you worried about any of these?",
+        my: "ဒီလို စိတ်ပူနေပါသလား?",
+      },
+      items: [
+        {
+          ja: "どんな書類が必要かわからない",
+          en: "Don't know what documents are required?",
+          my: "ဘာစာရွက်စာတမ်းတွေ လိုလဲ မသိဘူး?",
+        },
+        {
+          ja: "手続きの流れがわからず、どこから始めればよいか不安",
+          en: "Unsure about the procedure and where to start?",
+          my: "လုပ်ငန်းစဉ်ကို မသိလို့ ဘယ်ကနေ စရမလဲ စိတ်ပူနေတယ်",
+        },
+        {
+          ja: "日本語で書かれた説明や書類が読めない",
+          en: "Difficult to read explanations or documents in Japanese?",
+          my: "ဂျပန်လို ရေးထားတဲ့ ရှင်းလင်းချက်၊ စာရွက်စာတမ်းတွေကို မဖတ်တတ်ဘူး",
+        },
+        {
+          ja: "運転免許試験場に一人で行くのが不安",
+          en: "Worried about visiting the test center alone?",
+          my: "စာမေးပွဲကျင်းပရာ နေရာကို တစ်ယောက်တည်း သွားဖို့ စိတ်ပူတယ်",
+        },
+        {
+          ja: "実技試験に合格するための練習方法がわからない",
+          en: "Wondering how to practice to pass the driving test?",
+          my: "အမောင်းဖြေအောင်ဖို့အတွက်ဘယ်လိုလေ့ကျင့်ရမလဲ",
+        },
+      ],
+    },
+    services: {
+      title: {
+        ja: "DOUITSUのサポート内容",
+        en: "What DOUITSU Can Help With",
+        my: "ကူညီပေးနိုင်တာများ",
+      },
+      items: [
+        {
+          ja: "必要書類の確認と準備のお手伝い",
+          en: "Checking and preparing required documents",
+          my: "လိုအပ်တဲ့ စာရွက်စာတမ်း စစ်ဆေးခြင်းနဲ့ ပြင်ဆင်ရာမှာ ကူညီခြင်း",
+        },
+        {
+          ja: "手続きの流れをミャンマー語で分かりやすくご説明",
+          en: "Explaining the procedure workflow clearly in Myanmar language",
+          my: "လုပ်ငန်းစဉ်ကို မြန်မာဘာသာနဲ့ နားလည်လွယ်အောင် ရှင်းပြခြင်း",
+        },
+        {
+          ja: "日本語・ミャンマー語・英語の3言語で相談可能",
+          en: "Trilingual consultation in Japanese, Myanmar, and English",
+          my: "ဂျပန်၊ မြန်မာ၊ အင်္ဂလိပ်ဘာသာနဲ့ တိုင်ပင်နိုင်ခြင်း",
+        },
+        {
+          ja: "技能試験（実技）合格に向けた丁寧な指導・練習",
+          en: "Instruction and coaching to pass the practical driving exam",
+          my: "အမောင်းဖြေအောင်ဖို့အတွက်သင်ကြားပေးခြင်း",
+        },
+      ],
+    },
+    process: {
+      title: {
+        ja: "お手続きの流れ",
+        en: "Procedure Workflow",
+        my: "လုပ်ငန်းစဉ်",
+      },
+      steps: [
+        {
+          number: 1,
+          ja: "お電話またはメッセージでご相談",
+          en: "Consult us via phone or message",
+          my: "ဖုန်း (သို့) မက်ဆေ့ချ်နဲ့ တိုင်ပင်ပါ",
+        },
+        {
+          number: 2,
+          ja: "現在お持ちの免許証と在留資格の確認",
+          en: "Check current license and residency status",
+          my: "လက်ရှိ လိုင်စင်နဲ့ နေထိုင်ခွင့် အခြေအနေကို စစ်ဆေးပါ",
+        },
+        {
+          number: 3,
+          ja: "必要書類の準備・作成",
+          en: "Prepare required documents",
+          my: "လိုအပ်တဲ့ စာရွက်စာတမ်း ပြင်ဆင်ပါ",
+        },
+        {
+          number: 4,
+          ja: "運転免許試験場での申請・適性検査・技能試験",
+          en: "Procedures and examinations at the Driver's License Center",
+          my: "စာမေးပွဲကျင်းပရာ နေရာမှာ လုပ်ငန်းစဉ်နဲ့ စစ်ဆေးမှု",
+        },
+        {
+          number: 5,
+          ja: "日本の運転免許証を取得",
+          en: "Obtain your Japanese driver's license",
+          my: "ဂျပန်မော်တော်ယာဉ်မောင်းလိုင်စင် ရရှိပါ",
+        },
+      ],
+    },
+    faqs: {
+      title: {
+        ja: "よくあるご質問",
+        en: "Frequently Asked Questions",
+        my: "မေးလေ့ရှိတဲ့ မေးခွန်းများ",
+      },
+      items: [
+        {
+          id: "license-faq-1",
+          q: {
+            ja: "ミャンマーの運転免許証があれば、日本ですぐに運転できますか？",
+            en: "Can I drive directly in Japan with my Myanmar driver's license?",
+            my: "မြန်မာလိုင်စင်ရှိရင် ဂျပန်မှာ ဒီအတိုင်း ကားမောင်းလို့ ရလား။",
+          },
+          a: {
+            ja: "国や免許の種類により条件が異なりますが、ミャンマーの免許証のまま日本で運転することは原則できません。日本の運転免許証へ切り替える外免切替手続きが必要です。まずはお気軽にご相談ください。",
+            en: "Conditions vary depending on the country and license category, but generally you cannot drive directly in Japan with only a Myanmar license. Converting to a Japanese license (Gaimen Kirikae) is required. Please consult us first.",
+            my: "နိုင်ငံနဲ့ လိုင်စင်အမျိုးအစားပေါ် မူတည်ပြီး အခြေအနေ မတူပါဘူး။ ဂျပန်မှာ ကားမောင်းဖို့ ဂျပန်လိုင်စင်သို့ ပြောင်းလဲဖို့ လိုတာက များပါတယ်။ ပထမဆုံး တိုင်ပင်ပါ။",
+          },
+        },
+        {
+          id: "license-faq-2",
+          q: {
+            ja: "外免切替に試験はありますか？",
+            en: "Are there examinations during the conversion process?",
+            my: "ပြောင်းလဲရာမှာ စာမေးပွဲ ရှိလား။",
+          },
+          a: {
+            ja: "外免切替では、交通規則の知識確認（学科確認）と運転技能の確認（実技試験）が行われます。試験内容や審査基準は最新の法令に基づき詳しくご案内いたします。",
+            en: "Gaimen Kirikae typically includes a traffic knowledge check and a practical driving test. Requirements can change, so we explain based on the latest official information.",
+            my: "外免切替 မှာ ယာဉ်စည်းမျဉ်း အသိပညာ စစ်ဆေးမှုနဲ့ ကားမောင်းနိုင်စွမ်း စစ်ဆေးမှု ပါလေ့ရှိပါတယ်။ အကြောင်းအရာနဲ့ စံနှုန်းတွေက ပြောင်းလဲနိုင်လို့ နောက်ဆုံးအချက်အလက်အတိုင်း ရှင်းပြပေးပါမယ်။",
+          },
+        },
+        {
+          id: "license-faq-3",
+          q: {
+            ja: "何から始めればいいですか？",
+            en: "Where should I start?",
+            my: "ဘာကနေ စရမလဲ။",
+          },
+          a: {
+            ja: "まずはお電話またはメッセージでお気軽にご相談ください。現在お持ちの免許証と在留状況を確認した上で、必要な書類と手続きの流れをご案内します。",
+            en: "First, consult with us via phone or message. We will review your current license and status of residence, and explain the necessary documents and workflow.",
+            my: "ဖုန်း (သို့) မက်ဆေ့ချ်နဲ့ အရင် တိုင်ပင်ပါ။ လက်ရှိ လိုင်စင်နဲ့ နေထိုင်ခွင့်ကို စစ်ဆေးပြီး လိုအပ်တဲ့ စာရွက်စာတမ်းနဲ့ လုပ်ငန်းစဉ်ကို ရှင်းပြပေးပါမယ်။",
+          },
+        },
+        {
+          id: "license-faq-4",
+          q: {
+            ja: "ミャンマー語で相談できますか？",
+            en: "Can I consult in Myanmar language?",
+            my: "မြန်မာဘာသာနဲ့ တိုင်ပင်လို့ ရလား။",
+          },
+          a: {
+            ja: "はい、可能です。日本語・ミャンマー語・英語の3言語すべてで対応しておりますので、母国語で安心してご連絡ください。",
+            en: "Yes, absolutely. We support all three languages: Japanese, Myanmar, and English.",
+            my: "ရပါတယ်။ ဂျပန်၊ မြန်မာ၊ အင်္ဂလိပ်ဘာသာ သုံးမျိုးလုံးနဲ့ ဆက်သွယ်နိုင်ပါတယ်။",
+          },
+        },
+      ],
+    },
+    contact: {
+      title: {
+        ja: "お問い合わせ",
+        en: "Contact Us",
+        my: "ဆက်သွယ်ရန်",
+      },
+      company: {
+        ja: "DOUITSU合同会社（東京都清瀬市）",
+        en: "DOUITSU LLC (Kiyose, Tokyo)",
+        my: "DOUITSU合同会社",
+      },
+      phoneTel: "042-497-1537",
+      mobileTel: "080-3476-8194",
+    },
+  },
+
+  housingPage: {
+    eyebrow: {
+      ja: "お部屋探しサポート",
+      en: "HOUSING SEARCH SUPPORT",
+      my: "အိမ်ရှာပေးခြင်း ဝန်ဆောင်မှု",
+    },
+    metaTitle: {
+      ja: "ミャンマーの方の賃貸物件紹介｜外国人のお部屋探しをサポート｜DOUITSU合同会社（東京・清瀬）",
+      en: "Rental Housing Introductions for Myanmar Residents | Foreigner Apartment Search Support | DOUITSU LLC",
+      my: "ဂျပန်မှာ အိမ်ငှားရန် အိမ်ရှာပေးခြင်း｜မြန်မာများအတွက် ဘာသာစကားနှစ်မျိုးနဲ့ အကူအညီ｜DOUITSU合同会社",
+    },
+    metaDescription: {
+      ja: "日本でお部屋を探すミャンマーの方へ。物件探しから契約、入居後の生活まで、日本語・ミャンマー語でサポートします。東京都清瀬市のDOUITSU合同会社。",
+      en: "For Myanmar nationals looking for housing in Japan. We support apartment searches, lease contracts, and daily living after moving in, in Japanese and Myanmar. DOUITSU LLC in Kiyose, Tokyo.",
+      my: "ဂျပန်မှာ အိမ်ရှာနေတဲ့ မြန်မာများအတွက် အိမ်ရှာခြင်း၊ စာချုပ်ချုပ်ခြင်းကနေ ဝင်ရောက်နေထိုင်ပြီးနောက် နေထိုင်မှုအထိ ဂျပန်၊ မြန်မာဘာသာနဲ့ ကူညီပေးပါတယ်။  DOUITSU合同会社။",
+    },
+    h1: {
+      ja: "日本でのお部屋探しを、ミャンマー語でサポートします",
+      en: "Assisting Apartment Searches in Japan in Myanmar Language",
+      my: "ဂျပန်မှာ အိမ်ရှာတာကို မြန်မာလို ကူညီပေးပါတယ်",
+    },
+    h1Lead: {
+      ja: "DOUITSU合同会社は、ミャンマー語が話せる担当者が、物件探しから入居までをサポートします。",
+      en: "When renting an apartment in Japan, many foreign residents encounter challenges such as language barriers, complex lease rules, and guarantor (Hoshonin) requirements. At DOUITSU LLC, our Myanmar-speaking staff supports you from housing search to moving in.",
+      my: "ဂျပန်မှာ အိမ်ငှားတဲ့အခါ ဘာသာစကားအတားအဆီး၊ စာချုပ်စည်းမျဉ်းတွေ၊ အာမခံသူ (保証人) ပြဿနာတွေကြောင့် ခက်ခဲနေတဲ့ နိုင်ငံခြားသားတွေ အများကြီး ရှိပါတယ်။ DOUITSU合同会社 မှာ မြန်မာစကားပြောတတ်တဲ့ တာဝန်ခံက အိမ်ရှာခြင်းကနေ ဝင်ရောက်နေထိုင်တဲ့အထိ ကူညီပေးပါတယ်။",
+    },
+    highlights: [
+      {
+        ja: "外国人入居可の物件をご紹介",
+        en: "Introducing apartments that welcome foreign residents",
+        my: "နိုင်ငံခြားသား ဝင်ခွင့်ပြုတဲ့ အိမ်များ မိတ်ဆက်ပေးခြင်း",
+      },
+      {
+        ja: "契約内容をミャンマー語でご説明",
+        en: "Explaining lease contract terms in Myanmar language",
+        my: "စာချုပ်အကြောင်းအရာကို မြန်မာဘာသာနဲ့ ရှင်းပြခြင်း",
+      },
+      {
+        ja: "保証人がいない場合もご相談ください",
+        en: "Consultations available even if you do not have a guarantor",
+        my: "အာမခံသူ (保証人) မရှိဘူး (အာမခံသူမရှိလျှင်လည်း တိုင်ပင်နိုင်ပါသည်)",
+      },
+      {
+        ja: "入居後の生活ルールをご案内",
+        en: "Guidance on community rules and living etiquette after move-in",
+        my: "ဝင်နေပြီးနောက် နေထိုင်မှု စည်းမျဉ်းများ ညွှန်ကြားခြင်း",
+      },
+    ],
+    concerns: {
+      title: {
+        ja: "このようなお悩みはありませんか？",
+        en: "Are you worried about any of these?",
+        my: "ဒီလို စိတ်ပူနေပါသလား",
+      },
+      items: [
+        {
+          ja: "外国人を受け入れてくれる賃貸物件の探し方がわからない",
+          en: "Don't know how to find apartments that rent to foreign residents?",
+          my: "နိုင်ငံခြားသားကို ငှားတဲ့ အိမ်တွေ ဘယ်လိုရှာရမလဲ မသိဘူး",
+        },
+        {
+          ja: "日本語で書かれた契約書が読めず、内容がよく理解できない",
+          en: "Cannot read the Japanese contract or understand the terms?",
+          my: "ဂျပန်လို ရေးထားတဲ့ စာချုပ်ကို မဖတ်တတ်ဘူး၊ အကြောင်းအရာကို နားမလည်ဘူး",
+        },
+        {
+          ja: "日本に保証人になってくれる人がいない",
+          en: "Do not have a guarantor (Hoshonin) in Japan?",
+          my: "အာမခံသူ (保証人) မရှိဘူး",
+        },
+        {
+          ja: "入居後のルール（ゴミ出しや騒音マナーなど）が心配",
+          en: "Worried about rules after moving in (trash sorting, noise etiquette, etc.)?",
+          my: "ဝင်နေပြီးနောက် စည်းမျဉ်းတွေ (အမှိုက်စည်းမျဉ်း၊ ဆူညံသံ စသည်) အတွက် စိတ်ပူတယ်",
+        },
+      ],
+    },
+    services: {
+      title: {
+        ja: "DOUITSUがサポートできること",
+        en: "What DOUITSU Can Help With",
+        my: "ကူညီပေးနိုင်တာများ",
+      },
+      items: [
+        {
+          ja: "ご希望条件（家賃・場所・広さ・入居人数など）の丁寧なヒアリング",
+          en: "Listening to your preferences (rent, area, size, number of residents)",
+          my: "လိုချင်တဲ့ အချက်တွေ (အိမ်လခ၊ နေရာ၊ အကျယ်အဝန်း၊ နေမယ့်လူအရေအတွက်) ကို မေးမြန်းခြင်း",
+        },
+        {
+          ja: "外国人入居可能な安心できるお部屋のご紹介",
+          en: "Introducing foreigner-friendly apartments you can trust",
+          my: "နိုင်ငံခြားသား ဝင်ခွင့်ပြုတဲ့ အိမ်များ မိတ်ဆက်ပေးခြင်း",
+        },
+        {
+          ja: "契約内容をミャンマー語で分かりやすくご説明",
+          en: "Explaining contract details clearly in Myanmar language",
+          my: "စာချုပ်အကြောင်းအရာကို မြန်မာဘာသာနဲ့ ရှင်းပြခြင်း",
+        },
+        {
+          ja: "入居後の生活ルールやマナーのご案内",
+          en: "Guiding you on post-move-in living rules and manners",
+          my: "ဝင်နေပြီးနောက် နေထိုင်မှု စည်းမျဉ်းများ ညွှန်ကြားခြင်း",
+        },
+      ],
+    },
+    process: {
+      title: {
+        ja: "お手続きの流れ",
+        en: "Procedure Workflow",
+        my: "လုပ်ငန်းစဉ်",
+      },
+      steps: [
+        {
+          number: 1,
+          ja: "お電話またはメッセージでご相談",
+          en: "Consult us via phone or message",
+          my: "ဖုန်း (သို့) မက်ဆေ့ချ်နဲ့ တိုင်ပင်ပါ",
+        },
+        {
+          number: 2,
+          ja: "ご希望の条件をお聞かせください",
+          en: "Tell us your housing requirements and preferences",
+          my: "လိုချင်တဲ့ အချက်တွေ ပြောပြပါ",
+        },
+        {
+          number: 3,
+          ja: "お部屋のご紹介・内見",
+          en: "Apartment introductions and viewings",
+          my: "အိမ်များ မိတ်ဆက်ခြင်းနဲ့ အိမ်သွားကြည့်ခြင်း",
+        },
+        {
+          number: 4,
+          ja: "お申し込み・入居審査",
+          en: "Application submission and tenant screening",
+          my: "လျှောက်ထားခြင်းနဲ့ ဝင်ခွင့်စစ်ဆေးမှု",
+        },
+        {
+          number: 5,
+          ja: "ご契約手続き",
+          en: "Lease contract signing and important explanation",
+          my: "စာချုပ်ချုပ်ဆိုခြင်း",
+        },
+        {
+          number: 6,
+          ja: "鍵のお渡し・ご入居",
+          en: "Key handover and moving into your new home",
+          my: "ဝင်ရောက်နေထိုင်ခြင်း",
+        },
+      ],
+    },
+    faqs: {
+      title: {
+        ja: "よくあるご質問",
+        en: "Frequently Asked Questions",
+        my: "မေးလေ့ရှိတဲ့ မေးခွန်းများ",
+      },
+      items: [
+        {
+          id: "housing-faq-1",
+          q: {
+            ja: "外国人でもお部屋を借りられますか？",
+            en: "Can foreign residents rent apartments in Japan?",
+            my: "နိုင်ငံခြားသားလည်း အိမ်ငှားလို့ ရလား။",
+          },
+          a: {
+            ja: "はい、外国人入居可能な物件が多数ございます。ご希望条件をお聞きした上で、借りやすいお部屋をご紹介します。",
+            en: "Yes, there are many apartments that accept foreign tenants. After listening to your requirements, we will introduce suitable options.",
+            my: "နိုင်ငံခြားသား ဝင်ခွင့်ပြုတဲ့ အိမ်တွေ ရှိပါတယ်။ လိုချင်တဲ့ အချက်တွေ ကြားပြီး ငှားရလွယ်တဲ့ အိမ်တွေကို မိတ်ဆက်ပေးပါမယ်။",
+          },
+        },
+        {
+          id: "housing-faq-2",
+          q: {
+            ja: "保証人がいなくても大丈夫ですか？",
+            en: "Can I rent an apartment without a guarantor?",
+            my: "အာမခံသူ မရှိလည်း ရလား။",
+          },
+          a: {
+            ja: "はい、連帯保証人の代わりに家賃保証会社を利用できる物件も多数ございます。お客様の状況に合わせてご相談いただけます。",
+            en: "Many apartments allow using a guarantor company instead of an individual guarantor. Please consult with us according to your situation.",
+            my: "အာမခံသူအစား အာမခံကုမ္ပဏီ (保証会社) ကို သုံးလို့ရတဲ့ အိမ်တွေလည်း ရှိပါတယ်။ အခြေအနေအလိုက် တိုင်ပင်ပါ။",
+          },
+        },
+        {
+          id: "housing-faq-3",
+          q: {
+            ja: "初期費用はどのくらいかかりますか？",
+            en: "Approximately how much are the initial move-in costs?",
+            my: "ကနဦးကုန်ကျစရိတ်က ဘယ်လောက်လောက် ကျလဲ။",
+          },
+          a: {
+            ja: "一般的には敷金、礼金、仲介手数料、前家賃などがかかります。物件によって異なりますので、ご紹介時に詳しくご説明します。",
+            en: "Generally, initial costs include deposit, key money, agency fee, and advance rent. This varies by property, and we explain details upon introduction.",
+            my: "ယေဘုယျအားဖြင့် စီစဉ်ငွေ (敷金)၊ ကျေးဇူးတင်ငွေ (礼金)၊ ကြားဝင်ကော်မရှင် (仲介手数料)၊ ကြိုတင်အိမ်လခ စတာတွေ ကျပါတယ်။ အိမ်အလိုက် ကွာပါတယ်။ မိတ်ဆက်တဲ့အခါ အသေးစိတ် ရှင်းပြပေးပါမယ်။",
+          },
+        },
+        {
+          id: "housing-faq-4",
+          q: {
+            ja: "ミャンマー語で相談できますか？",
+            en: "Can I consult in Myanmar language?",
+            my: "မြန်မာဘာသာနဲ့ တိုင်ပင်လို့ ရလား။",
+          },
+          a: {
+            ja: "はい、可能です。日本語・ミャンマー語・英語の3言語すべてで対応しておりますので、母国語で安心してご連絡ください。",
+            en: "Yes, you can. We support Japanese, Myanmar, and English.",
+            my: "ရပါတယ်။ ဂျပန်၊ မြန်မာ၊ အင်္ဂလိပ်ဘာသာ သုံးမျိုးလုံးနဲ့ ဆက်သွယ်နိုင်ပါတယ်။",
+          },
+        },
+      ],
+    },
+    contact: {
+      title: {
+        ja: "お問い合わせ",
+        en: "Contact Us",
+        my: "ဆက်သွယ်ရန်",
+      },
+      company: {
+        ja: "DOUITSU合同会社（東京都清瀬市）",
+        en: "DOUITSU LLC (Kiyose, Tokyo)",
+        my: "DOUITSU合同会社",
+      },
+      phoneTel: "042-497-1537",
+      mobileTel: "080-3476-8194",
+    },
   },
 };

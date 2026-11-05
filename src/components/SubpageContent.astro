@@ -1,0 +1,294 @@
+---
+interface Props {
+  data: {
+    eyebrow: { ja: string; en: string; my: string };
+    h1: { ja: string; en: string; my: string };
+    h1Lead: { ja: string; en: string; my: string };
+    highlights?: Array<{ ja: string; en: string; my: string }>;
+    concerns: {
+      title: { ja: string; en: string; my: string };
+      items: Array<{ ja: string; en: string; my: string }>;
+    };
+    services: {
+      title: { ja: string; en: string; my: string };
+      items: Array<{ ja: string; en: string; my: string }>;
+    };
+    process: {
+      title: { ja: string; en: string; my: string };
+      steps: Array<{ number: number; ja: string; en: string; my: string }>;
+    };
+    faqs: {
+      title: { ja: string; en: string; my: string };
+      items: Array<{
+        id: string;
+        q: { ja: string; en: string; my: string };
+        a: { ja: string; en: string; my: string };
+      }>;
+    };
+    contact: {
+      title: { ja: string; en: string; my: string };
+      company: { ja: string; en: string; my: string };
+      phoneTel: string;
+      mobileTel: string;
+    };
+  };
+}
+
+const { data } = Astro.props;
+---
+
+<!-- ============================================================ -->
+<!-- SUBPAGE CONTENT SECTION (RICH CORPORATE LAYOUT)              -->
+<!-- ============================================================ -->
+<section
+  id="subpage-content"
+  class="py-12 sm:py-16 md:py-20 bg-white relative overflow-hidden"
+>
+  <!-- Ambient Glow Orbs (Exact Sectors styling) -->
+  <div class="absolute -top-24 -right-24 w-96 h-96 bg-douitsu-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-douitsu-sky/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- Background subtle dot grid pattern -->
+  <div class="absolute inset-0 opacity-[0.035] pointer-events-none" style="background-image: radial-gradient(#105c8e 1.5px, transparent 1.5px); background-size: 24px 24px;"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16 sm:space-y-20 md:space-y-24">
+
+    <!-- 1. H1 HERO & INTRO BLOCK -->
+    <div class="text-left">
+      <!-- Eyebrow Badge Pill -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-douitsu-primary/10 border border-douitsu-primary/20 text-douitsu-primary text-xs font-bold tracking-wider uppercase mb-4 shadow-2xs">
+        <span class="w-1.5 h-1.5 rounded-full bg-douitsu-primary shrink-0 animate-pulse"></span>
+        <span x-show="lang === 'ja'">{data.eyebrow.ja}</span>
+        <span x-show="lang === 'en'" style="display: none;">{data.eyebrow.en}</span>
+        <span x-show="lang === 'my'" style="display: none;">{data.eyebrow.my}</span>
+      </div>
+
+      <!-- H1 Main Heading with Left Gradient Accent Bar -->
+      <div class="flex items-stretch gap-3 sm:gap-4 mb-5">
+        <div class="w-1.5 sm:w-2 rounded-full bg-gradient-to-b from-douitsu-primary via-douitsu-accent to-douitsu-sky shrink-0 self-stretch"></div>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-douitsu-navy tracking-tight leading-normal sm:leading-snug">
+          <span x-show="lang === 'ja'">{data.h1.ja}</span>
+          <span x-show="lang === 'en'" style="display: none;">{data.h1.en}</span>
+          <span x-show="lang === 'my'" style="display: none;">{data.h1.my}</span>
+        </h1>
+      </div>
+
+      <!-- Lead Paragraph -->
+      <p class="text-base sm:text-lg text-slate-700 leading-relaxed sm:leading-loose max-w-4xl">
+        <span x-show="lang === 'ja'">{data.h1Lead.ja}</span>
+        <span x-show="lang === 'en'" style="display: none;">{data.h1Lead.en}</span>
+        <span x-show="lang === 'my'" style="display: none;">{data.h1Lead.my}</span>
+      </p>
+    </div>
+
+    <!-- 2. CONCERNS SECTION (H2: ဒီလို စိတ်ပူနေပါသလား?) -->
+    <div class="rounded-3xl bg-amber-50/40 border border-amber-200/70 p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+      <!-- Section Header -->
+      <div class="flex items-center gap-3 mb-6 sm:mb-8">
+        <div class="w-1.5 h-6 sm:h-7 rounded-full bg-amber-500 shrink-0"></div>
+        <h2 class="text-xl sm:text-2xl font-bold text-douitsu-navy">
+          <span x-show="lang === 'ja'">{data.concerns.title.ja}</span>
+          <span x-show="lang === 'en'" style="display: none;">{data.concerns.title.en}</span>
+          <span x-show="lang === 'my'" style="display: none;">{data.concerns.title.my}</span>
+        </h2>
+      </div>
+
+      <!-- Concern Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        {data.concerns.items.map((item) => (
+          <div class="rounded-2xl bg-white/90 border border-amber-200/60 p-4 sm:p-5 flex items-start gap-3.5 shadow-2xs hover:shadow-sm transition-all duration-200">
+            <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 mt-0.5 font-black text-xs">
+              ?
+            </div>
+            <p class="text-xs sm:text-sm font-semibold text-slate-800 leading-relaxed">
+              <span x-show="lang === 'ja'">{item.ja}</span>
+              <span x-show="lang === 'en'" style="display: none;">{item.en}</span>
+              <span x-show="lang === 'my'" style="display: none;">{item.my}</span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- 3. SERVICES / HOW DOUITSU HELPS (H2: ကူညီပေးနိုင်တာများ) -->
+    <div>
+      <div class="flex items-center gap-3 mb-6 sm:mb-8">
+        <div class="w-1.5 h-6 sm:h-7 rounded-full bg-douitsu-primary shrink-0"></div>
+        <h2 class="text-xl sm:text-2xl font-bold text-douitsu-navy">
+          <span x-show="lang === 'ja'">{data.services.title.ja}</span>
+          <span x-show="lang === 'en'" style="display: none;">{data.services.title.en}</span>
+          <span x-show="lang === 'my'" style="display: none;">{data.services.title.my}</span>
+        </h2>
+      </div>
+
+      <!-- Services Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {data.services.items.map((item, idx) => (
+          <div class="rounded-2xl bg-white border border-slate-200/90 hover:border-douitsu-primary/50 shadow-sm hover:shadow-card transition-all duration-300 p-5 sm:p-6 flex flex-col justify-between group overflow-hidden relative">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-douitsu-ice text-douitsu-primary flex items-center justify-center font-bold text-sm mb-4 group-hover:scale-105 transition-transform">
+                0{idx + 1}
+              </div>
+              <p class="text-sm sm:text-base font-bold text-douitsu-navy group-hover:text-douitsu-primary transition-colors leading-relaxed">
+                <span x-show="lang === 'ja'">{item.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{item.en}</span>
+                <span x-show="lang === 'my'" style="display: none;">{item.my}</span>
+              </p>
+            </div>
+            <div class="h-1 w-full bg-slate-100 group-hover:bg-gradient-to-r group-hover:from-douitsu-primary group-hover:to-douitsu-sky transition-colors mt-5"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- 4. PROCESS / WORKFLOW (H2: လုပ်ငန်းစဉ်) -->
+    <div class="rounded-3xl bg-slate-50/80 border border-slate-200/90 p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+      <div class="flex items-center gap-3 mb-6 sm:mb-8">
+        <div class="w-1.5 h-6 sm:h-7 rounded-full bg-gradient-to-b from-douitsu-primary to-douitsu-sky shrink-0"></div>
+        <h2 class="text-xl sm:text-2xl font-bold text-douitsu-navy">
+          <span x-show="lang === 'ja'">{data.process.title.ja}</span>
+          <span x-show="lang === 'en'" style="display: none;">{data.process.title.en}</span>
+          <span x-show="lang === 'my'" style="display: none;">{data.process.title.my}</span>
+        </h2>
+      </div>
+
+      <!-- Process Steps Grid -->
+      <div class={`grid grid-cols-1 sm:grid-cols-2 ${data.process.steps.length === 5 ? 'lg:grid-cols-5' : 'lg:grid-cols-6'} gap-4 sm:gap-5`}>
+        {data.process.steps.map((step) => (
+          <div class="rounded-2xl bg-white border border-slate-200/90 p-4 sm:p-5 flex flex-col justify-start shadow-2xs hover:shadow-xs transition-shadow">
+            <div class="w-8 h-8 rounded-xl bg-douitsu-primary text-white font-black text-xs flex items-center justify-center mb-3 shadow-2xs shrink-0">
+              {step.number}
+            </div>
+            <p class="text-xs sm:text-sm font-bold text-slate-800 leading-snug">
+              <span x-show="lang === 'ja'">{step.ja}</span>
+              <span x-show="lang === 'en'" style="display: none;">{step.en}</span>
+              <span x-show="lang === 'my'" style="display: none;">{step.my}</span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- 5. FAQS ACCORDION (H2: မေးလေ့ရှိတဲ့ မေးခွန်းများ) -->
+    <div>
+      <div class="flex items-center gap-3 mb-6 sm:mb-8">
+        <div class="w-1.5 h-6 sm:h-7 rounded-full bg-douitsu-primary shrink-0"></div>
+        <h2 class="text-xl sm:text-2xl font-bold text-douitsu-navy">
+          <span x-show="lang === 'ja'">{data.faqs.title.ja}</span>
+          <span x-show="lang === 'en'" style="display: none;">{data.faqs.title.en}</span>
+          <span x-show="lang === 'my'" style="display: none;">{data.faqs.title.my}</span>
+        </h2>
+      </div>
+
+      <!-- Alpine.js Interactive Accordion -->
+      <div class="space-y-4" x-data="{ active: 0 }">
+        {data.faqs.items.map((faq, idx) => (
+          <div class="rounded-2xl bg-white border border-slate-200/90 shadow-2xs overflow-hidden transition-all duration-200 hover:border-douitsu-primary/40">
+            <!-- Question Bar Button -->
+            <button
+              type="button"
+              @click={`active = (active === ${idx} ? null : ${idx})`}
+              class="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 cursor-pointer select-none"
+              :class={`active === ${idx} ? 'bg-douitsu-ice/40' : 'bg-white'`}
+            >
+              <span class="flex items-center gap-3 min-w-0">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-douitsu-primary text-white font-bold text-xs shrink-0">
+                  Q
+                </span>
+                <span class="text-sm sm:text-base font-bold text-douitsu-navy leading-snug">
+                  <span x-show="lang === 'ja'">{faq.q.ja}</span>
+                  <span x-show="lang === 'en'" style="display: none;">{faq.q.en}</span>
+                  <span x-show="lang === 'my'" style="display: none;">{faq.q.my}</span>
+                </span>
+              </span>
+              <svg
+                class="w-5 h-5 text-douitsu-primary shrink-0 transition-transform duration-200"
+                :class={`active === ${idx} ? 'rotate-180' : ''`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <!-- Answer Box -->
+            <div
+              x-show={`active === ${idx}`}
+              x-transition:enter="transition ease-out duration-200"
+              x-transition:enter-start="opacity-0 -translate-y-1"
+              x-transition:enter-end="opacity-100 translate-y-0"
+              class="px-4 pb-5 pt-2 sm:px-5 sm:pb-6 border-t border-slate-100 bg-white flex items-start gap-3"
+              style="display: none;"
+            >
+              <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-emerald-600 text-white font-bold text-xs shrink-0 mt-0.5">
+                A
+              </span>
+              <p class="text-xs sm:text-sm text-slate-700 leading-relaxed sm:leading-loose">
+                <span x-show="lang === 'ja'">{faq.a.ja}</span>
+                <span x-show="lang === 'en'" style="display: none;">{faq.a.en}</span>
+                <span x-show="lang === 'my'" style="display: none;">{faq.a.my}</span>
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- 6. CONTACT HELPLINE BOX (H2: ဆက်သွယ်ရန် / お問い合わせ) -->
+    <div class="rounded-3xl bg-gradient-to-br from-douitsu-navy via-slate-900 to-slate-950 text-white p-6 sm:p-10 lg:p-12 shadow-xl border border-slate-800 relative overflow-hidden">
+      <!-- Ambient background element -->
+      <div class="absolute -top-20 -right-20 w-80 h-80 bg-douitsu-sky/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 sm:gap-8">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2 h-2 rounded-full bg-douitsu-sky animate-pulse"></span>
+            <span class="text-xs uppercase font-bold tracking-widest text-douitsu-sky">
+              <span x-show="lang === 'ja'">{data.contact.title.ja}</span>
+              <span x-show="lang === 'en'" style="display: none;">{data.contact.title.en}</span>
+              <span x-show="lang === 'my'" style="display: none;">{data.contact.title.my}</span>
+            </span>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 tracking-tight">
+            <span x-show="lang === 'ja'">{data.contact.company.ja}</span>
+            <span x-show="lang === 'en'" style="display: none;">{data.contact.company.en}</span>
+            <span x-show="lang === 'my'" style="display: none;">{data.contact.company.my}</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400">
+            <span x-show="lang === 'ja'">ご質問・ご相談など、お気軽にお電話ください。</span>
+            <span x-show="lang === 'en'" style="display: none;">Feel free to contact us by telephone or mobile phone.</span>
+            <span x-show="lang === 'my'" style="display: none;">မေးမြန်းစုံစမ်းလိုသည်များ ရှိပါက အောက်ပါ ဖုန်းနံပါတ်များသို့ ဆက်သွယ်နိုင်ပါသည်။</span>
+          </p>
+        </div>
+
+        <!-- Phone Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full lg:w-auto shrink-0">
+          <!-- Main Telephone -->
+          <a
+            href={`tel:${data.contact.phoneTel.replace(/-/g, '')}`}
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-white/20 transition-all duration-200 shadow-sm"
+          >
+            <svg class="w-4 h-4 text-douitsu-sky shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            <span>電話: {data.contact.phoneTel}</span>
+          </a>
+
+          <!-- Mobile Hotline -->
+          <a
+            href={`tel:${data.contact.mobileTel.replace(/-/g, '')}`}
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-douitsu-primary hover:bg-douitsu-blue text-white font-bold text-xs sm:text-sm shadow-md transition-all duration-200"
+          >
+            <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+            <span>携帯: {data.contact.mobileTel}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

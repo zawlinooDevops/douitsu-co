@@ -7,13 +7,17 @@ import NetworkStatus from '../components/NetworkStatus.astro';
 interface Props {
   title?: string;
   description?: string;
+  titles?: { ja: string; en: string; my: string };
+  descriptions?: { ja: string; en: string; my: string };
   ogImage?: string;
   noindex?: boolean;
 }
 
 const {
-  title = siteData.meta.title.ja,
-  description = siteData.meta.description.ja,
+  titles,
+  descriptions,
+  title = titles?.ja || siteData.meta.title.ja,
+  description = descriptions?.ja || siteData.meta.description.ja,
   ogImage = siteData.meta.ogImage,
   noindex = false,
 } = Astro.props;
@@ -29,7 +33,20 @@ const canonicalURL = new URL(cleanPathname, siteData.meta.siteUrl).toString();
   lang="ja"
   translate="no"
   class="scroll-smooth notranslate"
-  x-data="{ lang: 'ja', lightboxImg: null, lightboxTitle: '', mobileMenuOpen: false }"
+  x-data={`{
+    lang: 'ja',
+    lightboxImg: null,
+    lightboxTitle: '',
+    mobileMenuOpen: false,
+    titles: ${JSON.stringify(titles || siteData.meta.title)},
+    init() {
+      this.$watch('lang', (newLang) => {
+        if (this.titles && this.titles[newLang]) {
+          document.title = this.titles[newLang];
+        }
+      });
+    }
+  }`}
   @open-lightbox.window="lightboxImg = $event.detail.img; lightboxTitle = $event.detail.title"
 >
   <head>
@@ -128,7 +145,7 @@ const canonicalURL = new URL(cleanPathname, siteData.meta.siteUrl).toString();
       }
     })} />
   </head>
-  <body class="bg-slate-50 text-slate-800 font-sans selection:bg-douitsu-primary selection:text-white relative">
+  <body class="bg-slate-50 text-slate-800 font-sans selection:bg-douitsu-primary selection:text-white relative" id="top">
     <!-- Brand Preloader (Min 1s, Max 2s Safety Fallback) -->
     <Preloader />
 

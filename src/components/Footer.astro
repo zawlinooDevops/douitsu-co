@@ -33,14 +33,27 @@ import { siteData } from '../data/content';
         </div>
       </div>
 
-      <!-- Navigation Links -->
-      <nav aria-label="Footer Navigation" class="flex flex-wrap items-center justify-center gap-4 text-xs">
-        {siteData.navigation.map((item) => (
-          <a href={item.href} class="text-slate-400 hover:text-white transition-colors">
-            <span x-show="lang === 'ja'">{item.label.ja}</span>
-            <span x-show="lang === 'en'" style="display: none;">{item.label.en}</span>
-            <span x-show="lang === 'my'" style="display: none;">{item.label.my}</span>
-          </a>
+      <!-- Navigation Links (Plain Text Prefix + Links: /license/ & /housing/) -->
+      <nav aria-label="Footer Navigation" class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
+        <span class="text-slate-400 font-semibold select-none">
+          <span x-show="lang === 'ja'">{siteData.footerCommunity.label.ja}</span>
+          <span x-show="lang === 'en'" style="display: none;">{siteData.footerCommunity.label.en}</span>
+          <span x-show="lang === 'my'" style="display: none;">{siteData.footerCommunity.label.my}</span>
+        </span>
+        {siteData.footerCommunity.links.map((item, idx) => (
+          <Fragment>
+            {idx > 0 && (
+              <span class="text-slate-600 select-none px-0.5" aria-hidden="true">|</span>
+            )}
+            <a
+              href={item.href}
+              class="text-slate-300 hover:text-douitsu-sky transition-colors font-medium hover:underline py-0.5"
+            >
+              <span x-show="lang === 'ja'">{item.label.ja}</span>
+              <span x-show="lang === 'en'" style="display: none;">{item.label.en}</span>
+              <span x-show="lang === 'my'" style="display: none;">{item.label.my}</span>
+            </a>
+          </Fragment>
         ))}
       </nav>
 
@@ -50,7 +63,7 @@ import { siteData } from '../data/content';
     <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
       <p>Copyright © 2025 DOUITSU LLC. All rights reserved.</p>
       <div class="flex items-center gap-3">
-        <a href="#home" class="text-slate-400 hover:text-white transition-colors">
+        <a href="#top" class="text-slate-400 hover:text-white transition-colors">
           <span x-show="lang === 'ja'">▲ ページ上部へ</span>
           <span x-show="lang === 'en'" style="display: none;">▲ Back to top</span>
           <span x-show="lang === 'my'" style="display: none;">▲ စာမျက်နှာ ထိပ်ဆုံးသို့</span>

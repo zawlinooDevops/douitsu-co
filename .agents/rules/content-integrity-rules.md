@@ -97,6 +97,24 @@ Under Japan's Immigration Control Act, Registered Support Organizations are lega
   - Registration certificate image: `public/images/landing/license-certificate.jpg`
   - Recruitment flyers: `public/images/jobs/`
 
+### Category F: Myanmar Community Support Subpages & Dedicated Services
+Special dedicated community service subpages created specifically for Myanmar residents in Japan. All copywriting, metadata, H1/H2 structures, FAQs, and contact channels are strictly immutable without explicit user authorization:
+- **1. Driver's License Conversion Support (外免切替サポート) (`/license/`)**:
+  - Route: `/license/`
+  - Canonical Title: `ミャンマーの運転免許を日本の免許に切り替え｜外免切替サポート｜DOUITSU合同会社（東京・清瀬）`
+  - Scope: Document inspection & preparation, procedure explanation in Myanmar language, trilingual consultation, and practical driving test coaching.
+  - Dedicated Hotline: `042-497-1537` (Office) / `080-3476-8194` (Mobile Consultation)
+  - Raw Data Archive: `raw-data/subpages-license-and-housing.md`
+- **2. Housing Introduction Support for Foreign Residents (賃貸物件紹介) (`/housing/`)**:
+  - Route: `/housing/`
+  - Canonical Title: `外国人向け賃貸物件紹介・住まい探しサポート｜DOUITSU合同会社（東京・清瀬）`
+  - Scope: Hearing tenant requirements, foreigner-friendly property matching, lease contract explanation in Myanmar language, living rules guidance, and guarantor company alternatives.
+  - Dedicated Hotline: `042-497-1537` (Office) / `080-3476-8194` (Mobile Consultation)
+  - Raw Data Archive: `raw-data/subpages-license-and-housing.md`
+- **Footer Community Links Integration**:
+  - Non-clickable label: `ミャンマーの方へ：` (JA) / `For Myanmar residents: ` (EN) / `မြန်မာလူမျိုးများအတွက်：` (MY)
+  - Subpage links: `運転免許切り替え` (`/license/`) and `賃貸物件紹介` (`/housing/`)
+
 ---
 
 ## 4. Operational Workflow for Content Requests
@@ -137,11 +155,12 @@ git diff src/components/
 
 ### Verification Questions for the Agent:
 1. Did I touch any string in `src/data/content.ts` or component template text that the user did **NOT** explicitly instruct me to change?
-2. Are company name, registration number `25登－012206`, address, and phone numbers (`042-497-1537`, `080-2213-8194`) 100% intact?
+2. Are company name, registration number `25登－012206`, address, and phone numbers (`042-497-1537`, `080-2213-8194`, `080-3476-8194`) 100% intact?
 3. Are all 10 Statutory Duties intact and unchanged in Japanese, English, and Myanmar?
 4. Did I accidentally delete or replace any trilingual translations (`ja`, `en`, `my`)?
+5. Are the dedicated Myanmar community subpages (`/license/` and `/housing/`) intact with verbatim copy?
 
-If the answer to question 1 is **YES**, or the answer to questions 2-4 is **NO**, the agent must immediately revert the unintended content mutations before proceeding.
+If the answer to question 1 is **YES**, or the answer to questions 2-5 is **NO**, the agent must immediately revert the unintended content mutations before proceeding.
 
 ---
 
@@ -151,5 +170,6 @@ If the answer to question 1 is **YES**, or the answer to questions 2-4 is **NO**
 - [ ] **No legal entity alterations**: DOUITSU LLC, registration `25登－012206`, and establishment date are intact.
 - [ ] **No contact info alterations**: Address in Kiyose-shi Tokyo, phone numbers, and emails are unaltered.
 - [ ] **No statutory service alterations**: 10 Statutory Support Duties remain legally accurate and intact.
+- [ ] **Community subpages protected**: Driver's License Conversion (`/license/`) and Housing Support (`/housing/`) content and metadata remain intact.
 - [ ] **Trilingual parity maintained**: Any user-authorized update includes verified `ja`, `en`, and `my` copy.
 - [ ] **Diff audited**: Verified with `git diff` that no content drift occurred.
