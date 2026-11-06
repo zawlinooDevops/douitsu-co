@@ -103,6 +103,7 @@ const canonicalURL = new URL(cleanPathname, siteData.meta.siteUrl).toString();
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(ogImage, siteData.meta.siteUrl).toString()} />
