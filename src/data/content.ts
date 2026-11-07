@@ -151,7 +151,7 @@ export const siteData = {
       my: "東京都清瀬市の登録支援機関。特定技能外国人（ミャンマー人材）の支援を、介護・ビルクリーニング・外食・製造業の分野でサポート。受入れ支援計画の作成から実施まで、法定10項目の支援に対応します。",
     },
     siteUrl: "https://douitsu-co.com",
-    ogImage: "/images/landing/logo-square.png",
+    ogImage: "/images/social-share.png",
     registrationNo: "25登－012206",
     companyName: "DOUITSU合同会社",
     companyNameEn: "DOUITSU LLC",
@@ -166,7 +166,7 @@ export const siteData = {
     },
     establishmentDate: "2025.3.31",
     staffCount: "6",
-    version: "1.4.4",
+    version: "1.4.5",
   },
 
   // Semantic Navigation Bar (Home, About Us, Services, Support, Process, FAQ, Contact Us)

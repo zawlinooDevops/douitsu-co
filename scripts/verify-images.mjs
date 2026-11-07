@@ -69,7 +69,7 @@ for (const htmlFile of htmlFiles) {
   }
 
   // 3. OpenGraph & Twitter preview images
-  const metaRegex = /<meta\b[^>]+(?:property=["']og:image["']|name=["']twitter:image["'])[^>]+content=["']([^"']+)["'][^>]*>/gi;
+  const metaRegex = /<meta\b[^>]+(?:property=["']og:image(?::secure_url)?["']|name=["']twitter:image["'])[^>]+content=["']([^"']+)["'][^>]*>/gi;
   for (const match of content.matchAll(metaRegex)) {
     assetEntries.push({ file: relFile, src: match[1].trim(), type: '<meta> social banner' });
   }
