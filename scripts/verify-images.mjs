@@ -102,7 +102,8 @@ for (const entry of assetEntries) {
   }
 
   const cleanPath = localRelativePath.startsWith('/') ? localRelativePath.slice(1) : localRelativePath;
-  const diskPath = path.join(distDir, cleanPath);
+  const pathnameOnly = cleanPath.split('?')[0].split('#')[0];
+  const diskPath = path.join(distDir, pathnameOnly);
   const cacheKey = `${entry.file}::${diskPath}`;
 
   if (!checkedAssets.has(cacheKey)) {
