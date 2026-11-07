@@ -11,6 +11,7 @@ interface Props {
   descriptions?: { ja: string; en: string; my: string };
   ogImage?: string;
   noindex?: boolean;
+  schema?: Record<string, any>;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   description = descriptions?.ja || siteData.meta.description.ja,
   ogImage = siteData.meta.ogImage,
   noindex = false,
+  schema,
 } = Astro.props;
 
 // Enforce trailingSlash: 'always' policy across all canonical and social URLs
@@ -120,31 +122,9 @@ const canonicalURL = new URL(cleanPathname, siteData.meta.siteUrl).toString();
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <!-- Schema.org JSON-LD Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": siteData.meta.companyName,
-      "alternateName": siteData.meta.companyNameEn,
-      "url": siteData.meta.siteUrl,
-      "logo": `${siteData.meta.siteUrl}/images/landing/logo.png`,
-      "image": `${siteData.meta.siteUrl}/images/landing/banner.jpg`,
-      "description": siteData.meta.description.ja,
-      "telephone": siteData.meta.phone,
-      "email": siteData.meta.email,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "元町1-11-21 フローレス元町205号",
-        "addressLocality": "清瀬市",
-        "addressRegion": "東京都",
-        "postalCode": "204-0021",
-        "addressCountry": "JP"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 35.7876,
-        "longitude": 139.5298
-      }
-    })} />
+    {!noindex && schema && (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    )}
   </head>
   <body class="bg-slate-50 text-slate-800 font-sans selection:bg-douitsu-primary selection:text-white relative" id="top">
     <!-- Brand Preloader (Min 1s, Max 2s Safety Fallback) -->

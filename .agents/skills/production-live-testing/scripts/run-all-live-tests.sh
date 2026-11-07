@@ -15,7 +15,7 @@ echo ""
 # ------------------------------------------------------------------
 # Stage 1: Domain, HTTPS & Canonical Redirect Gate
 # ------------------------------------------------------------------
-echo "▶ [Stage 1/5] Domain, SSL & Canonical Redirects Gate..."
+echo "▶ [Stage 1/6] Domain, SSL & Canonical Redirects Gate..."
 ROOT_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${TARGET_HOST}")
 WWW_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://www.douitsu-co.com")
 WWW_LOCATION=$(curl -sI "https://www.douitsu-co.com" | grep -i "location:" | tr -d '\r\n' || echo "")
@@ -37,28 +37,35 @@ echo ""
 # ------------------------------------------------------------------
 # Stage 2: Static Assets & R2 Storage Verification
 # ------------------------------------------------------------------
-echo "▶ [Stage 2/5] Static Assets & R2 Storage Pipeline Audit..."
+echo "▶ [Stage 2/6] Static Assets & R2 Storage Pipeline Audit..."
 node "${SCRIPT_DIR}/verify-assets.mjs"
 echo ""
 
 # ------------------------------------------------------------------
 # Stage 3: Cloudflare Edge Cache Audit
 # ------------------------------------------------------------------
-echo "▶ [Stage 3/5] Cloudflare Edge Cache Verification (cf-cache-status)..."
+echo "▶ [Stage 3/6] Cloudflare Edge Cache Verification (cf-cache-status)..."
 node "${SKILLS_DIR}/cloudflare-cache-audit/scripts/audit-cloudflare-cache.mjs"
 echo ""
 
 # ------------------------------------------------------------------
-# Stage 4: Contact API & Edge Security Gate
+# Stage 4: Live Schema.org JSON-LD Structured Data Audit
 # ------------------------------------------------------------------
-echo "▶ [Stage 4/5] Contact API & Edge Security Gate (9 Automated Tests)..."
+echo "▶ [Stage 4/6] Schema.org JSON-LD Structured Data Audit..."
+node "${SCRIPT_DIR}/verify-schema-live.mjs"
+echo ""
+
+# ------------------------------------------------------------------
+# Stage 5: Contact API & Edge Security Gate
+# ------------------------------------------------------------------
+echo "▶ [Stage 5/6] Contact API & Edge Security Gate (9 Automated Tests)..."
 bash "${SCRIPT_DIR}/test-contact-api.sh"
 echo ""
 
 # ------------------------------------------------------------------
-# Stage 5: Mobile Viewport & UI/UX Standards Audit
+# Stage 6: Mobile Viewport & UI/UX Standards Audit
 # ------------------------------------------------------------------
-echo "▶ [Stage 5/5] Mobile Viewport & UI/UX Standards Audit..."
+echo "▶ [Stage 6/6] Mobile Viewport & UI/UX Standards Audit..."
 TARGET_HOST="${TARGET_HOST}" node "${SKILLS_DIR}/mobile-ui-ux-audit/scripts/audit-mobile-uiux.mjs"
 echo ""
 

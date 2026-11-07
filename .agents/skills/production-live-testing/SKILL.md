@@ -4,6 +4,7 @@ description: >-
   Run end-to-end live testing on the DOUITSU LLC production website (https://douitsu-co.com).
   Verifies HTTP/2 status, SSL, canonical www redirect, 5 Global Edge Security Headers,
   all 66+ public assets & images, 4 sector visuals, Cloudflare Edge Cache (cf-cache-status: HIT),
+  Schema.org JSON-LD structured data (Organization, LocalBusiness, Address, Registration 25登－012206),
   PDF textbooks on Cloudflare R2, in-page navigation anchors (including #sectors and scroll-margin),
   Alpine.js trilingual switching, FAQ accordion, photo stack lightbox modal, automated mobile
   viewports (320px-412px) & zero-overflow standards, contact form validation, Cloudflare Turnstile
@@ -37,7 +38,7 @@ Whenever asked to test, audit, or verify the live site, links, images, contact f
 Run the entire end-to-end test suite in a single command:
 
 ```bash
-# Execute master production test suite (Stages 1 through 5)
+# Execute master production test suite (Stages 1 through 6)
 npm run audit:live
 
 # Or directly execute shell runner
@@ -113,7 +114,24 @@ Check all unique anchor links, section scroll-margins, and external schemes:
 
 ---
 
-### Stage 4: Interactive UI, Alpine.js Client Reactivity & Mobile Viewport Standards
+### Stage 4: Live Schema.org JSON-LD Structured Data Audit
+
+Verify that all production pages contain valid, compliant Schema.org JSON-LD structured data:
+
+```bash
+npm run audit:schema
+# or: node .agents/skills/production-live-testing/scripts/verify-schema-live.mjs
+```
+
+* **Pass Criteria**:
+  * All production pages (`/`, `/license/`, `/housing/`) return valid JSON-LD without syntax errors.
+  * `@context` strictly equals `https://schema.org` (or `http://schema.org`).
+  * `LocalBusiness` / `Organization` entities contain verified legal identifiers (`25登－012206`), correct company phone (`042-497-1537`), email, address in Tokyo Kiyose-shi (`元町1-11-21 フローレス元町205号`), and geo-coordinates (`35.7876`, `139.5298`).
+  * Rich entities (`Service`, `FAQPage`, `BreadcrumbList`, `WebSite`) are validated when present.
+
+---
+
+### Stage 5: Interactive UI, Alpine.js Client Reactivity & Mobile Viewport Standards
 
 #### 1. Instant Trilingual Switcher (Zero Page Reload)
 Evaluate in browser console or Alpine.js state:
@@ -146,7 +164,7 @@ npm run audit:mobile
 
 ---
 
-### Stage 5: Contact Form & Backend Security API Pipeline (9 Gates)
+### Stage 6: Contact Form & Backend Security API Pipeline (9 Gates)
 
 Execute the automated backend API security audit script:
 
@@ -168,7 +186,7 @@ The script verifies **9 automated edge security boundaries**:
 
 ---
 
-### Stage 6: SEO, PWA & Custom 404 Error Handling
+### Stage 7: SEO, PWA & Custom 404 Error Handling
 
 Verify edge assets and crawler configurations:
 
@@ -209,25 +227,29 @@ When delivering live test results to the user, format the summary using this str
    - Kaigo PDFs on R2: 2/2 HTTP 200 OK (39.7MB & 14.4MB)
    - Cloudflare Edge Cache: Verified cf-cache-status HIT / REVALIDATED
 
-3. **Links & Navigation**:
+3. **Schema.org Structured Data**:
+   - Live JSON-LD Blocks: 100% valid syntax on /, /license/, /housing/
+   - Legal Identifiers: 25登－012206, contact phone 042-497-1537, address in Kiyose-shi Tokyo verified
+
+4. **Links & Navigation**:
    - Section Anchors: #home, #about, #services, #sectors, #support, #flow, #faq, #contact verified
    - Header Offset: scroll-mt-[72px] lg:scroll-mt-[96px] verified
    - Direct Call & Email: tel: and mailto: verified
 
-4. **Client UI & Mobile Viewports**:
+5. **Client UI & Mobile Viewports**:
    - Trilingual Switcher: ja / en / my instant toggle
    - Mobile Viewports (320px, 360px, 390px, 412px): Zero horizontal overflow
    - Myanmar Typography: line-height >= 1.4, no diacritic collision
    - Accordion & Lightbox: Smooth expand & fullscreen modal
 
-5. **Form & Security Gate (9/9 Passed)**:
+6. **Form & Security Gate (9/9 Passed)**:
    - Method (405), Media (415), Buffer Guard (413) verified
    - Origin / CSRF: 403 Forbidden on untrusted origins
    - Turnstile CAPTCHA: Token required & enforced
    - Honeypot, Time Heuristic & Link Spam Traps: Silent 200 shadow-drop
    - Response Security Headers: Verified active
 
-6. **SEO, PWA & 404 Error Handling**:
+7. **SEO, PWA & 404 Error Handling**:
    - sitemap.xml, robots.txt, site.webmanifest, sw.js: 200 OK
    - Custom 404: 404 status with trilingual brand page
 ```

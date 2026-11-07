@@ -10,9 +10,12 @@ import Flow from '../components/Flow.astro';
 import Faq from '../components/Faq.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import { getHomepageSchema } from '../utils/seo-schema';
+
+const schema = getHomepageSchema();
 ---
 
-<Layout>
+<Layout schema={schema}>
   <!-- HEADER & NAVIGATION (Home, About Us, Services, Support, Process, FAQ, Contact Us) -->
   <Navbar />
 

@@ -4,13 +4,16 @@ import SubpageNavbar from '../components/SubpageNavbar.astro';
 import SubpageContent from '../components/SubpageContent.astro';
 import Footer from '../components/Footer.astro';
 import { siteData } from '../data/content';
+import { getLicensePageSchema } from '../utils/seo-schema';
 
 const { licensePage } = siteData;
+const schema = getLicensePageSchema();
 ---
 
 <Layout
   titles={licensePage.metaTitle}
   descriptions={licensePage.metaDescription}
+  schema={schema}
 >
   <!-- SUBPAGE HEADER (TOP INFO BAR + LOGO & BACK TO HOME BUTTON) -->
   <SubpageNavbar />

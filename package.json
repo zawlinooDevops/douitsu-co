@@ -1,7 +1,7 @@
 {
   "name": "douitsu-co",
   "type": "module",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -12,10 +12,14 @@
     "lint:css": "stylelint \"src/**/*.css\"",
     "check:astro": "astro check",
     "validate:html": "html-validate dist/",
+    "validate:schema": "node ./scripts/verify-schema.mjs",
+    "validate:images": "node ./scripts/verify-images.mjs",
+    "validate:links": "node ./scripts/verify-links.mjs",
     "check": "npm run lint:eslint && npm run lint:css && npm run check:astro",
     "validate": "./scripts/validate.sh",
     "audit:cache": "node .agents/skills/cloudflare-cache-audit/scripts/audit-cloudflare-cache.mjs",
     "audit:assets": "node .agents/skills/production-live-testing/scripts/verify-assets.mjs",
+    "audit:schema": "node .agents/skills/production-live-testing/scripts/verify-schema-live.mjs",
     "audit:mobile": "node .agents/skills/mobile-ui-ux-audit/scripts/audit-mobile-uiux.mjs",
     "audit:security": "bash .agents/skills/production-live-testing/scripts/test-contact-api.sh",
     "audit:live": "bash .agents/skills/production-live-testing/scripts/run-all-live-tests.sh",
